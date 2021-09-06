@@ -1,0 +1,92 @@
+threading - module
+    - High level threading interface on low level _thread module
+
+class threading.Thread(group=None, target=None, name=None, args=(), kwargs={}, *, daemon=None)
+    - returns a Thread object. Factory function
+    - target is callable object to be invoked by run() method
+    - args is argument for target callable
+    - kwargs is keyword argument for target callabel
+    - daemon creates a deamonic thread. A daemon thread is a thread that does not block 
+    main thread from exiting and when main thread exits, associated daemon threads are killed.
+
+    name
+        - A string used for identificatio purpose
+    
+    ident
+        - thread identifier with a nonzero number. 
+        - returns None if thread is not started
+
+    daemon
+        - boolean value to indicate if the thread is a daemon thread
+        - must be set before start() is called
+
+    start()
+        - to start a thread
+    
+    run()
+        - represents thread activity.
+        - only the run() and __init__() method is overriden in subclass of Thread
+        - dont forget to call Thread.__init__(self) if subclass of Thread
+
+    join(timeout=None)
+        - blocks the calling thread until the thread is terminated
+        - timeout argument is floating point number specifying seconds or fractions for timeout.
+        It just tells join how long to wait for the thread to stop. If the thread is still 
+        running after the timeout expires, the join call ends, but the thread keeps running.
+        - raises RunTimeError if that join() would make a deadlock
+
+    is_alive()
+        - returns wheather the thread is alive
+
+class threading.lock
+    - return a lock object that is used to syncronize resources
+    - this object can maintain two states. Lock and Unlock
+    - the lock can block execution
+
+    acquire(blocking=True, timeout=-1)
+        - returns True/False depending on if the lock is created or not
+        - if blocking=True/False and state is unlocked then create a lock and return true
+        - if blocking=True and state is locked then block until unlocked. When release is called 
+        by other thread, create lock and return true
+        - if blocking=False and  state is locked then it will not block the execution of thread.
+        It will return false immediately
+
+    release()
+        - set state from lock to unlock
+        - if the state is already unlocked then RuntimeError is raised
+
+    locked()
+        - returns true if the state is locked
+
+    Example:
+        def thread_task(lock):
+            lock.acquire()
+            increment()
+            lock.release()
+
+        # creating a lock
+        lock = threading.Lock()
+
+        # creating threads
+        t1 = threading.Thread(target=thread_task, args=(lock,))
+        t2 = threading.Thread(target=thread_task, args=(lock,))
+
+
+threading.active_count()
+    - returns the number of Thread object currenty active.
+
+threading.current_thread()
+    - returns the currect Thread object
+
+threading.excepthook(args,/)
+    - handles the uncought exceptions raised by Thread.run()
+    - can be overriden to handle exception of Thread.run()
+        def excepthook(args):
+            print("In excepthook")
+        threading.excepthook = excepthook
+
+threading.enumerate()
+    - returns list of all Thread objects currently alive
+
+threading.main_thread()
+    - returns Thread object for main thread

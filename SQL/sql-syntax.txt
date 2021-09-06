@@ -1,0 +1,269 @@
+
+UPDATE Statement:
+	update table_name
+	set col1 = val1, col2 = val2, ...
+	where condition;
+		- updates values based on conditions
+
+
+DELETE Statement:
+	delete from table_name where condition;
+		- delete rows based on condition
+	
+	delete from table:
+		- delete all rows
+
+
+SELECT TOP:
+	- SELECT TOP clause is used to specify the number of rows to return
+	
+	SQL Server:
+		SELECT TOP number|percent column_name(s)
+		FROM table_name
+		WHERE condition;
+	
+	MySQL:
+		SELECT column_name(s)
+		FROM table_name
+		WHERE condition
+		LIMIT number;
+
+	Oracle 12:
+		SELECT column_name(s)
+		FROM table_name
+		ORDER BY column_name(s)
+		FETCH FIRST number ROWS ONLY;
+		
+
+Builtin functions:
+	- functions can be used in SELECT statement
+	- takes one column as argument and returns one value
+	
+	MIN():
+		- returns minimum value of column	
+		select MIN(column_name)
+		from table;
+	
+	MAX():
+		- return maximum value of column
+		select MAX(column_name)
+		from table;
+	
+	COUNT():
+		- returns number of rows that matches for specified criterion
+		select COUNT(column_name)
+		from table
+		where condition;
+		
+	AVG():
+		- returns the average value of a numeric column
+		select AVG(column_name)
+		from table
+		where condition;
+		
+	SUM():
+		- returns total sum of a numeric column
+		select SUM(column_name)
+		from table
+		where condition;
+		
+
+LIKE Operator:
+	- LIKE is used in WHERE clause to specify pattern like glob
+	- % : zero, one or multiple character
+	- _ : one character
+	
+	select col1, col2, ...
+	from table
+	where columnN [NOT] LIKE pattern;
+	
+
+Subquery:
+	- Subqueries can be used with the SELECT, INSERT, UPDATE, and DELETE statements
+	along with the operators like =, <, >, >=, <=, IN, BETWEEN, etc.
+	- Subqueries must be enclosed within parentheses.
+	- A subquery can have only one column in the SELECT clause, unless multiple columns 
+	are in the main query for the subquery to compare its selected columns.
+	- Subqueries that return more than one row can only be used with multiple value 
+	operators such as the IN operator.
+	- An ORDER BY command cannot be used in a subquery.
+	- The BETWEEN operator cannot be used with a subquery. However, the BETWEEN operator 
+	can be used within the subquery.
+	
+	select col1, col2, ...
+	from table
+	where columnN OPERATOR 
+	(select column_name from table where condition);
+	
+	
+IN Operator:
+	- allows to specify multiple values in a WHERE clause
+	- it's a shorthand for multiple OR conditions
+	
+	select col1, col2, ...
+	from table
+	where columnN [NOT] IN (value1, value2, ...);
+	
+	select col1, col2, ...
+	from table
+	where columnN [NOT] IN (subquery);
+	
+
+BETWEEN Operator:
+	- selects values within a given range. The values can be numbers, text or dates.
+	- begin and end values are included
+	
+	select col1, col2, ...
+	from table
+	where columnN BETWEEN val1 AND val2;
+	
+	
+Aliaces:
+	- used to give a table or a column a temporary name
+	- created with AS keyword
+	- An alias only exist for the duration of the query
+	
+	COLUMN Alias:
+		select col1 AS alias_name1, col2 as alias_name2, ...
+		from table;
+		
+	TABLE Alias:
+		select col1, col2, ...
+		from table AS alias_name;
+
+	Examples:
+		SELECT CustomerName, Address + ', ' + PostalCode + ' ' + City + ', ' + Country AS Address  #concat in select
+		FROM Customers;
+		
+		SELECT o.OrderID, o.OrderDate, c.CustomerName
+		FROM Customers AS c, Orders AS o
+		WHERE c.CustomerName='Around the Horn' AND c.CustomerID=o.CustomerID;
+		
+		
+JOIN:
+	- The JOIN clause is used in from statement
+	- used to combine two or more tables
+	
+	table1 JOIN table2 ON relational_condition 											# Two table join
+	((table1 JOIN table2 ON relational_condition) JOIN table3 ON relational_condition)	# Multi table join 
+	
+	Example:
+		SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
+		FROM 
+			((Orders INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+			INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
+	
+	- different type of joins:
+		- INNER JOIN: Returns records that have matching values in both tables
+		- LEFT JOIN: Returns all records from the left table, and the matched records from the right table
+		- RIGHT JOIN: Returns all records from the right table, and the matched records from the left table
+		- FULL OUTER JOIN: Returns all records when there is a match in either left or right table
+	- table aliases can be used in JOIN
+				
+	
+INNER JOIN Syntax:
+	- The INNER JOIN keyword selects records that have matching values in both tables
+	
+	select col1, col2, ...
+	from table1 INNER JOIN table2 ON table1.column_name = table2.column_name;
+	
+	
+LEFT JOIN Syntax:
+	- The LEFT JOIN keyword returns all records from left table (table1) and matching records form right table (table2)
+	
+	select col1, col2, ...
+	from table1 LEFT JOIN table2 ON table1.column_name = table2.column_name;
+	
+
+RIGHT JOIN Syntax:
+	- THE RIGHT JOIN keyword returns all records from right table (table2) and matching records from left table (table1)
+	
+	select col1, col2, ...
+	from table1 RIGHT JOIN table2 ON table1.column_name = table2.column_name;
+	
+
+FULL OUTER JOIN / FULL JOIN Keyword:
+	- returns all matching and non matching records
+	
+	select col1, col2, ...
+	from table1 FULL JOIN table2 ON table1.column_name = table2.column_name;
+
+	- MySql does not support FULL JOIN. LEFT JOIN, UNION and RIGHT JOIN is combined to get the similar effect
+	
+	SELECT * FROM a LEFT JOIN b ON a.id = b.id
+	UNION
+	SELECT * FROM a RIGHT JOIN b ON a.id = b.id
+
+
+Self Join:
+	- Self join is a regular join but the table is joined with itself.
+
+	select e1.EmployeeID, 
+    e1.FirstName, 
+    e1.LastName,
+    e1.SupervisorID, 
+    e2.FirstName as SupervisorFirstName, 
+    e2.LastName as SupervisorLastName
+	from Employee e1
+	left outer join Employee e2 on e1.SupervisorID = e2.EmployeeID
+	
+	
+UNION Operator:
+	- used to combine result of two SELECT statements
+	- rules:
+		1. Every SELECT statement within UNION must have the same number of columns
+		2. The columns must also have similar data types
+		3. The columns in every SELECT statement must also be in the same order
+	- UNION operators selects only distinct values by default. UNION ALL allows duplicates.
+	
+	SELECT column_name(s) FROM table1
+	UNION [ALL]
+	SELECT column_name(s) FROM table2;
+	
+
+GROUP BY Statement:
+	- GROUP BY clause is used in collaboration with the SELECT statement to arrage identical data into groups.
+	- often used with aggregate fucntions to group the reult-set by one or more columns
+	
+	SELECT col1, col2, ...
+	FROM table_name
+	WHERE condition
+	GROUP BY col1, col2, ...
+	ORDER BY col1, col2, ...;
+	
+	Example:
+		select MAXLEN, count(MAXLEN) from CHARACTER_SETS group by MAXLEN order by MAXLEN;
+		- shows MAXLEN column's value and distict value counts
+		
+		
+HAVING Statement:
+	- HAVING clause enables to specify condition that filers group
+	- HAVING is used for using aggregated functions in condition
+	- WHERE is for SELECT and HAVING is for GROUP By
+	
+	SELECT col1, col2, ...
+	FROM table_name
+	WHERE condition
+	GROUP BY col1, col2, ...
+	HAVING condition
+	ORDER BY col1, col2, ...;
+	
+	
+EXIST Operator:
+	- used to test for the existence of any record in a subquery.
+	- returns TRUE if the subquery returns one or more records.
+
+	SELECT column_name(s)
+	FROM table_name
+	WHERE EXISTS
+	(SELECT column_name FROM table_name WHERE condition);
+	
+	Example:
+		- The following SQL statement returns TRUE and lists the suppliers with a product price less than 20:
+		SELECT SupplierName
+		FROM Suppliers
+		WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.SupplierID = Suppliers.supplierID AND Price < 20);
+		
+		
+
+

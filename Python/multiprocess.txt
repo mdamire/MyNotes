@@ -1,0 +1,200 @@
+* Multiprocess is done by multiprocessing module
+* Every process has their own memory space
+* multiprocessing supports three ways to start a process:
+    1. spawn : the parent process starts a fresh python interpreter. The child process will 
+    only inherit those resources necessary for run() method
+    - The default on Windows and macOS
+
+    2. fork: When the child process begins it's identical to parent process. All resources of 
+    parent process is inherited by child process
+    - The default on Unix
+
+    3. forkserver: a server process is started. Whenever a new process is needed, the parent process 
+    connects to the server and request that it forks a new process
+
+
+class multiprocessing.Process(group=None, target=None, name=None, args=(), kwargs={}, *, daemon=None):
+    - same as threading.Thread class
+
+    name:
+        - processes name
+
+    daemon:
+        - process's daemon flag
+
+    pid:
+        - returns process ID
+
+    exitcode:
+        - child process's exit code.
+        - returns None if the process has not yet terminted
+
+    authkey:
+        - process's authentication key
+
+    run():
+        - represents process activity.
+
+    start():
+        - start process activity
+
+    join([timeout]):
+        - blocks calling threads until process terminates
+        - timeout is optional and positive number that represents seconds
+
+    is_alive():
+        - returns if the process is alive
+
+    terminate():
+        - kills the process
+        - done by UNIX SIGTERM signal
+
+    kill():
+        - kills the process
+        - done by UNIX SIGKILL signal
+
+    close():
+        - close the process, releasing resources associated with it.
+        - ValueError is raised if the process is still running
+
+
+multiprocessing.Pool(processes=None, initializer=None, initargs=(), maxtasksperchild=None):
+    - returns multiprocessing.pool.Pool object
+    - easiest way to run a function 
+    - process is the number of processes to use. If none then os.cpu_count() is used
+
+    apply(func, args=(), kwds={}):
+        - call func with argument
+        - blocks until the result is ready
+
+    map(func, iterable):
+        - A parallel equivalent of builtin function map()
+        - blocks until the result is ready
+
+    Example:
+        if __name__ == "__main__":
+            with Pool(5) as p:
+                p.map(func, [1, 2, 3])
+
+
+class multiprocessing.Lock
+    - non-recursive lock object. same os threading.Lock
+
+    acquire(block=True, timeout=None):
+        - creates lock
+
+    release():
+        - unlock locked lock
+
+    
+multiprocessing.Pipe(duplex=True):
+    - returns a pair (conn1, conn2) of Connection objects
+    - used to two way communication
+    - if duplex is false then unidirectoal.
+    conn1 can only receive and conn2 can only send messages
+    - if duplex is true then bidirectional
+
+    class Connection:
+        send(msg):
+            - sends msg
+        recv():
+            - receives msg.
+            - waits until receiving
+        close():
+            - closes after sending
+
+
+class multiprocessing.Queue([maxsize]):
+    - returns a process shared queue
+
+    put(obj , block=True , timeout=None]]):
+        - puts objects into queue
+        - if block is True then blocks the process until slot is free. if timeout is a number then 
+        blocks for timeout seconds, raises queue.Full exception if no slot found in that time
+        - if block is False and slot is not immediately available then raises queue.Full exception
+
+    get():
+        - remove and return first object
+        - if block is True then blocks the process until slot is free. if timeout is a number then 
+        blocks for timeout seconds, raises queue.Full exception if no slot found in that time
+        - if block is False and slot is not immediately available then raises queue.Full exception
+
+    empty():
+        - returns True if queue is empty. Otherwise returns False
+
+    qsize():
+        - returns appx. size of queue. not reliable
+
+    close():
+        - indicates that no more data will be put by the current process
+
+        
+multiprocessing.Value(type, *args, lock=True)
+    - creates a ctype object allocated from shared memory
+    - lock can be bool or Lock object
+
+multiprocessing.Array(type, size, *, lock=True)
+    - creates a ctype array allocated from shared memory
+    - lock can be bool or Lock object
+
+multiprocessing.Manager():
+    - returns a started multiprocessing.managers.SyncManager object witch can be used for sharing objects between processes.
+
+    Example:
+        from multiprocessing import Process, Manager
+        def f(d, l):
+            d[1] = '1'
+            l.reverse()
+        if __name__ == '__main__':
+            with Manager() as manager:
+                d = 
+                l = manager.list(range(10))
+                p = Process(target=f, args=(manager.dict(), manager.list([1,2,3])))
+                p.start()
+                p.join()
+
+class multiprocessing.managers.SyncManager():
+    Queue()
+        - creates a queue.Queue() object and returns proxy for it
+
+    Array(typecode, sequence):
+        - creates an array and returns proxy for it
+
+    Value(typecode, value):
+        - creates and object with writable value attribute and returns proxy for it
+
+    dict():
+    dict(mapping):
+    dict(sequence):
+        - creates a shared dict object and returns proxy for it
+
+    list():
+    list(sequence):
+        - creates a shared list object and returns proxy for it
+
+multiprocessing.active_children():
+    - returns Process object list of all live children of the current process
+
+multiprocessing.cpu_count():
+    - returns the number of CPUs in the system
+
+multiprocessing.current_process():
+    - returns Process object of current process
+
+multiprocessing.parent_process():
+    - returns Process object of parent process of multiprocessing.current_process()
+
+multiprocessing.get_context(method=None):
+    - returns context object which has same attribute as multiprocessing module
+    - method can be 'spawn', 'fork' or 'forkserver'.
+    - raises ValueError if method not available
+    - used when a library wants to use a perticular start method so that user's choice of
+    starting method does not interfer library's start method.
+
+multiprocessing.set_start_method(method):
+    - Set the method which should be used to start child processes.
+    - method can be 'spawn', 'fork' or 'forkserver'.
+    - can only be used one time. should be inside 'if __name__ == "__main__"' clause
+
+multiprocessing.get_start_method():
+    - Returns the name of the starting method

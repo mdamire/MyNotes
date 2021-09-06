@@ -1,0 +1,72 @@
+# Machine learning is an application of Artificial Intelligence wherein the system gets the ability to 
+automatically learn and improve based on experience
+
+# Types of Machine Learning:
+    1. Supervised Learning: Data and answer is known. Next prediction is done by previous data and andsers.
+    2. Unsupervised Learning: Data is unknown. Data is grouped without knowing what the data actually is.
+    3. Reinforcement Learning: Data is not available before starting. Machine takes one data at a time and 
+    adjusts itself accordingly
+
+# Types of problems in Machine Learning:
+    1. Classification: Problems with categorial solutions like yes or no/Blue or yellow.
+    2. Regression: Problems that have continuous data and solutions needs to be predicted based on data.
+    3. Clustering: Problems where the data needs to be organized to find specific patterns.
+
+    * Decision tree is based on classification
+
+# Decision Tree:
+    - It is a tree shaped diagram used to determine a course of action. 
+    - Each branch of the tree represents a possible decision, occurrence or reaction.
+    - Can solve Classification or Regression Problems
+    - Classification example: determining a species from it's nature, discriminating three kinds of flowers
+    based on certain features
+    - Regression example: Predicting the sales of next month
+
+# Advantages of Decision Tree:
+    - Simple to understand, interpret and visualize
+    - little effort required for data preparation
+    - can handle both numerical and categorial data
+    - non linear parameters don't effect it's performance
+
+# Disadvantages of Decision Tree:
+    - Overfitting: occurs when the algorithm captures noise in the data
+    - High Variance: The model can get unstable due to small variation in data
+    - Low biased Tree: A highly complicated decision tree tends to have a low bias which makes it
+      difficult for the model to work with new data
+
+# Terms:
+    - Entropy: measure of randomness or unpredictability in the dataset
+    - Information gain: measure of decrease n entropy after the dataset is split
+        Gain = Entropy(N1) - Entropy(N1, N2)
+    - Decision Node: makes the decision
+    - Leaf Node: carries the result
+    - Root Node: top most decision node
+    - Branch/Sub Tree: A tree formed by splitting the tree.
+    - Pruning: When we remove sub-nodes of a decision node,
+      this process is called pruning. You can say the opposite process of splitting.
+
+Decision Tree Algorithm: 
+    Step-1: Begin the tree with the root node, says S, which contains the complete dataset.
+    Step-2: Find the best attribute in the dataset using Attribute Selection Measure (ASM).
+    Step-3: Divide the S into subsets that contains possible values for the best attributes.
+    Step-4: Generate the decision tree node, which contains the best attribute.
+    Step-5: Recursively make new decision trees using the subsets of the dataset created in 
+            step -3. Continue this process until a stage is reached where you cannot further classify 
+            the nodes and called the final node as a leaf node.
+
+
+# Attribute Selection Measure:
+    Information Gain:
+        Information Gain = E(Node1) - E(Node1, Node2)
+
+        Entropy / Shanon-Entropy:            
+            E(Node) = - sum( P(X1) * log2(P(X1)), P(X2) * log2(P(X2)), ... )
+            - X1, X2, ... are the values of Node 
+            
+        Entory for Node2 in terms of Node1:  
+            E(Node1, Node2) = sum( (P(X1) * E(Y1)), (P(X2) * E(Y2)), ...  )
+            - X1, X2, ... are the Values of Node2
+            - Y1, Y2, ... training column node which contains values of X1/X2/...
+
+        Permutation:
+            P(X1) = (Number of occurrence of X1) / (Total number of values, of that node)
