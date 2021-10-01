@@ -1,5 +1,67 @@
 
+SELECT Statement:
+	- select statement is used to select data from a database
+	- returns a table 
+
+	select col1, col2, ...
+	from table_name;
+
+
+SELECT DISTINCT statement:
+	- SELECT DISTINCT statement is used to return only distinct values
+	- If multiple columns are specified then distinction is calculated by combining the columns
+
+	SELECT DISTINCT column1, column2, ...
+	FROM table_name;
+
+
+WHERE clause:
+	- Used to filter records.
+
+	SELECT column1, column2, ...
+	FROM table_name
+	WHERE condition;
+
+
+Logical Operators:
+	- conditions can be combined with AND, OR, NOT operators
+	- can be in paranthesis
+
+	SELECT column1, column2, ...
+	FROM table_name
+	WHERE condition1 AND condition2 AND condition3 ...;
+
+
+ORDER BY Keyword:
+	- The ORDER BY keyword is used to sort the result-set in ascending or descending order
+	- ascending sort is default
+
+	select col1, col2, ...
+	from table_name
+	order by col1 ASC|DESC, col2 ASC|DESC, ...
+
+
+INSERT INTO statement:
+	- used to insert new records in a table
+	- column names are optional to specify all columns
+
+	INSERT INTO table_name [(col1, col2, col3, ...)]
+	VALUES (val1, val2, val3, ...)
+
+
+NULL Values:
+	- If a field in a table is optional, it is possible to insert a new record or update 
+	a record without adding a value to this field. Then, the field will be saved with a NULL value.
+	- IS NULL and IS NOT NULL operators are used in WHERE clause to test a column for NULL value.
+
+	SELECT column_names
+	FROM table_name
+	WHERE column_name IS [NOT] NULL;
+
+
 UPDATE Statement:
+	- updates the existing rows
+
 	update table_name
 	set col1 = val1, col2 = val2, ...
 	where condition;
@@ -232,7 +294,10 @@ GROUP BY Statement:
 	ORDER BY col1, col2, ...;
 	
 	Example:
-		select MAXLEN, count(MAXLEN) from CHARACTER_SETS group by MAXLEN order by MAXLEN;
+		select MAXLEN, count(MAXLEN) 
+		from CHARACTER_SETS 
+		group by MAXLEN 
+		order by count(MAXLEN) DESC;
 		- shows MAXLEN column's value and distict value counts
 		
 		
@@ -248,6 +313,12 @@ HAVING Statement:
 	HAVING condition
 	ORDER BY col1, col2, ...;
 	
+	Example:
+		select MAXLEN, count(MAXLEN) 
+		from CHARACTER_SETS 
+		group by MAXLEN 
+		having count(MAXLEN) > 5;
+
 	
 EXIST Operator:
 	- used to test for the existence of any record in a subquery.
@@ -264,6 +335,113 @@ EXIST Operator:
 		FROM Suppliers
 		WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.SupplierID = Suppliers.supplierID AND Price < 20);
 		
+
+ANY and ALL Operators:
+	- used for conditions with subquery
+
+	ANY Operator:
+		- returns boolean value
+		- returns TRUE if ANY of the SUBQUERY values meets the condition
+		- used in where clause
+
+		SELECT column_name(s)
+		FROM table_name
+		WHERE column_name <operator> ANY 
+			(SELECT column_name
+			FROM table_name
+			WHERE condition);
+
+		- <operator> means standard comparison operator (=, <>, !=, <, <=, >, >=)
+
+		Example:
+			SELECT ProductName
+			FROM Products
+			WHERE ProductID = ANY
+				(SELECT ProductID
+				FROM OrderDetails
+				WHERE Quantity = 10);
+
+	ALL Operator:
+		- returns boolean value
+		- returns TRUE if ALL of the SUBQUERY values meet the condition
+		- can be used in SELECT, WHERE and HAVING statements
+
+		SELECT column_name(s)
+		FROM table_name
+		WHERE column_name <operator> ALL 
+			(SELECT column_name
+			FROM table_name
+			WHERE condition);
+
+		- <operator> means standard comparison operator (=, <>, !=, <, <=, >, >=)
+
+		Example:
+			SELECT ProductName
+			FROM Products
+			WHERE ProductID = ALL
+				(SELECT ProductID
+				FROM OrderDetails
+				WHERE Quantity = 10);
+
+
+INSERT INTO Syntax:
+	- copies data from one table and inserts into another table
+	- data types in the source and target tables must match
+
+	INSERT INTO table2 [(col1, col2, ...)]
+	SELECT col1, col2, ...
+	FROM table1
+	WHERE condition;
+
+	- [(col1, col2, ...)] is optional to represent all the columns
+
+	Example:
+		INSERT INTO Customers (CustomerName, City, Country)
+		SELECT SupplierName, City, Country
+		From Suppliers
+		WHERE Country = 'Germany';
+
+
+NULL Check with fucntion:
+	- used to check for null value and return a different value
+
+	MySQL: IFNULL():
+		SELECT ProductName, (UnitsInStock + IFNULL(UnitsOnOrder, 0))
+		FROM Products;
+
+	SQL Server: ISNULL():
+		SELECT ProductName, (UnitsInStock + ISNULL(UnitsOnOrder, 0))
+		FROM Products;
+
+	Oracle: NVL():
+		SELECT ProductName, (UnitsInStock + NVL(UnitsOnOrder, 0))
+		FROM Products;
+
+
+Comments:
+	Single line comment:
+		--comment
+	
+	Multiline commnet:
+		/*commnet line1
+		comment line2*/
+
+Operators:
+	Arithmetic Operators:
+		+, -, *, /, %
+
+	Comparison Operators:
+		=, >, <, >=, <=, <>
+
+	Compound Operators:
+		+=, -=, *=, /=, %=, &= (Bitwise AND equals), ^-= (Bitwise Exclusive equals), |*= (Bitwise OR equals)
+
+	Logical Operators:
+		AND, OR, NOT
+		ALL, ANY, BETWEEN, IN, LIKE, NOT, OR, SOME
+
+	Bitwise Operator:
+		&, |, ^
 		
 
 
