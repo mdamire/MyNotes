@@ -299,6 +299,10 @@ GROUP BY Statement:
 		group by MAXLEN 
 		order by count(MAXLEN) DESC;
 		- shows MAXLEN column's value and distict value counts
+
+		SELECT COUNT(CustomerID), Country
+		FROM Customers
+		GROUP BY Country;
 		
 		
 HAVING Statement:
