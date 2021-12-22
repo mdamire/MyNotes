@@ -69,6 +69,8 @@ UPDATE Statement:
 
 
 DELETE Statement:
+	- deletes rows from a table
+
 	delete from table_name where condition;
 		- delete rows based on condition
 	
@@ -307,7 +309,8 @@ GROUP BY Statement:
 		
 HAVING Statement:
 	- HAVING clause enables to specify condition that filers group
-	- HAVING is used for using aggregated functions in condition
+	- HAVING is used for using aggregated functions in condition. 
+	(Because Aggregated functions can not be used in WHERE statement.)
 	- WHERE is for SELECT and HAVING is for GROUP By
 	
 	SELECT col1, col2, ...
@@ -388,7 +391,7 @@ ANY and ALL Operators:
 				WHERE Quantity = 10);
 
 
-INSERT INTO Syntax:
+INSERT INTO SELECT Syntax:
 	- copies data from one table and inserts into another table
 	- data types in the source and target tables must match
 
