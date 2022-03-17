@@ -32,6 +32,17 @@ Logical Operators:
 	WHERE condition1 AND condition2 AND condition3 ...;
 
 
+Regex operator:
+	- enables regular expression in condition
+
+	MySQL:
+		- Done by REGEXP operator
+
+		SELECT column1, column2, ...
+		FROM table_name
+		WHERE column REGEXP <regular-expression>;
+
+
 ORDER BY Keyword:
 	- The ORDER BY keyword is used to sort the result-set in ascending or descending order
 	- ascending sort is default
@@ -74,7 +85,7 @@ DELETE Statement:
 	delete from table_name where condition;
 		- delete rows based on condition
 	
-	delete from table:
+	delete from table;
 		- delete all rows
 
 
