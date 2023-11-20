@@ -1,0 +1,38 @@
+IAM: 
+
+    - Identity and access Management
+    - Global service
+
+
+Policies:
+    - Users will get one/multiple group policies
+    - User without group will have inline policies
+    - Policies has JSON structure
+
+Account Security:
+    * Password authentication
+        - account is secured with Password
+    * MFA - Multi Function authentication:
+        - secured with password and a device
+
+Accessing AWS:
+    - AWS Management console - protected by Password + MFA
+    - AWS CLI - protected by Access key
+    - AWS SDK - protected by Access Key
+
+    * Access key id ~ Username
+    * Access key ~ Password
+
+    AWS CLI configuration:
+        $ aws configure # creates default configurations
+        $ aws configure --profile <profile name> # creates configuration for another account
+        $ aws s3 ls --profile test # You can see s3 buckets of test user
+        - configurations are written in ~/.aws/credentials file
+
+IAM Security Tools:
+    - Credential Report (account level)
+    - Access Advisor (user level)
+
+Shared Responsibility Model:
+    - AWS: Infrastructure, Configuration and vulnerability analysis, Compilance validation
+    - User: Make sure all users are ok using IAM sevice

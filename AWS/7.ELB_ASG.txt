@@ -1,0 +1,70 @@
+Availability, Scalability, Elasticity:
+    - Vertical Scalable:
+        - Increase size of the instance
+        - e.g t2.micro to t2.targe
+        - for non distributed system like database
+
+    - Horizontal Scalable (Elasticity):
+        - increase number of instances/systems
+        - for distributed system
+        - need: auto scaling group & loan balancer
+
+    - High availability:
+        - running application at least 2 availability zones
+
+
+Elastic Loan Balancing:
+    - Load balancers forward internet traffic to miltiple servers
+    - Exposes a single point of access (DNS) to the applicaiton
+    - regular health check to instance
+
+    - managed load balancer
+    - can be possible to install own load balancer on 
+
+    - 4 kinds of AWS load balancers:
+        * Application loan balancer 
+            - HTTP/HTTPS/gRPC protocols 
+            - Layer 7
+            - HTTP routing features
+            - Static DNS (URL)
+
+        * Network Load Balancer
+            - high performance, 
+            - TCP/UDP protocols 
+            - Layer 4
+            - Static IP through Elastic IP
+        
+        * Gateway load balancer 
+            - GENEVE protocol on IP packets
+            - Layer 3
+            - e.g routing traffic to firewalls that you manage on EC2
+        
+        * Classic Load Balancer (retired in 2023) - Layer 4 & 7
+
+
+Auto Scaling Group:
+    - Goal:
+        - Scale out to match increased load
+        - Scale in to match a decreased load
+        - Minimum and maximum number of machines running
+        - automatically register new instances to a load balancer
+        - replace unhealthy instances
+
+
+ASG Strategies:
+    - Manually Scaling: 
+        - update ASG size manually
+    
+    - Dynamic Scaling:
+        - Simple/Step Scaling: 
+            * emaple when CPU > 70% then add 2 units
+            * example when CPU < 30% then remove 1
+        - Target Tracking Scaling:
+            * Example: I want the average ASG CPU to stay at around 40%
+        - Scheduled Scaling:
+            * Emaple: increase capacity at 10 to 11 pm friday
+    
+    - Predictive Scaling
+        * Uses machine learning to predict future traffic ahead of time
+        * Auto sets right number of EC2 ahead of time
+        * useful when loan has time based pattern

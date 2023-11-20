@@ -1,0 +1,83 @@
+EC2:
+    - Elastic Compute Cloud
+    - Infrastructure as Service
+
+    * EC2 - Renting Virtual Machine
+    * EBS - Storing data on Virtual Machine (Elastic Block Store)
+    * ELB - Elastic Loan Balancer
+    * ASG - Auto Scaling Group 
+
+    * Bootstrap using "EC2 user data" script
+        - run once while instance first start
+        - runs with root access
+
+
+EC2 Instance Types:
+
+    - Depends on usecase
+    - Naming convension e.g m5.2xlarge
+        - m: instance class
+        - 5: generation
+        - 2xlarge: size
+
+    * General Purpose:
+        - web servers, code repository
+        - balanced
+        - M/T series
+
+    * Compute Optimized
+        - Batch processing, Media transcoding, high performance web server, data analysis
+        - C series
+
+    * Memory Optimized:
+        - Processes that loads large data in memory
+        - Web scale cache, high performance db, In memory db optimization, big data
+        - R series/X1/Z1
+
+    * Storage Optimized:
+        - Storage intensive tasks
+        - Data warehouse, File system
+
+    https://instances.vantage.sh/
+
+
+Security Group:
+    - network security
+    - controls network traffic
+    - contains only 'allow' rules
+    - inbound (data coming in EC2) and outbound (data going out from EC2) traffic rules
+    - rules can be referenced by IP or by other security groups
+
+    - can be attached to multiple instance
+    - Locked down to region/VPC combination
+
+    - timeout means security group issue
+
+    PORTS:
+        - 22 : SSH
+        - 21 : FTP
+        - 22 : SFTP
+        - 80 : HTTP
+        - 443 : HTTPS
+        - 3389 : RDP, Remote Desktop Protocol, log into a windows instance
+ 
+
+SSH:
+    $ chmod 0400 <pem cert>
+    $ ssh -i <pem cert> ec2-user@<instance ip> #ec2-user is default user for amazon linux
+        - eg: ssh -i /Users/rahat/Documents/Codes/AWS/udemy-aws-test-acct.pem ec2-user@51.20.83.32
+
+
+IAM Role: 
+    - Add IAM role to instance to use aws cli in EC2. 
+    - AWS CLI needs access key permission which cannot be added to EC2 for security reasons
+
+
+Buying options of EC2:
+    - On demand: Pay as you use
+    - Reserved Instances: Commit to specific instance for specific time, can be Convertible
+    - Savings Plans: Commit to certain amount of usage for specific time
+    - Spot instance: Uses beating system, can lose the instance to higher beat
+    - Dedicated host: Book an entire physical server
+    - Dedicated instance: No other customer will share the hardware 
+    - Capacity Reservations: Reserve Capacity for any duration

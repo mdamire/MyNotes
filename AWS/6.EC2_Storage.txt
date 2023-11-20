@@ -1,0 +1,84 @@
+EBS:
+    - Elastic Block Storage
+    - "Network Drive" that can be attached to EC2 instances
+    - Keeps data even after EC2 instance termination
+
+    - Can be mounted to one EC2 instance at a time, except io1 and io2 type volumes
+    - one EC2 instance can have multiple EBS
+
+    - Bound to specific availability zone
+
+    - "Delete on Termination" is default turned on for "Root" volume and turned off for other volumes
+    - Measured by size and IOPS (IO per Seconds)
+
+
+Snapshot:
+    - Creates a backup
+    - Can be copied across availability zones and regions
+
+    # Archive
+        - 75% cheaper when moved to archive tier
+        - takes 24 to 72 hours to restore
+
+    # Recycle Bin
+        - Can be restored after delete
+        - Specific retention (from 1 day to 1 year)
+
+
+AMI:
+    - Amazon machine image
+    - Customization of EC2 instance
+    - AMI build for specific region
+    - Public, Own, Marketplace
+
+
+EC2 Image builder:
+    - Automate creation, maintain, validate and test EC2 AMIs
+    - EC2 Image builder -> EC2 instance -> AMI -> Test EC2 instance -> AMI is distributed
+    - Can be scheduled
+
+
+EC2 Instance Store:
+    - high performance than EBS 
+    - it will be lost if instance is stopped
+    - can be used as cache/temporary data/buffer etc
+
+
+EFS:
+    - Elastic file system
+    - NFS (network file system) that can be mounted to 100s of EC2
+    - expensive, pay per use cost
+    - shared through all availability zones in a region
+
+    EFS-IA:
+        - EFS infrequest Access
+        - Storage class that is cost Optimized
+        - EFS will move files to EFS-IA in the background according to Lifecycle policy
+
+
+Shared Responsibility:
+    AWS: 
+        - Infrastructure
+        - Replication for data for EBS volumes and EFS drives
+        - Replace faulty hardware
+        - Ensuring their employees cannot access data
+
+    Customer:
+        - setting up backup/snapshot procedure
+        - Settting up data encryption
+        - data on the drives
+        - Risk of EC2 instance store
+
+
+FSx:
+    - High performance 3rd party file system on AWS
+    - FSx for Windows file server:
+        - Windows native shared file system
+        - Build on windows file system
+        - supports SMB and NTFS
+    
+    - FSx for Luster
+        - for linux (linux and cluster)
+        - For High performance computing
+
+    - FSx for NetApp ONTAP

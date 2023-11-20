@@ -1,0 +1,156 @@
+
+RDS:
+    - Relational database server
+    - Databases that use SQL
+    - Storage backed by EBS
+
+    # Advantage over DB on EC2:
+        - Automated provisioning
+        - Continuous backups and restore to specific timestamp
+        - Monitoring dashboard
+        - Read replicas for improved read performance
+        - Scaling capability
+        - Multi AZ
+
+    # Amazon Aurora:
+        - proprietary db technology from AWS
+        - PostgreSQL and MySQL are supported
+        - Cloud optimized, 5x faster MySQL ans 3x PostgreSQL
+        - auto storage increment by 10GB up to 128TB
+        - 20% expensive than RDS but efficient
+
+        - Aurora serverless:
+            - auto db instantiation and auto scaling based on actual usage
+            - least management overhead
+            - for infrequent, intermittent or unpredictable workload
+            - client is connected to Proxy Fleet and aurora instantiate and connect to it
+            (serverless db decouple the part of the management system that deals with storage from the part that
+            executes queries)
+
+
+RDS Deployment options:
+    * Read Replicas:
+        - Creates replicas to read the DB
+        - Scales the workload of DB
+        - Data is only written to the main DB
+        - Can create upto 15 read replicas
+
+    * Multi-AZ:
+        - Creates copy of db on another AZ for failover in case fo AZ outage
+        - Can only be accessed in case of AZ fail
+        - Can only have one other AZ as failover
+        - App reads/writes to main db
+    
+    * Multi-Region (read replicas):
+        - read replicas in multiple region
+        - in case of regional issue
+        - replication costs
+
+
+ElastiCache:
+    - in memory database, high performance, low latency
+    - like RDS, it is managed cache like Redis or Memcache
+    - AWS takes care fo OS maintenance/patching, optimizations, setup, configuration, monitoring, failure recovery and 
+    backups
+
+
+DynamoDB:
+    - NoSQL db, fully managed, highly available with replication across 3AZ
+    - distributed "serverless" db. means need to instantiate instead of creating a server
+    - Fast, High Performance, 100s of TB of storage
+    - low latency
+    - Integrated with IAM for security authorization and administration
+    - low cost and auto scaling capability
+    - Standard and Infrequent Access table classes
+
+    * DynamoDB Accelerator - DAX:
+        - Fully managed in memory cache for DynamoDB
+        - Only for DynamoDB, ElastiCache can be used for any DB
+        - secure, fast, highly available and scalable
+
+    * Global Tables:
+        - make dynamo table accessible with low latency in multiple region
+        - Global table can be created in mutiple regions and they will be in sync with each other.
+        - User can read/write either of those, so will be accessed to the closest one
+        - Active-Active replication (actively write any region and actively replicate to other regions)
+
+
+Redshift:
+    - Based on PostgreSQL, but it's not OLTP (Online Transaction Processing)
+    - OLAP - online Analytics Processing (analytics and data warehousing)
+    - Load data every hour, not every second
+    - Columnar storage of data (instead of row based)
+    - Massive Parallel Query Execution (MPP)
+    - Has SQL interface
+    - Business Intelligence(BI) tools integrated(AWS Quicksight or tableau)
+
+    * Redshift Serverless:
+        - workloads without managing data warehouse infrastructure
+        - pay as you use
+        - for Reporting, dashboarding applications, real-time analytics
+
+
+EMR: ???
+    - Elastic MapReduce
+    - Helps creating hadoop clusters to analyze and process vast amount of data
+    - the clusters can be made of hunderds of EC2 instances
+    - also supports Apache Spark, Hbase, Presto, flink
+    - Use cases: data processin, machine learning, web indexing, big data
+
+
+Athena:
+    - Serverless query service to perform analytics against S3 objects
+    - SQL to query the files
+    - supports csv, Json, ORC, Avro and Parquet (built on Presto)
+    - use compressed or columnar data for cost-savings
+    - Use case: BI/Analytics/reporting ...
+
+
+Quicksight:
+    - to create dashboard on databases to visualize the insights of data
+    - Integrated with RDS, Aurora, Athena, Redshift, S3 ...
+
+
+DocumentDB:
+    - Aurora is an "AWS-implementation" of PostgreSQL/MySQL
+    - DocumentDB is the same for MongoDB
+    - Fully managed, hightly available and auto scallable (increments of 10GB, upto 64TB)
+    - millions of request per second
+
+
+Netune:
+    - fully managed Graph database
+    - A popular graph db is social network
+    - Build and run applications working with highly connected datasets - optimized for these complex and hard queries.
+    - can store upto billions of relations and query the graph with milliseconds latency
+    - Great for knowledge graphs, fraud detection, recommendation engines, social networking
+
+
+QLDB:
+    - Quantum Ledger Database
+    - A ledger is a book recording financial transactions
+    - Fully managed, serverless, high available, replication accross 3AZ
+    - Used to review history of all the changes made to your application data overtime
+    - Immutable system
+    - centralization component
+
+
+Managed Blockchain:
+    - blockchain makes it possible to build applications where multiple parties can execute transactions without the 
+    need for a trusted, central authority. (decentralized)
+    - Compatible with frameworks: Hyperledger Fabric & Ethereum
+
+
+Glue:
+    - Managed extract, transform and load (ETL) service
+    - useful to prepare and transform data for analytics
+    - fully serverless service
+    - example, extracting data from S3 and RDS, transforming it and loading it to Redshift
+    - Glue Data catalog: catlog of datasets, can be used by Athena, redshift ...
+
+
+DMS:
+    - Database Migrations Service
+    - Source DB -> EC2 instance running DMS -> Target DB
+    - Source database remains available during migration
+    - Support Homogeneous migrations (MySQL to MySQL) or Heterogeneous migrations (MySQL to Oracle)

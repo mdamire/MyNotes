@@ -1,0 +1,187 @@
+
+- "infinitely scaling" storage
+- example: Nasdaq stores 7 years of data into s3 Glacier
+- example: Sysco runs analytics on it's data and gain business insights
+
+Buckets:
+    - stores files into buckets (top level directories)
+    - must have a globally unique name
+    - defined at region level
+    - naming convention:
+        * no uppercase, no underscore
+        * 3-6e chars
+        * must not ip
+        * not start with xn--
+        * not end with -s3alias
+
+Objects:
+    - objects are files
+    - has a key which is the full path of the file
+    - key is prefix(directory) + object name(file)
+    - values are the content of the body
+    - max 5TB, multipart for > 5gb
+    - Metadata: list of text key value pairs
+    - Tags: list of Unicode key value paris (upto 10)
+    - has a version id
+
+
+Security:
+    # User based:
+        * IAM Policies - specific users of IAM
+    
+    # Resource Based:
+        * Bucket Policies - bucket rules allows cross account
+        * Object Access Control List (ACL)
+        * Bucket Access Control List (ACL)
+
+    - Note: an IAM principan can access an S3 object if IAM permission allows it OR the resource policy allows it
+    AND there is no explicit deny
+
+    - Bucket policies are JSON based
+
+    - Bucket policies are for:
+        * Grant public access to the bucket
+        * Force object to encrypt on upload
+        * Grant access to another account
+    
+    - Use case:
+        * Public access - use bucket policy
+        * User access - IAM policies
+        * EC2 instance access - IAM role policies
+        * Cross Account Access - use bucket policy
+
+    - "Block public access" bucket settings
+        - to prevent data leak
+        - overrides other policies
+        - can be set account level
+
+
+Versioning:
+    - enabled in bucket level
+    - same key overwrite will change the version
+    - can be roll back
+    - any file that is not versioned prior to enabling will have null version ID
+
+
+Replication:
+    # CRR: Cross Region Replication
+    # SRR: Same Region Replication
+
+    - Must enable versioning in source and destination buckets
+    - bucket can be in different aws accounts
+    - asynchronous copy
+    - proper IAM permission to S3
+
+
+Storage Classes:
+    - can move between classes manually or using S3 Lifecycle configuration
+    - Durability: How many times a object can be lost in a time frame
+    - Availability: How regular the object is available
+
+    # S3 standard - general purpose:
+        - 99.99% availability
+        - used for frequently accessed data
+        - low latency and high throughput
+        - sustain 2 concurrent facility failures
+        - for big data analysis, mobile and gaming applications, content distribution
+
+    # S3 Infrequent access:
+        - for less frequent but rapid access
+        - lower cost than s3 standard
+
+        * Standard IA:
+            - 99.9% availability
+            - for disaster recovery, backups
+
+        * One Zone IA:
+            - high Durability
+            - data lost when AZ is destroyed
+            - 99.5% availability
+            - For storing secondary backup, or data that can be recreated
+
+    # S3 Glacier:
+        - Low cost
+        - For archive/backup
+        - Pricing: price for storage + object retrieval cost
+
+        * Instant Retrieval:
+            - millisecond retrieval, great for data accessed once a quarter
+            - minimum Storage 90 days
+        
+        * Flexible Retrieval:
+            - Expedited (data back in 1 to 5 minutes), Standard (3 to 5 hours), Bulk (5 to 12 hours, free)
+            - minimum Storage 90 days
+
+        * Deep Archive:
+            - long term storage
+            - Standard(12 hours), Bulk(48 hours)
+            - minimum storage 180 days
+    
+    # S3 Intelligent-Tiering:
+        - Moves objects between Access Tiers based on usage
+        - Small monthly monitoring and auto-tiering fee
+        - no retrieval cost
+
+        * Frequent Access tier(auto): default tier
+        * Infrequent Access tier(auto): objects not accessed for 30 days
+        * Archive Instant Access tier(auto): not accessed for 90 days
+        * Archive Access Tier(optional): configurable from 90days to 700+ day
+        * Deep Archive Access Tier(optional): 180 days to 700+ days
+
+
+Encryption:
+    - Server side: object is encrypted after uploading by server
+    - Client side: object is encrypted before uploading by client
+
+
+IAM Access Analyzer:
+    - monitoring feature that ensures only intended people can access S3 bucket
+    - Evaluates S3 bucket policies, S3 ACLs, S3 Access point policies
+    - Posered by IAM access analyzer
+
+
+Snow Family:
+    - Used for import/export of huge amount of data from AWS
+    - These are physical devices that are shipped to client. Client can import/export data and send the device back.
+    - Used to a huge data migrations like migrating a data center where data upload over internet will take a very long
+    time
+
+    * Snowcone:
+        - Smaller device
+        - Storage: 8TB HDD, 14TB SSH
+        - Migrations: Upto 24TB online or offline
+
+    * Snowball
+        - Storage: 80TB
+        - Migration: Upto petabytes offline
+
+    * Snowmobile
+        - Storage: < 100PB
+        - Migration: up to exabytes offline
+        - it's a truck
+    
+    # Edge computing:
+        - Where internet is not available but generates data
+        - AWS device can be set up to do edge computing
+        - EC2 and AWS Lambda runs on these devices (using AWS IoT Gressgrass)
+
+        * Snowcode & Snowcode SSD (smaller)
+        * Snowball Edge - Compute Optimized
+        * Snowball Edge - Storage Optimized
+    
+    - OpsHub software (gui) can be used to manage Snow family devices
+
+
+Storage Gateway:
+    - Bridge between on premise data and cloud data in S3
+    - Hybrid storage allows seamless use of on premise data with could data
+
+    - AWS storage native options:
+        * Block: EBS, EC2 instance store
+        * File: Amazon EFS
+        * Object: S3, Glacier
+
+    - Types of Storage Gateway:
+        * File Gateway
+        * Volume Gateway
+        * Tape Gateway
