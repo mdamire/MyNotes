@@ -1,0 +1,43 @@
+    - Two types of application:
+        - Synchronous communications : Application => Application
+        - Asynchronous / Event based communications : Application => Queue => Application
+    
+    - Decouple application using:
+        # SQS: Queue model
+        # SNS: pub/sub model
+        # Kinesis: real-time data streaming model
+        - this can scale independently from application
+
+SQS:
+    - simple queue service
+    - Fully managed, serverless
+    - used to decouple applications
+    - No limit how many message in the queue
+    - FIFO task execution
+    - infinite scaling
+    - messages are kept upto 14 days
+
+Kinesis:
+    - Real time big data streaming
+    - Managed service to collect, process and analyze real time streaming data at any scale
+
+    - Kinesis Data streams: low latency streaming to ingest data at scale form hundreds of thousands of sources
+    - Kinesis Data Analytics: perform real-time analytics on streams using SQL
+    - Kinesis Data Firehose: load streams into S3, Redshif, ElasticSearch, etc. 
+    - Kinesis Video Stream: monitor real-time video streams for analytics or ML
+
+    - data from different inputs => Kinesis Streams => Kinesis Analytics => Kinesis firehose => S3, Redshift
+
+SNS:
+    - Pub / Sub integrations
+    - Simple notification service
+    - infinite scaling
+    - No mesage retention
+
+    - Application =(event publishers)=(notifications)=> SNS =(messages)=(event subscribers)=> appropriate integrated service
+
+Amazon MQ:
+    - Managed MQ service for RabbitMQ and ActiveMQ
+    - Does not scale as much as SQS/SNS
+    - runs of servers, can run in Multi-AZ with failover
+    - has both queue features (~SQS) and topic features (~SNS)

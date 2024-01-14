@@ -1,0 +1,145 @@
+    # Well Architected Framework 6 pillars:
+        (Not for exam)
+        1. Operational Excellence
+        2. Security
+        3. Reliability
+        4. Performance Efficiency
+        5. Cost Optimization
+        6. Sustainability
+
+Operational Excellence:
+    - Includes the ability to run and monitor systems to deliver business value and to continualy improve supporting
+    processes and procedures
+
+    Design Principles:
+        * Perform operations as code
+        * Annotate documentation
+        * Make frequent, small, reversible changes
+        * Refine operations procedures frequently
+        * Anticipate failure and learn from failure
+    
+    AWS Services:
+        * Prepare: CloudFormation, Config (to check compliance of CloudFormation)
+        * Operate: CloudFormation, Config, CloudTrail, CloudWatch, X-Ray
+        * Evolve: CloudFormation, CodeBuild, CodeCommit, CodeDeploy, CodePipeline
+
+Security:
+    - Includes the ability to protect information, systems and assests while delivering business value through risk 
+    assessments and mitigation strategies
+
+    Design Principles:
+        * Implement a strong identity foundation
+        * Enable traceability
+        * Apply security at all layers
+        * Automate security best practices
+        * Protect data in transit and at rest
+
+    AWS Services:
+        * Identity and Access management: IAM, AWS-STS, MFS, Organizationss
+        * Detective Controls: Config, CloudTrail, CloudWatch
+        * Infrastructure Protection: CloudFront, VPC, Sheild, WAF, Insspector
+        * Data Protection: KMS, S3, ELB, EBS, RDS
+
+Reliability:
+    - Ability of a system to recover, scale, monitoring
+
+    Design Principles:
+        * Test recovery procedures
+        * Automatically recover from failure
+        * Scale horizontally
+        * Stop guessigng capacity
+        * Change through automation
+
+Well Architechted Tool:
+    - Free tool to REVIEW YOUR ARCHITECTURE agaist the 6 pillars of Well-Architechted Framework and get best practices
+    RECOMMENDATIONS
+    - Can be done in Well-Architechted Tool console
+
+Cloud Adoption Framework:
+    - Helps you BUILD AND THEN EXECUTE A COMPREHENSIVE PLAN FOR YOUR DIGITAL TRANSFORMATION through innovative ues of 
+    AWS
+    - Created by AWS Professionals by taking advantage of AWS Best Practices and lessons learned from 1000s of 
+    customers
+    
+    - ** CAF groups is capabilites in six perspectives:
+        (business perspectives)
+        * Business
+            - ensures that your cloud investments accelerate your digital trasformation
+        * People:
+            - SERVES A BRIDGE BETWEEN TECHNOLOGY AND BUSINESS
+        * Governance:
+            - helps you orchestrate cloud initiatives
+        
+        (Technical perspectives)
+        * Platform:
+            - helps you build an enterprise-grade, scalable, hubrid cloud platform
+        * Security:
+            - helps you achive security of data
+        * Operations:
+            - Helps to ensure that cloud services are operating according to business
+
+    # Transformation Domains: Technology -> Process -> Organization -> Product
+        * Technology: using the cloud to migrate and modernize infrastructure, applications, data ...
+        * Process: digitizing, automating and optimizing your business operaions
+        * Organization: Reimagining your operating model
+        * Product: Reimagining your business model
+
+    # Transformation Phases:
+        * Envision: Demonstrate how the Cloud will accelerate business outcomes
+        * Align: identify capabiliy gaps arcoss CAP perspectives
+        * Launch: build and deliver pilot initiatives in production
+        * Scale: expand pilot initiatives to the desired scale
+
+Right Sizing:
+    - Right sizing is matching instance type with need AT THE LOWEST POSSIBLE COST
+    - Scale up is easy so always start small
+
+    - It's important to Right Size:
+        * before a Cloud Migration
+        * Continuously after the cloud onboarding process
+
+    - tools: CloudWatch, Cost Explorer, Trusted Advisor, 3rd party tools
+
+Ecosystem:
+    # Free resources:
+        * AWS Blogs
+        * AWS Forums (re:Post)
+        * AWS Whitepapers and Guides
+        * AWS Partner Solutions
+            - Automated, gold-standard deployments in the AWS cloud
+            - Build your production environemnt quickly with templates
+        * AWS Solutions (Control Tower):
+            - Vetted technology solutions for the AWS cloud
+            - Example: AWS Landing Zone: Secure, multi-account environemnt
+
+    # MarketPlace:
+        - Digital catalog with thousands of software listings
+        - e.g Custome AMI
+    
+    # AWS Professional Services and Partner Network:
+        - Professional Services organization is a global team of experts
+        - They work alongside your team and a chosen member of AWS partnerner network (APN)
+
+        * APN Technology Partners: providing hardware, connectivity and software
+        * APN Consulting Partners: professional services firm to help you build on AWS
+        * APN Training Partners: helps you learn AWS
+
+        * AWS Competency Program: become a APN partner
+        * AWS Navigate Program: help partners become better partners 
+    
+Knowledge Center:
+    - Contains the most frequest & common questions and requests
+    - Best practices & documentations
+
+IQ: 
+    - Quickly find professionals help for your AWS projects
+    - Engage and pay AWS certified 3rd party experts
+    - Freelancer platform
+
+re:Post:
+    - AWS managed Q&A service
+    - it's a forum
+
+AWS Managed Services:
+    - AWS expert temp provides infrastructure and application support on AWS
+    - AWS handles common activities such as change request, monitoring, patch mangement, security and backup services

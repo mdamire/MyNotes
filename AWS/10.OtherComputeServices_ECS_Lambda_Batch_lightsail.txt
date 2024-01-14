@@ -1,0 +1,54 @@
+ECS:
+    - Elastic container service
+    - Launch docker containers on AWS
+    - AWS takes care of starting/stoping containers
+    - Has integrations with ALB
+
+Fargate:
+    - Launch docker containers on AWS
+    - No EC2 instance to manage
+    - Serverless offering
+
+ECR:
+    - Elastic container registry
+    - Private Docker registry on AWS
+    - Docker images are stored here so that they can be run by ECS or Fargate
+
+Serverless:
+    - Don't have to manage servers any more.
+    - Just deploy the code/function
+    - FaaS (Function as a service)
+    - S3, DynamoDB, Fargate, Lambda
+
+Lambda:
+    - Virtual function: no server to manage
+    - limited by time (ec2 is limited by ram or cpu)
+    - Scaling is automated
+    - Event driven: functions get invoked by AWS only when needed
+    - monitor with cloudwatch
+
+    - container image must implement the Lambda Runtime API
+    - Can be used for serverless CRON job
+    - pricing is based on calls and durations
+
+API Gateway:
+    - CLIENT <-(rest api)->API Gateway<-(proxy request)->Lambda<-(crud)->DynamoDB
+
+    - fully managed service for developers to easily create, publish, maintain, monitor and secure APIs
+    - Serverless
+    - supports REST api and webSocket apis
+
+AWS Batch:
+    - Batch job is a job with start and end
+    - Efficiently runs lots of batch jobs on AWS
+    - Dynamicaly launcehs EC2 instances or Spot instances
+    - Batch jobs are defined as Docker images and run on ECS
+
+    - rely on EBS/instance for for disk space
+    - EC2 instance as server
+
+Lightsail:
+    - Virtual servers, storage, databases and networking
+    - Simpler alternative to use AWS services
+    - Low and perdictable pricing
+    - for people who has low learning about AWS

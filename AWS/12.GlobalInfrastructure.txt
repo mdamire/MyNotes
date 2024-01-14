@@ -1,0 +1,95 @@
+Global Applications:
+    - Global application is deployed in multiple Regions and/or Edge Locations
+    - Decreased Latency
+    - Disaster Recovery
+    - attack protection
+
+Route 53:
+    - Managed DNS (Domain Name System)
+    - DNS is a collection of rules and and records which helps clients to reach a server through URLs
+
+    - common records:
+        - domain => ipv4 : A record
+        - domain => ipv6 : AAAA record
+        - domain => domain: CNAME
+        - domain => AWS resource: Alias
+
+    - Policies:
+        # Simple routing policies: (does not have health check)
+        # Weighted routing policies: Server has weight and servers with more weight gets more requests
+        # Latency routing policies: Route53 will find lowest latency
+        # Failover routing policty: If server health check fails then it will route to another one
+
+CloudFront:
+    - managed CDN (Content Delivery Network)
+    - Global service by using WAF & Sheild
+    - Content is cached at the edge, 
+    - Improves read performance, user experience
+    - Gives DDos protection
+
+    - Origins:
+        # S3 Bucket:
+            - for distributing files and caching them at the edge
+            - can be used as ingress (to upload files to S3)
+            - Security with Origin Acess Control (OAC) replacing origin access identity (OAI)
+        
+        # Custom Origin:
+            - ALB
+            - EC2 instance
+            - S3 website
+            - Any HTTP backend
+
+    - CloudFront is great for static content that must be available everywhere
+    - S3 cross region replication is great for dynamic content that need to be available at low latency in few
+    regions
+
+S3 Transfer Acceleration:
+    - Increase transfer speed by transferring file to an AWS edge location which will forward the data to S3 bucket 
+    in target region
+    - File in USA =(public www)=>Edge location in USA =(private network)=> S3 Bucket 
+
+Global Accelerator:
+    - Improve application's availability and performance by using AWS global network
+    - AWS uses the internal network to optimize routing
+    - 2 Anycast IP are created
+
+    - Client in USA <==> Edge Location <==> ALB in india
+
+    - CloudFront is a Content Delivery Network that chaches the content
+    Global network used AWS internal network to route the packet faster
+
+Outposts:
+    - "Server Racks" that offers same AWS infrastructure on premises
+    - AWS will setup and manage "Outposts racks"
+
+WaveLength Zones:
+    - Infrastructure deployments embedded within the telecommunicaitons providers' datacenters at the edge of the
+    5G network
+    - Brings AWS services to the 5g network
+
+LocalZones:
+    - Extended Zones near to customer
+    - Extend the VPC to more locations (AWS regions)
+    - For latency sensitive applications
+
+Global Application Architecture:
+    # Single Region, Single AZ
+        - Low Availability
+        - High Global Latency
+        - Low Dificulty
+
+    # Single Resion, Muliple AZ
+        - High availability
+        - High global latency
+        - midium difficulty
+
+    # Multiple region, Active-Passive
+        - Data replicaiton between Active and passive region (writes into one)
+        - Improved read latency
+        - Bad write latency
+        - midium + 1 difficulty
+    
+    # Multiple region, Active-Active
+        - Write/Read into multiple regions
+        - Good read/write latency
+        - Difficult to setup

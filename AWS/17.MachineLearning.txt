@@ -1,0 +1,57 @@
+Rekognition:
+    - Finds objects, prople, text, scenes in images and videos using ML
+    - Facial analysis and facial search to do user varification, people counting
+    - Celebrity recognition
+    - Pathing
+
+Trascribe:
+    - Auto convert speech into text
+    - Uses deep learning process called automatic speech recognition (ASR)
+    - Auto removes Personally Identifiable Information PII
+    - Supports Auto language detection
+
+Polly:
+    - Text to speech
+
+Translate:
+    - Natural and accurate language translation
+    
+Lex & Connect:
+    # Lex:
+        "For ASR chatbots"
+        - Same technology that powers Alexa
+        - ASR to convert Speech to Text
+        - Helps build chatbots, call center bots
+    
+    # Connect:
+        "for contact center"
+        - Receive calls, create contact flows, cloud based virtual contact center
+        - Can integrate with other CRM systems
+
+Comprehend:
+    - Natural language processing - NLP
+    - Fully managed, serverless
+    - ML to find insights and relationships in text
+
+    - use case: analyze customer interactions (emails) to find positive or negative experience
+
+SageMaker:
+    - fully managed service for developers/data scientists to build ML models
+    - Typically difficult to do all the processes in one place + provision servers
+
+Forecast:
+    - Uses ML to deliver highly accurate forecasts
+    - Reduce forecasting time from months to hours
+
+Kendra:
+    - Fully managed document search service
+    - extract answers within documents
+
+Personalize:
+    - ML service to build apps with real time personalized recommendations
+    - Example: Personalized product recommendations
+    - Integrates into existing websites, applications, SMS, ...
+
+Textract:
+    - Auto extracts text, handwriting, and data from any scanned documents using AI and ML
+    - Extract data from form, tables, files

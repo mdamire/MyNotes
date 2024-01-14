@@ -1,0 +1,42 @@
+Security Token Service (STS):
+    - Enables you to create temporary, limited-privileges credentials to access your AWS resources
+    - Sort term credentials: you configure expiration period
+
+    - Use cases:
+        * Provide STS tokens to external systems to access AWS resources
+        * IAM Roles for cross/same account access
+        * IAM roles for EC2
+
+Cognito:
+    - Identity for your Web and Mobile applications users
+    - Instead of creating them an IAM user, you create user in Cognito
+    - e.g instead of djnago users, we can create cognito users
+
+Directory Services:
+    (mimics Microsoft Active Directory)
+
+    * AWS Managed Microsoft AD:
+        - Create your own AD in AWS, manage users locally, support MFA
+        - Establish "trust" connections with your on-premises AD
+    
+    * AD connector:
+        - Directory Gateway to redirect to on-premises AD
+        - Users are managed on the on-premises AD
+    
+    * Simple AD:
+        - AD compatible managed directory on AWS
+        - Cannot be joind with on-premises AD
+
+IAM Identity Center:
+    # If someone has multiple accounts for multiple purposes then with single sign on feature in identity center 
+    that person will be able to login to any account with one sign in.
+
+    - One login (single sign-on) for all your:
+        ** AWS accounts in AWS Organization
+        * Business cloud applications
+        * SAML2.0 enabled applications
+        * EC2 Windows instances
+    
+    - Identity providers:
+        - Built in identity store
+        - connect to 3rd party identity store: Active Directory, OneLogin, Okta...

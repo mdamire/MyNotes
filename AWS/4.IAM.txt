@@ -29,6 +29,14 @@ Accessing AWS:
         $ aws s3 ls --profile test # You can see s3 buckets of test user
         - configurations are written in ~/.aws/credentials file
 
+
+IAM Roles:
+    - Used go give permission to a aws service to perform action to another aws service
+    - e.g if from EC2 instance anyone want to list S3 objects then AWS cli cannot be installed in EC2 instance for 
+    security perpous. Instead EC2 instance will be given a IAM role
+    - e.g EC2 instance wants to use AWS cli
+
+
 IAM Security Tools:
     - Credential Report (account level)
     - Access Advisor (user level)

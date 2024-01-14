@@ -1,0 +1,105 @@
+CloudFormation:
+    - Declarative way of outlining AWS infrastructure
+    - Infrastructure as a code
+
+    - Resources are dynamically created, good for control
+    - infrastructure is reviewed through code
+    - estimate the costs using CloudFormation template
+
+    - Ability to destry and re-create an infrastructure on the fly
+    - Don't recreate the wheel - use existing templates and documentations on the web
+
+CDK:
+    - Cloud development kit
+    - Define cloud infrastructure using programming language (will be compiled to CloudFormation code)
+    - CDK CLI will convert code to define cloud infrastructure (as CloudFormation)
+
+Beanstalk:
+    - Developer centric view of deploying on AWS
+    - all in one view
+    - We still have full control over configuration
+    - PaaS
+
+    - Managed Service:
+        - Instance configuration/OS 
+        - Deployment strategy
+        - Capacity provisioning
+        - Loan balancing and auto-scaling
+        - health-monitoring & responsiveness
+
+    - Three architechture models:
+        - Single instance
+        - LB + ASG
+        - ASG only : for non web applications (e.g workers)
+    
+    * Beanstalk is about code and cloudwatch is about infrastructure about code
+
+
+# Code management related services:
+
+CodeDeploy:
+    - Works with EC2 instances (update code version in many ec2 instances)
+    - Works with on premises servers
+    - Hybrid service
+
+    - Servers/Instances must be provisioned with CodeDeploy Agent
+
+CodeCommit:
+    - Git cloud like github
+    - Fully managed
+    - Private, Secured, Integrated with AWS servicess
+
+CodeBuild:
+    - Build code in cloud
+    - Retrive code, Compiles source code, run tests, produce packages to deploy
+    - Fully managed, serverless
+    - Pay as you go
+
+Code pipeline:
+    - connect between steps for code
+    - Code => Build => Test => Provision => Deploy
+
+    - Fully managed, fast delivery & rapid updates
+
+CodeArtifact:
+    - Storing and retrieving dependencies
+    - Works with common dependency management tools: Maven, Gradle, npm, pip
+    - Developers can retrive dependencies from Artifact
+
+CodeStar:
+    - Unified UI for code related services
+
+Cloud9:
+    - Cloud IDE
+    - Can be used within we browser, no need to install
+    - Code colaboration, pair programming
+
+AWS System Manager (SSM):
+    - Helps you manage your EC2 and On-Premises system at scale
+    - Hybrid system
+
+    - Need to install SSM agent on EC2 and On-Premises systems
+    - these agents will report back to SSM service in AWS
+
+SSM Session Manager:
+    - SSH to EC2 or on-premises servers without SSH access, bastion hosts or SSH keys
+    - No port 22 needed. (better security)
+
+    - User -> (IAM Permission) -> SSM Session Manager -> (Execute commands) -> EC2 instance with SSM agent
+
+    - Service: System Manager -> Fleet manager (here all the VMs with SSM agent)
+    - Service: System Manager -> Session manager (to ssh to VMs)
+
+SSM Parameter Store:
+    - Secure storage for configurations and secrets
+    - Serverless Scalable
+    - Control asscess using IAM
+
+    - Service: System Manager -> Parameter Store
+
+OpsWork:
+    - Chef & Puppet: third party , for server configuration
+    - Works with EC2 and on-premises VMs
+    - AWS OpsWork = Managed Chef & Puppet
+    - alternative to AWS SSM
+

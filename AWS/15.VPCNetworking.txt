@@ -1,0 +1,78 @@
+
+    - Virtual Private Cloud
+    - Subnets: Tied to an AZ, network partition on the VPC
+
+IPAddress in AWS:
+    - Public IP: EC2 instance gets a new public ip everytime it restarts
+    - Private IP: EC2 instances will have fixed private ip 
+    
+    - Elastic IP: Same public IP will be kept
+
+VPC:
+    - Private cloud to keep resources
+    - Subnets: Allows you to partition your newtwork
+    - Subnet that are connected to internet are called public otherwise private
+    - NAT gateway and NAT Instances allow your instances in private subnet to access the internet while
+    remaining private
+
+NACL:
+    - Network Access Control List
+    - Firewall that controls traffic from and to subnet
+    - Rules only include IP address
+    - Attached to Subnet level
+    - Can have Allow/Deny rules
+    - Is stateless
+
+Security Group:
+    - Firewall that controll traffic in and out from an EC2 instance
+    - Can only have allow rules
+
+Flow Logs:
+    - All informatin about IP traffic
+
+    * VPC Flow Logs
+    * Subnet Flow Logs
+    * Elastic Network Interface Flow Logs
+
+    - Help to monitor connectivity issue
+
+VPC Peering:
+    - Connect two VPC privately using AWS network
+    - Make them behave as if they were in current network
+
+    - must not have overlapping CIDR(IP address range)
+
+VPC Endpoint:
+    - Endpoint allows you to connect to AWS services using a private networks
+    - Enhanced security and lower latency
+
+    Types:
+        - VPC endpoint Gateway: S3 & DynamoDB
+        - VPC endpoint Interface: other services
+
+Private Link:
+    - run services within other VPC without VPC peering
+    - Requires a Network Loan Balancer(service end) and Elastic Network Interface (customer end)
+
+Hybryd VPC:
+    # Site to site VPN:
+        - Connect an on-premises VPN to AWS
+        - Connection is automatically encrypted
+        - goes through public internet
+
+        - On-premises must use a Customer Gateway
+        - AWS: must use a Virtual private gateway 
+
+    # Direct Connect (DX):
+        - Physical connection between on-premises and AWS
+        - Private, secure and fast connection
+
+Client VPN:
+    - Connect from your computer using OpenVPN to you private network in AWS and on-premises
+    - Allows to use EC2 instances on private network
+
+Transit Gateway:
+    "How to connect thousands and VPC and on-premises together?"
+
+    - For having transitive peering between thousands of VPC and on-premises, hub and spoke (star) connection
+    - Works with direct connect gateway, VPN connections.

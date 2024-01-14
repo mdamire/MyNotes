@@ -1,0 +1,128 @@
+DDoS Attack Protection:
+    - Distributed Denial of Service attack
+
+    - AWS Sheild standard: 
+        protection is turned on by default (common attacks)
+    - AWS Sehled Advanced: 
+        more expensive option (sophisticated attack)
+    - AWS WAF: 
+        - Web Application Firewall
+        - Filter specific users based on rules 
+        - Layer 7
+        - Deploy on ALB, API gateway, CloudFront
+    
+    - CloudFront and route53: combined with shield and provides attack mitigation at the edge
+
+Network Firewall Service:
+    - Protect your entire VPC
+    - From layer 3 to 7
+    - you can inspect any direction
+
+Firewall Manager:
+    - Manage security rules of all accounts
+    - Rules are applied to new resources as they are created across all accounts
+
+Penetration Testing:
+    - Penetration tests are allowed on 8 services without prior approval.
+    - DoS, DDoS or other attacks are prohibited
+
+Encryption:
+    - Encryption at rest and in transit(when data moves)
+    - Need encryption keys to encrypt
+    - Auto encryption enabled: CloudTrail Log, S3, Glacier, Storage Gateway
+
+    # KMS: 
+        - Key management service
+        - AWS manage encryption keys for us
+
+        - Cutomer managed keys: Create/managed by customer
+        - AWS managed keys: create/managed by AWS on customer behalf
+        - AWS owned keys: Collection of CMKs what an AWS service owns and manages to use it in multiple account
+        
+    # CloudHSM:
+        - KMS manages softwares for encryption
+        - CloudHSM manages hardware for encryption
+        - AWS will give us the hardware but we need to managed encryption by ourselves
+
+AWS Certificate Manager (ACM):
+    - provision, manage or deploy SSL/TLS certificates
+    - Used to provide in-flight encryption for HTTPS
+    - For private and public TLS
+
+Secrets Manager:
+    - To store secrets
+    - Rotation after 'X' days
+    - Integration with RDS
+    - Encrypted with KMS
+
+Artifact:
+    - Portal to access AWS compliance documentation and agreements
+    - Artifact report: to download security and compliance documents
+    - Artifact agreements: to review, accept, and track the status of AWS agreement
+
+GuardDuty:
+    - AI to protect AWS account
+    - Uses machine learning to detect anomaly using 3rd party data
+    - Input data includes:
+        - CloudTrail Logs
+        - VPC Flow logs
+        - DNS Logs
+        - Optional features: RDS, Aurora, EBS Lambda, S3 data events
+    - Can protect against crypto currency attack
+
+Inspector:
+    - Automated security assessments
+    - Analyzes vulnerabilities for:
+        * EC2 instances
+        * Container images to push to ECR
+        * Lambda functions
+
+    - Continuous scanning for the infrastructure
+
+Config:
+    - Helps auditing and recording of configurations and changes over time
+    - Posibility of storing configuration data into S3
+    - Used to check compliance of the comfigurations
+    - Questions that it answers:
+        * is there unrestricted SSH access to security groups?
+        * Do my buckets have any public access?
+        * How has my ALB configuration changed overtime?
+
+Macie:
+    - Fully managed data security and privacy service
+    - uses Machine learning to discover and protect SENSITIVE DATA (like PII) in AWS
+
+    - S3 =Analyze=> Macie (discover sesitive data) =Notify=> Event Bridge =integration=> SNS/Lambda/...
+
+Security Hub:
+    - Certral security tool to manage security across multiple AWS accounts and automate security checks
+    - Auto aggregate alerts in predefined or personal FINDINGS formats from various AWS services and AWS partner tools
+    - Must enable AWS config service to make it work
+
+Detective:
+    - GuardDuty, Macie and security hub are used to identify potential security issues or findings
+    - Detective analyze, investigates and quickly identifies the root cause of security issues if any
+    - Helps to find root cause of security issue
+
+Abuse:
+    - Report suspected AWS resource used for abusive or illigal purposes
+    - For example: Spam from AWS IP / DDoS attack
+
+Root User Privileges:
+    - Account owner
+    - Has complete access to all AWS services and resources
+    - Actions that can be performed by only root user
+        * Change account settings
+        * Tax invoices
+        * Close account
+        * Restore IAM user permissions
+        * Change or cancel AWS support Plan
+        * Register as a seller in the Reserved Instance Marketplace
+        * Configure S3 to enable MFA
+        * Edit/delete amazon S3 bucket policy that includes an invalid VPC ID or VPC endpoint ID
+        * Sign up for GovCloud
+
+IAM access analyzer:
+    - Find out which resources are shared externally
+    - Define Zone of Trust: AWS account/Organization
+

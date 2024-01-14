@@ -1,0 +1,90 @@
+WorkSpaces:
+    - Managed Desktop as a Service (Daas) solution to easily provision Windows or Linux virtual desktops
+    - Great to eliminate management of on-premises Virtual Desktop Infrastructure (VDI)
+
+AppStream 2.0:
+    - Desktop Application Streaming service
+    - The application is delivered through a web browser
+
+IoT Core:
+    - Allows to you easily connect IoT devices to the AWS cloud
+    - Serverless, secure and scalable
+
+AppSync:
+    - Store and sync data across mobile and web apps in real time
+    - Makes use of GraphQL
+
+Amplify:
+    - A set of tools and services that helps you develop and deploy scalable full stack web and mobile applications.
+    - Wrapper of other services to help building web and mobile applications
+
+Composer:
+    - Visually design and build serverless applications quickly on AWS
+    - Generates Infrastructure as Code using CloudFormation
+
+Device Farm:
+    - Fully managed service that tests your web and mobile apps against desktop browsers, real mobile devices and 
+    tablets
+    - Run tests concurrently on multiple devices
+
+AWS Backup:
+    - Full managed service to centrally manage and automate backups across AWS services
+    - Cross region/ Cross account backups
+
+Disaster Recovery:
+    - backup and restore (cheapest)
+    - Pilot Light: backup and restore for minimum functionality of an application in the cloud
+    - Warm Standby
+    - Multi-Site/Host-site
+
+Elastic Disaster Recovery:
+    - Quickly and easily recover your physical, virtual and cloud based servers into AWS
+    - Continuous block-level replication for your servers
+    - Example: protect your most critical databases, enterpricse apps, protect data from ransomeware attacks
+
+DataSync:
+    - Move large amount of data from on-premises to AWS
+    - Can synchronize to: S3, EFS, Amazon FSx for windows
+
+    - The replication tasks are incremental after the first full load
+
+Application Discovery Service:
+    - Plan migration projects by gathering information about on-premises data centers
+    - 2 types of migrations:
+        * Agentles Discovery
+        * Agent-based Discovery
+    
+    # Application Migration Service:
+        *  Lift and shift solution which simplify migrating applications to AWS
+
+Migration Evaluator:
+    - Helps to build a data driven business case for migration to AWS
+    - Provides a clear baseline of what your organization is running today
+    - Analyze current state, define target state, then develop migration plan
+
+Migration Hub:
+    - Central location to collect servers and applications inventory data for the assessment, planning and tracking 
+    of migrations to AWS
+    - Migrations Hub orchestrator: prebuild templates
+
+Fault Injection Simulator:
+    - Fully managed service for running fault injection experiments on AWS workloads
+    - Based on Chaos Engineering - stressing an application by creating disruptive events and observing how they
+    response
+
+Step Functions:
+    - Build serverless visual workflow to manage Lambda Functions
+    - Features: Sequence, parallel, conditions, timeouts, error handling
+
+Ground Station:
+    - Fully managed service that lets you control satellite communication, process data and scale your satellite 
+    operations
+    - Download satellite data to your AWS VPC within seconds
+
+Pinpoint:
+    - Scalable 2-way marketing communications service
+    - Supports email, SMS, push, voice and in-app messaging
+    
+    - Vs Amazon SNS or SES:
+        * In SNS & SES: you manage each message's audience, content and delivery schedule
+        * In Pinpoint: you create message templates, delivery schedule and full campaigns

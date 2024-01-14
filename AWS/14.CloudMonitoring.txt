@@ -1,0 +1,89 @@
+CloudWatch:
+    # Metrics:
+        - CloudWatch provides metrics for every service in aws
+        - Metrics is a variable to monitor
+        - metrics has timestamps
+
+    # Alarms:
+        - Alarms are used to trigger notifications of any metric
+        - Alarm actions:
+            * Auto scaling: scale in or out
+            * EC2 actions: stop, terminate, reboot or recover
+            * SNS notifications: send a notification on SNS topic
+        - Can choose the period on which to evaluate an alarm
+        - States: OK, INSUFFICIENT_DATA, ALARM
+
+CloudWath Logs:
+    - Logs can be collected from:
+        * Elastic beanstalk: collection from applications
+        * ECS: collection from containers
+        * Lambda: collection from function logs
+        * CloudTrail based of filter
+        * CloudWatch log agents: from EC2 / on-premises server
+        * route53: 
+    
+    - Adjustable logs retention
+    - Logs from EC2:
+        - by default, no logs from EC2 instance will go to cloudwatch
+        - Need to run a cloudwatch agent on EC2 to push the log files to CloudWatch
+
+EventBridge:
+    - Schedule: Cron Jobs
+    - Event Pattern: react to a service doing something
+    - trigger Lambda function, send SNS ..
+    - Schema Registry: model event schema
+    - You can archive event sent to an event bus
+    - serverless
+
+    * default event bus
+    * partner event bus
+    * custom event bus
+
+CloudTrail:
+    - Provides governance, compliance and audit for AWS account
+    - enabled by default
+    - Creates logs for events/API calls made within your account by:
+        * Console
+        * SDK
+        * CLI
+        * Any AWS service
+        (in other words anything that happens is logged)
+    
+    - Logs can be put into CloudWatch or S3
+    - Anytime an investment of any work is needed, CloudTrail logs should be the first place
+
+X-Ray:
+    - Visual Analysis of application
+
+    - Troubleshooting performance
+    - Understanding dependencies in a microservice architecture
+    - find errors and exceptions
+    - throttleing
+    - impacted users
+    - review request behavior
+
+CodeGuru:
+    - ML powered automated code review and application performance recommendations
+
+    - CodeGuru Reviewer: automated code reviews for static code analysis (dev)
+        - looks at commits
+        - best practices, resource leaks, security detection, input validation
+
+    - CodeGuru Profiler: visibility/recommendations about application performance during runtime (production)
+        - Looks at performance at run time
+        - Example: identify CPU intensive jobs
+        - identify and remove code inefficiencies
+        - Improve application performance
+        - Decrease compute costs
+
+Health Dashboard:
+    # Service History:
+        - Shows all regions, all services health
+        - Shows historical information on each day
+        - General status of all AWS service
+
+    # Your Account:
+        - Alers when AWS experiencing events that may directly impact you
+        - Performance and availability status of the services that you are actually using in account/resources
+        - Can aggregate data for organization
+
