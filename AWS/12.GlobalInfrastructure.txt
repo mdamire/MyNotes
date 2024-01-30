@@ -4,6 +4,14 @@ Global Applications:
     - Disaster Recovery
     - attack protection
 
+# 4 kinds of cloud:
+    - Public cloud: AWS
+    - Private cloud: On-Premises Cloud (AWS Outpost)
+    - Multi cloud: Using multiple public clouds like AWS, Azure
+    - Hybrid cloud: Public and Private cloud together meetin the cloud computing criteria in Hybrid environment (AWS
+    Direct Connect)
+    (Hybrid environment is using AWS cloud and Private data center) 
+
 Route 53:
     - Managed DNS (Domain Name System)
     - DNS is a collection of rules and and records which helps clients to reach a server through URLs
@@ -22,8 +30,8 @@ Route 53:
 
 CloudFront:
     - managed CDN (Content Delivery Network)
-    - Global service by using WAF & Sheild
-    - Content is cached at the edge, 
+    - Global service protected by using WAF & Sheild
+    - Content (both static and dynamic) is cached at the edge location, 
     - Improves read performance, user experience
     - Gives DDos protection
 
@@ -66,6 +74,7 @@ WaveLength Zones:
     - Infrastructure deployments embedded within the telecommunicaitons providers' datacenters at the edge of the
     5G network
     - Brings AWS services to the 5g network
+    - Helps to build applications with ultra-low latency to mobile devices and end users
 
 LocalZones:
     - Extended Zones near to customer

@@ -81,3 +81,11 @@ Buying options of EC2:
     - Dedicated host: Book an entire physical server
     - Dedicated instance: No other customer will share the hardware 
     - Capacity Reservations: Reserve Capacity for any duration
+
+Golden AMI:
+    - A AMI that contains latest security patches, software, configuration and latest monitoring options
+
+Containers ECS:
+    - AWS Elastic Container Service
+    - An alternative to EC2 instance
+    - Runs applications from container not from a VM

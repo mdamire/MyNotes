@@ -8,7 +8,7 @@ Security Token Service (STS):
         * IAM roles for EC2
 
 Cognito:
-    - Identity for your Web and Mobile applications users
+    - Identity for your Web and Mobile applications users to give temporary permissions to use AWS services
     - Instead of creating them an IAM user, you create user in Cognito
     - e.g instead of djnago users, we can create cognito users
 

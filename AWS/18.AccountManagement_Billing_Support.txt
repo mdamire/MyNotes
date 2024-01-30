@@ -188,7 +188,7 @@ Billing and Costing Tools:
 
         - tags can be used to create resource groups in 'resource groups and tags' csonsole
 
-        - Data export in AWS Billing Dashboard:
+        # Data export in AWS Billing Dashboard:
             - Cost and Usage Reports
             - most comprehensive set of AWS cost and usage data available, including meta data
             - report can be integrated with Athena, Redshif or QuickSight
@@ -222,6 +222,7 @@ Service Quotas:
     - Create cloudwatch alarms on the Service Quotas console
 
 Trusted Advisor:
+    - Advices best practices of AWS infrastructure
     - High level AWS account assessment
     - Business and Enterprise support plan:
         - Full set of checks

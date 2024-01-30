@@ -137,7 +137,6 @@ Encryption:
 IAM Access Analyzer:
     - monitoring feature that ensures only intended people can access S3 bucket
     - Evaluates S3 bucket policies, S3 ACLs, S3 Access point policies
-    - Posered by IAM access analyzer
 
 
 Snow Family:
@@ -148,7 +147,7 @@ Snow Family:
 
     * Snowcone:
         - Smaller device
-        - Storage: 8TB HDD, 14TB SSH
+        - Storage: 8TB HDD, 14TB SSD
         - Migrations: Upto 24TB online or offline
 
     * Snowball

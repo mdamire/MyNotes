@@ -10,7 +10,7 @@ CloudFormation:
     - Don't recreate the wheel - use existing templates and documentations on the web
 
 CDK:
-    - Cloud development kit
+    - Cloud development kit (SDK)
     - Define cloud infrastructure using programming language (will be compiled to CloudFormation code)
     - CDK CLI will convert code to define cloud infrastructure (as CloudFormation)
 
@@ -32,7 +32,7 @@ Beanstalk:
         - LB + ASG
         - ASG only : for non web applications (e.g workers)
     
-    * Beanstalk is about code and cloudwatch is about infrastructure about code
+    * Beanstalk is about code and cloudwatch is about infrastructure as code
 
 
 # Code management related services:
@@ -102,4 +102,3 @@ OpsWork:
     - Works with EC2 and on-premises VMs
     - AWS OpsWork = Managed Chef & Puppet
     - alternative to AWS SSM
-

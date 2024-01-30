@@ -3,11 +3,12 @@ DDoS Attack Protection:
 
     - AWS Sheild standard: 
         protection is turned on by default (common attacks)
-    - AWS Sehled Advanced: 
+    - AWS Sheild Advanced: 
         more expensive option (sophisticated attack)
     - AWS WAF: 
         - Web Application Firewall
-        - Filter specific users based on rules 
+        - USED TO FILTER WEB TRAFIC BASED ON FILTERS LIKE IP ADDRESS, HTTP HEADER AND CUSTOM URL
+        - Controls traffic with defined rules
         - Layer 7
         - Deploy on ALB, API gateway, CloudFront
     
@@ -29,7 +30,7 @@ Penetration Testing:
 Encryption:
     - Encryption at rest and in transit(when data moves)
     - Need encryption keys to encrypt
-    - Auto encryption enabled: CloudTrail Log, S3, Glacier, Storage Gateway
+    - Auto encryption enabled: CloudTrail Log, S3, S3 Glacier, Storage Gateway
 
     # KMS: 
         - Key management service
@@ -126,3 +127,7 @@ IAM access analyzer:
     - Find out which resources are shared externally
     - Define Zone of Trust: AWS account/Organization
 
+# Where to find compliance information:
+    * AWS CloudWatch
+    * AWS CloudTrail
+    * AWS Audit Manager

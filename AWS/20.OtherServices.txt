@@ -51,7 +51,7 @@ DataSync:
 Application Discovery Service:
     - Plan migration projects by gathering information about on-premises data centers
     - 2 types of migrations:
-        * Agentles Discovery
+        * Agentless Discovery
         * Agent-based Discovery
     
     # Application Migration Service:
@@ -84,7 +84,7 @@ Ground Station:
 Pinpoint:
     - Scalable 2-way marketing communications service
     - Supports email, SMS, push, voice and in-app messaging
-    
+
     - Vs Amazon SNS or SES:
         * In SNS & SES: you manage each message's audience, content and delivery schedule
         * In Pinpoint: you create message templates, delivery schedule and full campaigns

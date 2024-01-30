@@ -45,7 +45,7 @@ EC2 Instance Store:
 
 
 EFS:
-    - Elastic file system
+    - Elastic file system for Linux based machine
     - NFS (network file system) that can be mounted to 100s of EC2
     - expensive, pay per use cost
     - shared through all availability zones in a region

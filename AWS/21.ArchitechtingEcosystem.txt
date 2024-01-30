@@ -1,5 +1,4 @@
     # Well Architected Framework 6 pillars:
-        (Not for exam)
         1. Operational Excellence
         2. Security
         3. Reliability
@@ -33,6 +32,8 @@ Security:
         * Apply security at all layers
         * Automate security best practices
         * Protect data in transit and at rest
+        * Keep people away from data
+        * Prepare for security events
 
     AWS Services:
         * Identity and Access management: IAM, AWS-STS, MFS, Organizationss
@@ -44,11 +45,29 @@ Reliability:
     - Ability of a system to recover, scale, monitoring
 
     Design Principles:
-        * Test recovery procedures
         * Automatically recover from failure
+        * Test recovery procedures
         * Scale horizontally
         * Stop guessigng capacity
         * Change through automation
+
+Performance Efficiency:
+    * Democratize advanced technologies
+    * Go global in minutes
+    * Use serverless architechtures
+    * Experiment more often
+    * Consider mechanical sympathy
+
+Cost Optimization:
+    - 
+
+Sustainability:
+    * Understand your impact
+    * Establish sustainability goals
+    * Maximize utilization
+    * Anticipate and adopt new, more efficient hardware and software offerings
+    * Use managed services
+    * Reduce the downstream impact of your cloud workloads
 
 Well Architechted Tool:
     - Free tool to REVIEW YOUR ARCHITECTURE agaist the 6 pillars of Well-Architechted Framework and get best practices
@@ -60,7 +79,9 @@ Cloud Adoption Framework:
     AWS
     - Created by AWS Professionals by taking advantage of AWS Best Practices and lessons learned from 1000s of 
     customers
-    
+    - The 7Rs are seven migration strategies to cloud: 
+    Retire, Retain, Rehost, Relocate, Repurchase, Replatform, Refactor or Re-Architect
+
     - ** CAF groups is capabilites in six perspectives:
         (business perspectives)
         * Business

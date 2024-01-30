@@ -4,6 +4,9 @@ ECS:
     - AWS takes care of starting/stoping containers
     - Has integrations with ALB
 
+EKS:
+    - Amazon managed kubernetes service
+
 Fargate:
     - Launch docker containers on AWS
     - No EC2 instance to manage

@@ -6,7 +6,7 @@ IPAddress in AWS:
     - Public IP: EC2 instance gets a new public ip everytime it restarts
     - Private IP: EC2 instances will have fixed private ip 
     
-    - Elastic IP: Same public IP will be kept
+    - Elastic IP: (Static Public IP) Same public IP will be kept
 
 VPC:
     - Private cloud to keep resources
@@ -16,12 +16,12 @@ VPC:
     remaining private
 
 NACL:
-    - Network Access Control List
-    - Firewall that controls traffic from and to subnet
+    - Network Access Control List: to secure VPC
+    - Firewall that controls traffic from and to SUBNET
     - Rules only include IP address
     - Attached to Subnet level
-    - Can have Allow/Deny rules
-    - Is stateless
+    - Can have Allow/Deny rules (Security Group can only Allow rules)
+    - Is stateless (Inbound and outbound rules are different streams) Security Group is statefull)
 
 Security Group:
     - Firewall that controll traffic in and out from an EC2 instance
@@ -47,7 +47,7 @@ VPC Endpoint:
     - Enhanced security and lower latency
 
     Types:
-        - VPC endpoint Gateway: S3 & DynamoDB
+        - VPC endpoint Gateway: S3 & DynamoDB (Public Domain Services)
         - VPC endpoint Interface: other services
 
 Private Link:
@@ -55,24 +55,24 @@ Private Link:
     - Requires a Network Loan Balancer(service end) and Elastic Network Interface (customer end)
 
 Hybryd VPC:
-    # Site to site VPN:
+    # VPN:
         - Connect an on-premises VPN to AWS
         - Connection is automatically encrypted
         - goes through public internet
-
+s
         - On-premises must use a Customer Gateway
         - AWS: must use a Virtual private gateway 
 
     # Direct Connect (DX):
         - Physical connection between on-premises and AWS
-        - Private, secure and fast connection
+        - DEDICATED, Private, secure and fast connection
 
 Client VPN:
     - Connect from your computer using OpenVPN to you private network in AWS and on-premises
     - Allows to use EC2 instances on private network
 
 Transit Gateway:
-    "How to connect thousands and VPC and on-premises together?"
+    "How to connect thousands of VPC and on-premises together?"
 
     - For having transitive peering between thousands of VPC and on-premises, hub and spoke (star) connection
     - Works with direct connect gateway, VPN connections.

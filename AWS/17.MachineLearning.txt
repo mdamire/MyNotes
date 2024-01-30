@@ -18,7 +18,7 @@ Translate:
     
 Lex & Connect:
     # Lex:
-        "For ASR chatbots"
+        "For Auto Speech Recognition chatbots"
         - Same technology that powers Alexa
         - ASR to convert Speech to Text
         - Helps build chatbots, call center bots
@@ -29,9 +29,9 @@ Lex & Connect:
         - Can integrate with other CRM systems
 
 Comprehend:
+    - ML to find insights and relationships in text
     - Natural language processing - NLP
     - Fully managed, serverless
-    - ML to find insights and relationships in text
 
     - use case: analyze customer interactions (emails) to find positive or negative experience
 

@@ -77,13 +77,12 @@ CodeGuru:
         - Decrease compute costs
 
 Health Dashboard:
-    # Service History:
+    # Service Health Dashboard:
         - Shows all regions, all services health
         - Shows historical information on each day
         - General status of all AWS service
 
-    # Your Account:
+    # Personal Health Dashboard:
         - Alers when AWS experiencing events that may directly impact you
         - Performance and availability status of the services that you are actually using in account/resources
         - Can aggregate data for organization
-

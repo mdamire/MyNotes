@@ -12,20 +12,20 @@ RDS:
         - Scaling capability
         - Multi AZ
 
-    # Amazon Aurora:
-        - proprietary db technology from AWS
-        - PostgreSQL and MySQL are supported
-        - Cloud optimized, 5x faster MySQL ans 3x PostgreSQL
-        - auto storage increment by 10GB up to 128TB
-        - 20% expensive than RDS but efficient
+Amazon Aurora:
+    - proprietary db technology from AWS
+    - PostgreSQL and MySQL are supported
+    - Cloud optimized, 5x faster MySQL ans 3x PostgreSQL
+    - auto storage increment by 10GB up to 128TB
+    - 20% expensive than RDS but efficient
 
-        - Aurora serverless:
-            - auto db instantiation and auto scaling based on actual usage
-            - least management overhead
-            - for infrequent, intermittent or unpredictable workload
-            - client is connected to Proxy Fleet and aurora instantiate and connect to it
-            (serverless db decouple the part of the management system that deals with storage from the part that
-            executes queries)
+    - Aurora serverless:
+        - auto db instantiation and auto scaling based on actual usage
+        - least management overhead
+        - for infrequent, intermittent or unpredictable workload
+        - client is connected to Proxy Fleet and aurora instantiate and connect to it
+        (serverless db decouple the part of the management system that deals with storage from the part that
+        executes queries)
 
 
 RDS Deployment options:
@@ -49,7 +49,7 @@ RDS Deployment options:
 
 ElastiCache:
     - in memory database, high performance, low latency
-    - like RDS, it is managed cache like Redis or Memcache
+    - like RDS, it is managed cache like Redis or MemcacheD
     - AWS takes care fo OS maintenance/patching, optimizations, setup, configuration, monitoring, failure recovery and 
     backups
 
@@ -76,8 +76,10 @@ DynamoDB:
 
 
 Redshift:
-    - Based on PostgreSQL, but it's not OLTP (Online Transaction Processing)
-    - OLAP - online Analytics Processing (analytics and data warehousing)
+    - USED FOR DATA WAREHOUSE ANALYTICS
+    - Column based database
+    - it's not OLTP (Online Transaction Processing), it's OLAP - online Analytics Processing 
+    - Based on PostgreSQL
     - Load data every hour, not every second
     - Columnar storage of data (instead of row based)
     - Massive Parallel Query Execution (MPP)
@@ -90,9 +92,10 @@ Redshift:
         - for Reporting, dashboarding applications, real-time analytics
 
 
-EMR: ???
+EMR: 
     - Elastic MapReduce
-    - Helps creating hadoop clusters to analyze and process vast amount of data
+    - Provides BI tools to process and analyze vast amount of data
+    - Helps creating HADOOP clusters to analyze and process vast amount of data
     - the clusters can be made of hunderds of EC2 instances
     - also supports Apache Spark, Hbase, Presto, flink
     - Use cases: data processin, machine learning, web indexing, big data
@@ -118,7 +121,7 @@ DocumentDB:
     - millions of request per second
 
 
-Netune:
+Neptune:
     - fully managed Graph database
     - A popular graph db is social network
     - Build and run applications working with highly connected datasets - optimized for these complex and hard queries.
