@@ -1,0 +1,11 @@
+$ nginx -t
+    - Test the conf file and shows which conf file is it using
+
+$ systemctl reload nginx
+    - doesn't stop the server
+    - if new nginx configuration fails then it will continue to use old configuration file
+    - prevent any downtime
+
+$ systemctl restart nginx
+    - stops the server and starts again
+    - if new configuration fails then it won't start the server

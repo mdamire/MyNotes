@@ -1,0 +1,142 @@
+
+Headers and Expires:
+
+    - add_header <header name> <value>: directive to add header to request
+    - expires 30m: directive to set 'Expires' header
+
+    location = /thumb.png {
+        add_header Cache-Control public; //the resource can be cached
+        add_header Pragma public;   //older version of Cache-Control header
+        add_header Vary Accept-Encoding; //The response can vary by the value of request header Accept-Encoding
+        expires 30m; // sets 'Expires' header to 30 min in future
+    }
+
+    - to set expire date for static file:
+        location ~* \.(css|js|jpg) {
+            access_log off;
+            <headers for expire>
+        }
+
+
+Compress Responses with gzip:
+
+    - any static file like css, js, jpg, etc. can be compressed with gzip
+    - client need to send that it accepts compressed responses 
+        - with header: {"Accept-Encoding": "gzip"}
+        - all modern browsers support this
+        - "add_header Vary Accept-Encoding;" indicates that the response might vary according to Accept-Encoding header
+        $ curl -I -H "Accept-Encoding: gzip" http://127.0.0.1/style.css
+    
+    # Configuration:
+        gzip on; //turns on gzip
+        gzip_comp_level 3;
+            - amount of compression used numbered from 0 to 9
+            - 0 means least compression (original size) and 9 means most compression (takes more server resources)
+            - level over 5 means minor compression. 3/4 is a good choice
+        gzip_types text/css;
+        gzip_types text/javascript;
+            - mime types for which compression will work.
+    
+    - can be turned off in nested context
+
+
+Micro Cache: FastCGI Cache:
+
+    fastcgi_cache_path /tmp/nginx_cache levels=1:2 keys_zone=ZONE1:100m inactive=60m;
+        - nginx will create file at /tmp/nginx_cache directory to store cached data
+
+        - levels let us configure the depth of directory to split the cache into
+        - 1 here means first create directory with last digit of cache name and 2 means another directory inside the 
+        first one naming remaining last two characters
+        - for a name 'abc12345' cache it will place the file in /tmp/nginx_cache/5/35/
+
+        - keys_zone=<zone name>:size of the zone
+
+        - inactive means how long it will be cached after the last access. defaults to 10m.
+
+    fastcgi_cache_key "$scheme$request_method$host$request_uri";
+        - cache key to identify the request to a cache entry
+        - this key is md5 hashed to make the cache name
+
+    location ~\.php$ {
+        include fastcgi.conf;
+        fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+
+        # Enable cache
+        fastcgi_cache ZONE1; # enables the cache
+        fastcgi_cache_valid 200 404 60m; # the cached response 200 and 404 will be valid for 60mins
+    }
+        - need to enable caching for a location
+
+    # Apache bench to test the performance
+        $ ab    #apache bench command
+        $ ab -n 100 -c 10 <ip> # 100 requests in 10 concurrent connections
+
+    # monitor caching in header
+        add_header X-Cache $upstream_cache_status;
+            - set header to see if it's from cache
+        
+    # Skip caching
+        set $no_cache 0;
+        if ($arg_skipcache = 1) {   #query parameter
+            set $no_cache 1;
+        }
+        location ~\.php$ {
+            include fastcgi.conf;
+            fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+
+            # Enable cache
+            fastcgi_cache ZONE1; 
+            fastcgi_cache_valid 200 404 60m; 
+            fastcgi_cache_bypass $no_cache;  # Bypass from the cache
+            fastcgi_no_cache $no_cache; # Don't write to the cache
+        }
+
+
+HTTP2:
+    - Binary protocol (more compact), http1 is text protocol
+    - Compressed header 
+    - Persistent Connections
+    - multiplex streaming. different assest like html, js, css will be combined into single binary stream.
+    - server push
+
+    - HTTPS (SSL) is required
+
+    // need to install http_v2 module, ssl module and rebuild the nginx
+
+    # generate test ssl:
+        $ openssl req -x509 -days 10 -nodes -newkey rsa:2048 -keyout <private key file> -out <cert file>
+    
+    # enable https:
+        server {
+            listen 443 ssl;
+
+            ssl_certificate <cert file>;
+            ssl_certificate_key <private key file>;
+        }
+    
+    # enable http2:
+        server {
+            listen 443 ssl http2;
+
+            ssl_certificate <cert file>;
+            ssl_certificate_key <private key file>;
+        }
+
+
+Server Push:
+    https://www.nginx.com/blog/nginx-1-13-9-http2-server-push/
+    - pushing assests with page request (without needing to request the assests differently)
+    
+    # CLI tool to test http2:
+        - nghttp2: implementation of http/2 compression algorithm
+        $ nghttp -nys <url>
+            - -n: descard response, -y: ignore self signed certificate, -s: print response statistics
+        $ nghttp -nys <url>
+            - -a: request with assets (css, js)
+    
+    location = /index.html {
+        http2_push /style.css; 
+        http2_push /thumb.png;
+    }
+        - http2_push doesn't specify the resource but the request for the resource

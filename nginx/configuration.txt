@@ -1,0 +1,269 @@
+Terms:
+    * Context:
+        - Scope/Section in configuration
+        - Nested and inherited from parent
+        - e.g http {
+            <directives>
+        }
+    * Directive:
+        - Specific configuration options
+        - consists name and value
+        - e.g server_name mydomain.com;
+
+Virtual Host:
+    * Conf file:
+        - linux: /etc/nginx/nginx.conf; mac: /opt/homebrew/etc/nginx/nginx.conf
+        - server_name directive can have asterisk char like *.demo.com
+        - context types { text/html html; }:  mime type text/html for html extension files
+        - include <relative_path>; includes configuration from other file
+    
+    * Conf file:
+    events {}
+    http {
+        include mime.types;
+        
+        server {
+            listen 80;
+            server_name localhost;
+            root /Users/rahat/Documents/Codes/nginx/demo;
+        }
+    }
+
+Location Block:
+    - configuration of URI
+    - Different ways of mathing:
+        # Regex match case sensitive: e.g location ~ /greet[0-9]
+        # Regex match case in-sensitive: e.g location ~* /greet[0-9]
+        # Prefix match: anything that starts with the match. e.g location /greet
+        # Preferential Prefix match: same as Prefix match but more important. e.g location ^= /greet
+        # Exact match: e.g location = /greet
+    - Order of matching: 
+        1. Exact match: = uri
+        2. Preferential Prefix Match: ^~ uri
+        3. Regex match: ~ uri / ~* uri (whichever comes first)
+        4. Prefix match: uri
+
+
+    * Conf file:
+    server {
+        listen 80;
+        server_name localhost;
+        root /Users/rahat/Documents/Codes/nginx/demo;
+        location /greet {
+            return 200 "Hello world
+        }
+    }
+
+Variables:
+    - 2 types:
+        # Configuration variables: set $var 'something';
+            - string, integers and booleans
+        
+        # NGINX module variables: $http, $uri, $args
+          https://nginx.org/en/docs/varindex.html
+    
+    - Conditional:
+        if ( $arg_apikey != 1234 ) {
+            return 401 "Incorrect API key";
+        }
+
+        // $arg_apikey is query parameter 'apikey' value
+
+        set $is_weekend 'no';
+        if ( $date_local ~ 'Saturday|Sunday' ) {
+            set $is_weekend 'yes';
+        }
+    
+Rewrites and Redirects:
+    * rewrite <regex pattern> <uri>
+        - redirect changes the url to original one for user, rewrite keep what was given by user
+        - rewrite gets the rewritten uri and re checks it in the configuration
+
+        rewrite ^/user/(\w+) /greet/$1
+        location /greet/john {
+            return 200 'hello user'
+        }
+        // /greet url will be rewritten to ^/user/\w+ pattern
+
+        # rewrite <regex pattern> <uri> last;
+            - 'last' keyword marks the <uri> as rewritten for the last time
+
+
+    * return <status> <return_value>
+        - for 200: <return_value> is a string
+        - for 300 (redirect): <return_value> is a uri
+
+Try Files & Named Locations:
+    * try_file <path1> <path2> ... <pathN> <final path>;
+        - check if the path exist in root directory and serve it
+        - it will keep checking the path and will serve the path that it found first
+
+        - only <final path> is a rewrite. other paths are for file to search in root directory
+
+        - if it finds a path to serve it will serve regardless of what the url was
+
+    
+    config file:
+    server {
+        listen 80;
+        server_name localhost;
+
+        root /sites/demo;
+
+        try_file $uri /serve_404;
+
+        location = /serve_404 {
+            return 404 "Not found";
+        }
+    }
+
+    // this servers the incoming uri and if not found it servers 404
+
+    * Named location:
+        - used for locating a location by name instead of uri
+
+        try_file @named_location;
+        location @named_location {
+            // something
+        }
+
+
+Logging:
+    * Error Log: log any error
+    * Access Log: any request/response log
+
+    - logs are open by default
+    - default log directory: /var/log/nginx/
+
+    - custom logs:
+        * access_log <path>, error_log <path>
+
+        location /secure {
+            access_log /var/log/nginx/secure.access.log
+            return 200 "welcome";
+        }
+        - access log for /secure won't exist in global access log
+        - can be sent to both global and custom log by adding access_log again to global log
+
+        * access_log off;
+            - disable access log for some context
+
+Inheritence and Directive Types:
+    - context inherits directives from it's parent context
+
+    e.g:
+        http{
+            server{
+                root /site/demo;
+                location /something {
+                    // something
+                }
+            }
+        }
+        - file context -> http context -> server context -> location context
+
+    * 3 directive types:
+        # standard directive
+            - can be decleared once in a given context
+            - inherited top down
+            - redeclearing in child context will override parent directive
+
+        # array directive:
+            - can be decleared multiple times without overriting the previous
+            - e.g access_log
+            - inherited top down
+            - redeclearing any in child context will override parent directive
+        
+        # action directive
+            - break or action in confing
+            - e.g return, rewrite, try_file
+
+PHP Processing:
+    - need to add a location context for php file to use the fpm socket
+
+    # index directive:
+        index <index file1> <index file2>;
+        - to look for start html file when server is accessed without any following path
+    
+    # 'user' directive:
+        user <user name>;
+        - in file context to run nginx worker under that user
+
+Worker Process:
+    - worker process is launched by master process
+    - worker process listens for and response to client process
+
+    # 'worker_processes <number of process>' directive:
+        worker_processes 2;
+            - it will launch 2 worker processes
+        
+        - worker process runs on a single cpu core
+
+        worker_processes auto;
+            - one worker per core
+    
+    # 'worker_connections <number>' directive:
+        events {
+            worker_connections <number>;
+        }
+        - how many concurrent request a worker process can handle
+        - number can be found by `ulimit -n`, return how many files can be open by each cpu core
+
+        * worker_processes * worker_connections = max connections
+    
+    # 'pid <path>' directive:
+        - can reconfigure the process id file location
+        - default process id file /var/run/nginx.pid
+
+Buffers & timeouts:
+    - configurations for requests to the server
+
+    * request -> nginx writes the data to memory (buffering) -> next steps
+    * file -> loads into memory (buffering) -> serve from memory
+
+    # client_body_buffer_size 10K;
+        - buffer size for post data
+        - 10K = 10KB
+        - having it more that needed will cause unused memory
+        - having it lower that needed, nginx will write part of it in disk
+    
+    # client_max_body_size 8M:
+        - max size for post request body
+        - larger than that will return 413 "request entity too large"
+
+    # client_header_buffer_size 1k:
+        - size for request header
+    
+    # client_body_timeout 12:
+        - timeout between consicutive read operation of body by buffer
+    
+    # client_header_timeout 12:
+        - timeout between consicutive read operation of header by buffer
+
+    * timeout directive: 12 = 12ms, 12s = 12 seconds, 12m = mins, 12h = hours, 12d = days
+
+    # keepalive_timeout 15;
+        - how long nginx will keep the connection open between client and server in case more data in on the way
+    
+    # send_timeout 10:
+        - if client doesn't receive respone in 10ms then abort sending the response all together
+    
+    # sendfile on:
+        - when sending a file from disk don't put it in buffer(memory)
+    
+    # tcp_nopush on:
+        - optimize sendfile packets
+
+Dymanic Modules:
+    - dynamic modules are modules that we can load selectively from nginx configuration
+    - static modules are always loaded
+
+    - dynamic modules directory: /etc/nginx/modules/
+
+    * rebuild nginx:
+        - `nginx -V` gives current configuration which shouldn'e be changed
+        - `./configure --help` gives all the modules to load. dynamic modules ends with =dynamic
+        - `./configure <all current configuarions> <dynamic module flag>` this will load the dynamic module into current
+        build
+        - reload nginx
+        - 'load_module modules/...;' to load the dynamic module into configuration file
