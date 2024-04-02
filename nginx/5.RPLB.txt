@@ -1,0 +1,78 @@
+
+Reverse Proxy:
+    location /nginxorg {
+
+        proxy_pass 'https://nginx.org/';
+            - it will start reverse proxying 'https://nginx.org/' url at /nginxorg path
+            - the end slash in proxy url is required. It indicates a full proxy path. So, it will requiest for 
+            'https://nginx.org/'
+            - Without the end slash nginx will pass the requested url to the proxy url. So it will request for
+            'https://nginx.org/nginxorg'. inconsistent and not recommended.
+
+            - with end slash it will also pass paths whatever came after it. so if /nginxorg/test1/url is requested,
+            it will reverse to 'https://nginx.org/test1/url'
+    }
+
+    # another use case is to pass cusom headers. Either to proxyed server or to client.
+        location /nginxorg {
+            add_header custom-header test-value;
+                - add header for client
+
+            proxy_set_header custom-header test-value;
+                - add header for the proxyed server
+
+            proxy_pass 'https://nginx.org/';
+        }
+
+
+Load Balancer:
+    - nginx becomes load balacer by using reverse proxy
+    - uses upstream context for load balancing
+
+    http {
+
+        upstream my_servers {
+            [ip_hash; # distribute based on ip]
+            [least_conn; # distribute based on least connection]
+
+            server localhost:10001;
+            server localhost:10002;
+            server localhost:10003;
+        }
+
+        server {
+            listen 8888;
+
+            location / {
+                proxy_pass http://my_servers;
+            }
+        }
+    }
+        - this will create a load balancer in round robin algorithm
+        - if one server is down then it will stop sending request to that server
+
+
+Load Balancer Options:
+    # default algorithm is round robin
+
+    # ip_hash directive chooses server based on ip. (sticky ip). it will start serving from same server for one ip
+    until it's down.
+        upstream php_servers {
+            ip_hash;
+            server localhost:10001;
+            server localhost:10002;
+            server localhost:10003;
+        }
+    
+    # least_conn directive distribute based on least number of request to a server
+        upstream php_servers {
+            least_conn;
+            server localhost:10001;
+            server localhost:10002;
+            server localhost:10003;
+        }
+
+
+Documentations:
+    nginx documentations: https://nginx.org/en/docs/
+    common pitfalls: https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/

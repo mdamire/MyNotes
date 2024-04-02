@@ -1,0 +1,24 @@
+NGINX Init Service:
+    - need to create an init script for nginx to use it as linux service.
+    
+    - init script: https://github.com/JasonGiedymin/nginx-init-ubuntu
+    - init script live in /etc/init.d/
+    - get the init script: $ wget https://github.com/JasonGiedymin/nginx-init-ubuntu/blob/master/nginx
+    - give executable permissiong: $ sudo chmod +x nginx
+
+    - overriden settings values live in /etc/default/nginx
+    - $ echo "NGINX_CNF_FILE=/etc/nginx/nginx.conf"> /etc/default/nginx
+    - $ echo "DAEMON=/usr/bin/nginx"> /etc/default/nginx
+
+    - update-rc.d -f nginx defaults # load the init script
+
+
+Video Streaming:
+    - --with-http_mp4_module
+
+    location ~ \.mp4$ {
+        root /sites/downloads/; # directory for the video file
+        mp4; # define the module
+        mp4_buffer_size 4M;
+        mp4_max_buffer_size 10M; 
+    }

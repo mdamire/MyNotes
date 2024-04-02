@@ -256,14 +256,21 @@ Buffers & timeouts:
 
 Dymanic Modules:
     - dynamic modules are modules that we can load selectively from nginx configuration
-    - static modules are always loaded
+        - dynamic modules have '=dynamic' at the end of the module name
+    - static modules are always loaded in conf file
 
     - dynamic modules directory: /etc/nginx/modules/
 
-    * rebuild nginx:
+    * adding module by rebuilding nginx:
         - `nginx -V` gives current configuration which shouldn'e be changed
+
+        - go to the downloaded source code 
         - `./configure --help` gives all the modules to load. dynamic modules ends with =dynamic
-        - `./configure <all current configuarions> <dynamic module flag>` this will load the dynamic module into current
-        build
+
+        - `./configure <all current configuarions> <dynamic module flag> [--modules-path=/etc/nginx/modules]` 
+            - this will load the dynamic module into current build
+        - make
+        - make install
+        
         - reload nginx
-        - 'load_module modules/...;' to load the dynamic module into configuration file
+        - 'load_module modules/<module name>;' to load the dynamic module into configuration file

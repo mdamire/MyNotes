@@ -9,3 +9,13 @@ $ systemctl reload nginx
 $ systemctl restart nginx
     - stops the server and starts again
     - if new configuration fails then it won't start the server
+
+$ nginx -s reload
+$ nginx -s restart
+    - reload restart from nginx executable
+
+$ nginx -V
+    - show configure arguments
+
+$ nginx -c <Path to nginx conf>
+    - Run nginx with the provided conf file
