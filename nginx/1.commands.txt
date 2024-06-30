@@ -19,3 +19,8 @@ $ nginx -V
 
 $ nginx -c <Path to nginx conf>
     - Run nginx with the provided conf file
+
+
+# to see the cores:
+    $ nproc     # shows number of cores
+    $ lscpu

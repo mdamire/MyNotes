@@ -11,12 +11,7 @@ Terms:
         - e.g server_name mydomain.com;
 
 Virtual Host:
-    * Conf file:
-        - linux: /etc/nginx/nginx.conf; mac: /opt/homebrew/etc/nginx/nginx.conf
-        - server_name directive can have asterisk char like *.demo.com
-        - context types { text/html html; }:  mime type text/html for html extension files
-        - include <relative_path>; includes configuration from other file
-    
+    - Virtual host is the server context inside http context
     * Conf file:
     events {}
     http {
@@ -24,10 +19,19 @@ Virtual Host:
         
         server {
             listen 80;
+                # listen to a port. default is 80
             server_name localhost;
+                # server_name directive can have asterisk char like *.demo.com to mark every sub domain
+            
             root /Users/rahat/Documents/Codes/nginx/demo;
+                # root path from where nginx will server requests or static files.
         }
     }
+
+    * Conf file:
+        - linux: /etc/nginx/nginx.conf; mac: /opt/homebrew/etc/nginx/nginx.conf
+        - context types { text/html html; }:  mime type text/html for html extension files
+        - include <relative_path>; includes configuration from other file
 
 Location Block:
     - configuration of URI
@@ -39,9 +43,9 @@ Location Block:
         # Exact match: e.g location = /greet
     - Order of matching: 
         1. Exact match: = uri
-        2. Preferential Prefix Match: ^~ uri
+        2. Preferential Prefix Match: ^= uri
         3. Regex match: ~ uri / ~* uri (whichever comes first)
-        4. Prefix match: uri
+        4. Prefix match: uri (longest prefix will match first)
 
 
     * Conf file:
@@ -50,7 +54,7 @@ Location Block:
         server_name localhost;
         root /Users/rahat/Documents/Codes/nginx/demo;
         location /greet {
-            return 200 "Hello world
+            return 200 "Hello world"
         }
     }
 
@@ -76,6 +80,7 @@ Variables:
     
 Rewrites and Redirects:
     * rewrite <regex pattern> <uri>
+        - mutants the uri internally
         - redirect changes the url to original one for user, rewrite keep what was given by user
         - rewrite gets the rewritten uri and re checks it in the configuration
 
@@ -87,13 +92,20 @@ Rewrites and Redirects:
 
         # rewrite <regex pattern> <uri> last;
             - 'last' keyword marks the <uri> as rewritten for the last time
+            - still re checks the configuration after rewrite but wont be rewritten any more.
 
 
-    * return <status> <return_value>
-        - for 200: <return_value> is a string
-        - for 300 (redirect): <return_value> is a uri
+    Redirect:
+        return 300 <uri> 
+
+        * return <status> <return_value>
+            - for 200: <return_value> is a string
+            - for 300 (redirect) variant: <return_value> is a uri
 
 Try Files & Named Locations:
+    - in server context or location context
+    - check resouce to response with in any number of path relative to root directory
+
     * try_file <path1> <path2> ... <pathN> <final path>;
         - check if the path exist in root directory and serve it
         - it will keep checking the path and will serve the path that it found first
@@ -120,6 +132,8 @@ Try Files & Named Locations:
     // this servers the incoming uri and if not found it servers 404
 
     * Named location:
+        - assigning a name to a location context.
+        - directly looks for a location without re evulation
         - used for locating a location by name instead of uri
 
         try_file @named_location;
@@ -160,7 +174,7 @@ Inheritence and Directive Types:
                 }
             }
         }
-        - file context -> http context -> server context -> location context
+        - main context -> http context -> server context -> location context
 
     * 3 directive types:
         # standard directive
@@ -187,22 +201,24 @@ PHP Processing:
     
     # 'user' directive:
         user <user name>;
-        - in file context to run nginx worker under that user
+        - in main context to run nginx worker under that user
 
 Worker Process:
     - worker process is launched by master process
     - worker process listens for and response to client process
 
     # 'worker_processes <number of process>' directive:
+        - in main context:
         worker_processes 2;
             - it will launch 2 worker processes
         
         - worker process runs on a single cpu core
 
-        worker_processes auto;
+        worker_processes auto:
             - one worker per core
     
     # 'worker_connections <number>' directive:
+        - in events context:
         events {
             worker_connections <number>;
         }
@@ -211,48 +227,58 @@ Worker Process:
 
         * worker_processes * worker_connections = max connections
     
+    # worker_processes x worker_connections = max connections
+    
     # 'pid <path>' directive:
+        - in main context
         - can reconfigure the process id file location
         - default process id file /var/run/nginx.pid
 
 Buffers & timeouts:
     - configurations for requests to the server
 
-    * request -> nginx writes the data to memory (buffering) -> next steps
-    * file -> loads into memory (buffering) -> serve from memory
+    # Buffering:
+        * request -> nginx writes the data to memory (buffer) -> next steps
+        * file -> loads into memory (buffer) -> serve from memory
 
-    # client_body_buffer_size 10K;
-        - buffer size for post data
-        - 10K = 10KB
-        - having it more that needed will cause unused memory
-        - having it lower that needed, nginx will write part of it in disk
-    
-    # client_max_body_size 8M:
-        - max size for post request body
-        - larger than that will return 413 "request entity too large"
+    - in http context
 
-    # client_header_buffer_size 1k:
-        - size for request header
+    # buffer size for post submission
+        # client_body_buffer_size 10K;
+            - buffer size for post data
+            - 10K = 10KB
+            - having it more that needed will cause unused memory
+            - having it lower that needed, nginx will write part of it in disk
+        
+        # client_max_body_size 8M:
+            - max size for post request body
+            - larger than that will return 413 "request entity too large"
+
+    # buffer size for headers:
+        # client_header_buffer_size 1k:
+            - size for request header
     
-    # client_body_timeout 12:
-        - timeout between consicutive read operation of body by buffer
-    
-    # client_header_timeout 12:
-        - timeout between consicutive read operation of header by buffer
+    # max time to receive client headers/body
+        # client_body_timeout 12:
+            - timeout between consicutive read operation of body by buffer
+        
+        # client_header_timeout 12:
+            - timeout between consicutive read operation of header by buffer
 
     * timeout directive: 12 = 12ms, 12s = 12 seconds, 12m = mins, 12h = hours, 12d = days
 
     # keepalive_timeout 15;
         - how long nginx will keep the connection open between client and server in case more data in on the way
+        - after the timeout time nginx will close the request and process it
     
-    # send_timeout 10:
+    ## send_timeout 10:
         - if client doesn't receive respone in 10ms then abort sending the response all together
     
     # sendfile on:
         - when sending a file from disk don't put it in buffer(memory)
     
     # tcp_nopush on:
-        - optimize sendfile packets
+        - optimize the size of data packets that being sent to the client
 
 Dymanic Modules:
     - dynamic modules are modules that we can load selectively from nginx configuration
