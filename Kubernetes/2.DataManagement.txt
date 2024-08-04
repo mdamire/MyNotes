@@ -1,0 +1,179 @@
+
+* Volumes are part of the pods, volume lifetime depends on the pod lifetime.
+* Volume survive container restarts but romoved when pods are destroyed.
+* Persistent Volume lives outside of pods
+* Types of volumes documentation: https://kubernetes.io/docs/concepts/storage/volumes/
+
+
+Volume in config file:
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+        name: story-deployment
+    spec: 
+        replicas: 1
+        selector:
+            matchLabels:
+                app: story
+        template:
+            metadata:
+            labels:
+                app: story
+            spec:
+            containers:
+                - name: story
+                image: academind/kub-data-demo
+                volumeMounts:
+                    - mountPath: <container directory>      // path to make it persitant
+                      name: <volume name> 
+            volumes:    // all containers in this pod will be using this volume
+                - name: <volume name>
+                  emptyDir: {}      //driver type of the volume, empty value is enough for defining type, Creates a empty directory per pod.
+    
+    ---
+
+    apiVersion: v1
+    kind: Service
+    metadata:
+        name: story-service
+    spec:
+        selector: 
+            app: story
+        type: LoadBalancer
+        ports:
+            - protocol: "TCP"
+            port: 80
+            targetPort: 3000
+
+
+* 'hostPath' volume dirver:
+    - Usefull if you want to share existing data
+    - creates a path in the host machine or node and the pods share it.
+    - we can use multiple host machines and the host path can be in one of them
+    - like a bind mounth.
+    - Will create a shared volume and can have existing data. 
+
+    volumes:
+        - name: <volume name>
+          hostPath:
+            path: /data     //host machine path
+            type: DirectoryOrCreate
+
+
+* CSI drivers are existing interface to let other create their driver. Like csi efs driver.
+
+Persitant Volumes:
+    - volumes are detached from the pods and nodes
+
+    apiVersion: v1
+    kind: PersistentVolume
+    metadata:
+        name: <volume name>
+    spec:
+        capacity:
+            storage: 1Gi   // need to check if the space is actually available in the service
+        volumeMode: Filesystem
+        storageClassName: standard
+        accessModes:
+            - ReadWriteOnce  // can be mounted as read write volume in single node, like minikube.
+            // - ReadOnlyMany   // read only but for multiple nodes
+            // - ReadWriteMany  // read write for multiple nodes
+        hostPath:               // type of volume, hostPath only works if there is one node
+            path: /data         //host machine path
+            type: DirectoryOrCreate
+
+
+Persistent Volume Claims:
+    - In order to use a volume, a claim is needed
+
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+        name: <claim name>  // it will be useful to use it in a pod
+    spec:
+        volumeName: <volume name> // the persitant volume that needs to be claimed
+        storageClassName: standard
+        capacity:
+            storage: 4Gi   // need to check if the space is actually available in the service
+        volumeMode: Filesystem
+        accessModes:
+            - ReadWriteOnce  
+        resources:
+            requests:
+                storage: 1Gi
+
+
+Connect Claims to Pods/deployments:
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+        name: story-deployment
+    spec: 
+        replicas: 1
+        selector:
+            matchLabels:
+                app: story
+        template:
+            metadata:
+            labels:
+                app: story
+            spec:
+            containers:
+                - name: story
+                image: academind/kub-data-demo
+                volumeMounts:
+                    - mountPath: <container directory>
+                      name: <volume name> 
+            volumes:    
+                - name: <volume name>
+                  persistentVolumeClaim:        // connect to the persitant volume
+                    claimName: <claim name>
+
+
+Storage class:
+    $ kubectl get sc
+        - shows storage class
+        - to provide how admins clear view of which storage is being used
+
+    $ kubectl get pv
+        - show persitant volume list
+
+    $ kubectl get pvc
+        - show persitant volume claims list
+
+
+Environment Variable:
+    - in deployment yaml spec:
+
+    containers:
+        - name:
+          ..
+          env:
+            - name: <env var name>
+              value: <value>
+
+Config Map:
+    - another resource, it crates a map of key value pairs.
+
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: <config map name>
+    data:
+        key1: <value1>
+        key2: <value2>
+        ...
+    
+    $ kubectl get configmap
+        - to see the config map
+    
+    * Need to add the config map in environment variable of containers in deployment:
+        containers:
+            - name:
+            ..
+            env:
+                - name: <env var name>
+                  valueFrom:
+                    configMapKeyRef:
+                        name: <config map name>
+                        key: <key name in config map for this variable>

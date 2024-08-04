@@ -1,0 +1,191 @@
+Setup:
+    * install kubectl on local
+    * install minikube on local for learning
+
+    $ minikube start --driver=docker
+        - start minikube
+    
+    $ kubectl config get-contexts
+        - get list of contexts
+    
+    $ kubectl config current-context
+        - get current context
+    
+    $ kubectl config use-context <context name>
+        - Change context
+
+
+Objects:
+    - Kubernetes works with objects like pods, Deployments, Services, Volume
+    - You will create objects and Kubernetes will do something with those objects
+    - Objects can be created Imperatively or Declaratively
+
+
+Pod Object:
+    - The core object
+
+
+Deployment Object:
+    - controls one/multiple pods
+    - We set a desired target state and Kubernetes will get us there
+
+
+First Deployment:
+    $ minikube status
+        - to see the cluster status
+    
+    $ kubectl 
+        - execute on the local machine
+        - this command sends codes to Kubernetes cluster
+    
+    $ kubectl create deployment <deployment object name> --image=<dockerHub Account>/<docker image name>
+        - creates deployment object and sends the code automatically to master node
+        - gets the image from dockerHub
+
+    $ kubectl get deployments
+        - see all the deployments
+    
+    $ kubectl get pods
+        - see all the pods created by deployments
+
+    $ minikube dashboard
+        - runs dashboard server
+
+Service Object:
+    - Pods ip address changes when re-created and cannot be used to access the pod from outside
+    - Service groups pods with shared IP
+    - Service can allow external access to Pods
+
+    - without service pods are hard to reach
+
+    $ kubectl expose deployment <deployment name> --type=(ClusterIP/NodePort/LoadBalancer) --port=<number>
+        * ClusterIP = Default type. Means only reachable from inside the cluster.
+        * NodePort = Means this deployment should be exposed using ip address of worker node. 
+          makes it accessible from outside
+        * LoadBalancer = Load balancerer needs to exist in infrastructure. The load balancer will generate ip for this service.
+          Evenly ditribute incoming request to all pods which are part of this service
+
+    $ kubectl get services
+        - gets services
+    
+    $ minikube service first-app
+        - shows service external ip
+
+# Pods are restarted when application crashes
+
+Autoscaling:
+    $ kubectl scale deployment/<deployment name> --replicas=<number>
+        - it will create <number> of pods
+        - need to have load balancer in place. ??
+
+
+Updating Deployments:
+    $ kubectl set image deployment/<deployment name> <old image name>=<dockerhub account>/<new image>:<tag>
+        - this will update the deployment with new image
+        - new image is downloaded if there is a different tag or tag is 'latest'
+
+
+Rollbacks and History:
+
+    * Kubernetes doesn't shut down old pod before the new pod is up and running
+
+    $ kubectl rollout status deployment/<deployment name>
+        - this tells what is currently going on with deployment
+    
+    $ kubectl rollout undo deployment/<deployment name> [--to-revision=<number>]
+        - this will undo the latest deployment (with out --to-revision)
+        - [--to-revision=<number>] : undo to specific revision
+    
+    $ kubectl rollout history deployment/<deployment name> [--revision=3]
+        - see the deployment history
+        - [--revision=3] shows details of that revision
+    
+Cleaning:
+    $ kubectl delete service <service name>
+    $ kubectl delete deployment <deployment name>
+
+    $ kubectl delete -f <config file>[, -f <config file2>]
+        - deletes resources created by config file
+
+
+Declarative Approach:
+    - written in a yaml file
+
+    $ kubectl apply -f <config file path>
+
+Deployment Config File:
+    deployment.yaml:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+            name: <deployment name>
+        spec:
+            replicas: <number> //default 1
+            selector:                                   // deployment selects the to be controlled pods 
+                matchLabels:                            // another is matchExpressions
+                    <label name>: <label value>         // and condition for multiple labels
+                    <label name>: <label value>
+            
+            template:  // creates pods
+                metadata:
+                    labels:
+                        <label name>: <label value>
+                spec: //specs of pods
+                    containers: 
+                        - name: <name>
+                          image: <image name 1>, ...    // --image switch
+                          livenessProbe:                // pod check how the containers are up and running
+                            httpGet:                    // sends a get request to check health
+                              path: <path to check>
+                              port: <port>
+                            perionSeconds: <number>
+                            initialDelaySeconds: 5
+                          env:
+                          - name: DJANGO_SETTINGS_MODULE
+                            value: "microservices.settings.staging"
+                          - name: AWS_SECRET_ARN
+                            value: "<AWS_SECRET_ARN>"
+                          ports:
+                          - containerPort: 8000
+                          workingDir: /path/to/your/app
+                          command: ["gunicorn"]
+                          args: ["-c", "microservices/gunicorn.py", "microservices.wsgi"]
+    
+    - labels in template can be used in another section like "selector"
+
+    $ kubectl apply -f deployment.yaml
+        - applies the configurations in deployment.yaml file
+
+
+Creating Service Declaratively:
+    - service manages pods
+
+    service.yaml:
+        apiVersion: v1
+        kind: Service
+        metadata:
+            name: <service name>
+        spec:
+            selector:   //which other resouce is controlled by this resouce
+                <label name>: <label value>     // and condition for multiple labels. Labels of pods
+                <label name>: <label value>
+            ports:      //--port=<number>
+                - protocol: 'TCP'
+                  port: 80              // outside port
+                  targetPort: 8080      //container port
+            type: LoadBalancer      //--type=(ClusterIP/NodePort/LoadBalancer)
+
+* One file can have multiple object definitions separated by '---'
+* it's good practice to put Service before Deployment as Service can easily add newly created pods to control
+
+
+Selectors:
+    - As matchLabels there is matchExpressions:
+        matchExpressions:
+            - {key: <label key>, operator: (In/NotIn/Exist/...,) values: [<label value 1>, <label value 2>]}
+
+    $ kubectl delete deployment,services -l <key>=<value>
+        - delete using label selector
+
+
+* Documentation of POD reference: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/
