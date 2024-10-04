@@ -1,0 +1,115 @@
+Pod-Internal Communication:
+    
+    - Containers in same pod share common 'localhost'
+    - if two pods communicate with each other use 'localhost' as host name
+
+Pod-Pod communication:
+    - need a service to make it available for internal pods
+
+        apiVersion: v1
+        kind: Service
+        metadata:
+            name: <service-name>
+        spec:
+            selector:
+                app: auth  # for a deployment who has label 'app: auth'
+            type: ClusterIP
+            ports:
+                - protocol: TCP
+                  port: 80  # outside exposed port
+                  targetPort: 80    # target port of container
+
+    - one service has it's own ip address and this won't change 
+    - `$ kubectl get services` shows Cluster-IP which can be used to communicate with the cluster
+
+    - Kubernetes gives a automated generated environment variable to get this IP
+        <Uppercase service name>_SERVICE_HOST       # it's an environment variable which contains the service IP
+    
+    - if file deployment file didn't change and needs to apply again, then delete it first:
+        $ kubectl delete -f <filename>.yaml
+        $ kubectl apply -f <filename>.yaml
+
+Using DNS for pod to pod communication:
+    - kubernetes comes with a service called 'coredns', it automatically generates a hostname for service:
+        <service_name>.<namespace>
+
+
+Ingress:
+    - Make your HTTP (or HTTPS) network service available using a protocol-aware configuration mechanism, 
+    that understands web concepts like URIs, hostnames, paths, and more. 
+    - The Ingress concept lets you map traffic to different backends based on rules you define via the Kubernetes API.
+    - Ingress controler evaluated all the rules and forwords the requests
+
+    example_service.yaml:
+        apiVersion: v1
+        kind: Service
+        metadata:
+            name: example-service
+        spec:                   // default type: ClusterIP
+            selector:
+                app: myapp
+            ports:
+                - protocol: TCP
+                  port: 8080
+                  targetPort: 8000
+
+    example_ingerss.yaml:
+        apiVersion: networking.k8s.io/v1beta1
+        kind: Ingress
+        metadata:
+            name: example-ingress
+        spec:
+            rules:
+            - host: myapp.com
+              http:
+                paths:
+                    - backend:
+                      serviceName: example-service
+                      servicePort: 8080
+    
+    $ kubectl get all -n <namespace> 
+        - give you information about components including service ip
+    
+    $ kubectl get ingress -n <namespace> --watch
+        - info about ingress, including ingress ip
+    
+    multi_host_example_ingress:
+        apiVersion: networking.k8s.io/v1beta1
+        kind: Ingress
+        metadata:
+            name: example-ingress
+            annotations:
+                // controler specific rules go here, i guess
+        spec:
+            tls:
+                - hosts:
+                    - myapp.com
+                      secretName: myapp-secret
+            rules:
+                - host: analytics.myapp.com
+                http:
+                    paths:
+                        -  path: / 
+                        backend:
+                                serviceName: example-analytics-service
+                                servicePort: 8080
+                - host: shopping.myapp.com
+                http:
+                    paths:
+                        -  path: / 
+                        backend:
+                                serviceName: example-shopping-service
+                                servicePort: 8080
+    
+    tls_secret_example.yaml:
+        apiVersion: v1
+        kind: Secret
+        metadata:
+            name: myapp-secret
+            namespace: default
+        data:
+            tls.crt: base64 encoded cert
+            tls.key: base64 encoded key
+        type: kubernetes.io/tls
+
+
