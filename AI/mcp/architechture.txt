@@ -1,0 +1,23 @@
+Participants:
+    - MCP HOST: the AI application that manages one or multiple MCP clients
+    - MCP Client: Maintains connection to a mcp server
+    - MCP Server: Provies context to MCP clients
+
+
+Layer:
+    # Data Layer
+        The data layer implements a JSON-PRC 2.0 based exchange protocol
+        - Lifecycle management: handles connection initialization, capability negotiation and
+        connection termination between clients and servers
+        - Server features: Enables servers to provide tools, resources and prompts
+        - Client features: Enables servers to ask the client to sample from the host LLM, elicit input
+        from the user, and log messages to the client
+        - Utility features: Supports additional capability like notification for real-time updates and 
+        progress tracking for long-running operations
+     
+    # Transport layer
+        The transport layer manages communication channels and authentication between clients and server.
+        It handles connection establishment, message framing and secure communication between MCP Participants.
+        - Stdio transport: Uses stdio
+        - Streamable HTTP transport: Uses HTTP POST for client to server message with optional Server-Send Events for
+        streaming capabilities. Supports bearer tokens, API keys, and custom headers. OAuth is recommanded

@@ -1,0 +1,139 @@
+
+- stateless remote procedure call (rpc) protocol
+- json-rpc 2.0 request and response may not work with json-rpc 1.0.
+- json-rpc 2.0 always has a member name "jsonrpc" with value "2.0", when json-rpc 1.0 does not
+
+# Request object members:
+    * jsonrpc: required
+        - String value is always "2.0"
+    * method: required
+        - String containing name of the method to be invoked
+        - methods that start with 'rpc-' are reserved for rpc-internal methods
+    * params: optional
+        - structured parameter values
+        - If present it can be an Array or an object
+            - by position: Array. ['value1', 'value2', ...]
+            - by name: Object. {'param_name1': 'param_value', 'param_name2': 'param_value'}
+    * id: required
+        - must contain a String, Number or NULL value if included
+        - without id it's a notification
+        - NULL is discouraged and Number cannot be fractional
+
+# Response object members:
+    * jsonrpc: required
+        - String value is always "2.0"
+    * result:
+        - required on SUCCESS and must not exist in error
+        - The value of this member is determined by the method invoked on the Server.
+    * error:
+        - required on ERROR and must not exist in success
+        - members:
+            * code: required
+                -32700 :: Parse error :: Invalid JSON was received by the server.
+                                    An error occurred on the server while parsing the JSON text.
+                -32600 :: Invalid Request :: The JSON sent is not a valid Request object.
+                -32601 :: Method not found :: The method does not exist / is not available.
+                -32602 :: Invalid params :: Invalid method parameter(s).
+                -32603 :: Internal error :: Internal JSON-RPC error.
+                -32000 to -32099 :: Server error ::Reserved for implementation-defined server-errors.
+            * message: required
+                - A single sentece description of the error.
+            * data: optional
+                - Primitive or Structured value defined by the server
+
+    * id: required
+        - must be same as what was in the request.
+        - in case of error detecting request id, it would be Null
+
+
+# Batch:
+    - Client can send an Array of request object
+    - server will response an Array that contains same number of response except for notification. These 
+    can be success or error responses. The array is not ordered and request to response can be mapped with id.
+    - If all are notifications then server will return nothing and must not return empty array
+    - If the rpc call itself fails, it will return one response object with error.
+
+
+# Examples
+    Syntax:
+        --> data sent to Server
+        <-- data sent to Client
+
+    rpc call with positional parameters:
+        --> {"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1}
+        <-- {"jsonrpc": "2.0", "result": 19, "id": 1}
+
+        --> {"jsonrpc": "2.0", "method": "subtract", "params": [23, 42], "id": 2}
+        <-- {"jsonrpc": "2.0", "result": -19, "id": 2}
+
+    rpc call with named parameters:
+        --> {"jsonrpc": "2.0", "method": "subtract", "params": {"subtrahend": 23, "minuend": 42}, "id": 3}
+        <-- {"jsonrpc": "2.0", "result": 19, "id": 3}
+
+        --> {"jsonrpc": "2.0", "method": "subtract", "params": {"minuend": 42, "subtrahend": 23}, "id": 4}
+        <-- {"jsonrpc": "2.0", "result": 19, "id": 4}
+    
+    a Notification:
+        --> {"jsonrpc": "2.0", "method": "update", "params": [1,2,3,4,5]}
+        --> {"jsonrpc": "2.0", "method": "foobar"}
+
+    rpc call of non-existent method:
+        --> {"jsonrpc": "2.0", "method": "foobar", "id": "1"}
+        <-- {"jsonrpc": "2.0", "error": {"code": -32601, "message": "Method not found"}, "id": "1"}
+        
+    rpc call with invalid JSON:
+        --> {"jsonrpc": "2.0", "method": "foobar, "params": "bar", "baz]
+        <-- {"jsonrpc": "2.0", "error": {"code": -32700, "message": "Parse error"}, "id": null}
+    
+    rpc call with invalid Request object:
+        --> {"jsonrpc": "2.0", "method": 1, "params": "bar"}
+        <-- {"jsonrpc": "2.0", "error": {"code": -32600, "message": "Invalid Request"}, "id": null}
+    
+    rpc call Batch, invalid JSON:
+        --> [
+        {"jsonrpc": "2.0", "method": "sum", "params": [1,2,4], "id": "1"},
+        {"jsonrpc": "2.0", "method"
+        ]
+        <-- {"jsonrpc": "2.0", "error": {"code": -32700, "message": "Parse error"}, "id": null}
+        
+    rpc call with an empty Array:
+        --> []
+        <-- {"jsonrpc": "2.0", "error": {"code": -32600, "message": "Invalid Request"}, "id": null}
+
+    rpc call with an invalid Batch (but not empty):
+        --> [1]
+        <-- [
+        {"jsonrpc": "2.0", "error": {"code": -32600, "message": "Invalid Request"}, "id": null}
+        ]
+    
+    rpc call with invalid Batch:
+        --> [1,2,3]
+        <-- [
+        {"jsonrpc": "2.0", "error": {"code": -32600, "message": "Invalid Request"}, "id": null},
+        {"jsonrpc": "2.0", "error": {"code": -32600, "message": "Invalid Request"}, "id": null},
+        {"jsonrpc": "2.0", "error": {"code": -32600, "message": "Invalid Request"}, "id": null}
+        ]
+    
+    rpc call Batch:
+        --> [
+                {"jsonrpc": "2.0", "method": "sum", "params": [1,2,4], "id": "1"},
+                {"jsonrpc": "2.0", "method": "notify_hello", "params": [7]},
+                {"jsonrpc": "2.0", "method": "subtract", "params": [42,23], "id": "2"},
+                {"foo": "boo"},
+                {"jsonrpc": "2.0", "method": "foo.get", "params": {"name": "myself"}, "id": "5"},
+                {"jsonrpc": "2.0", "method": "get_data", "id": "9"} 
+            ]
+        <-- [
+                {"jsonrpc": "2.0", "result": 7, "id": "1"},
+                {"jsonrpc": "2.0", "result": 19, "id": "2"},
+                {"jsonrpc": "2.0", "error": {"code": -32600, "message": "Invalid Request"}, "id": null},
+                {"jsonrpc": "2.0", "error": {"code": -32601, "message": "Method not found"}, "id": "5"},
+                {"jsonrpc": "2.0", "result": ["hello", 5], "id": "9"}
+            ]
+    
+    rpc call Batch (all notifications):
+        --> [
+                {"jsonrpc": "2.0", "method": "notify_sum", "params": [1,2,4]},
+                {"jsonrpc": "2.0", "method": "notify_hello", "params": [7]}
+            ]
+        <-- //Nothing is returned for all notification batches
