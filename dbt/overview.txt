@@ -1,0 +1,1058 @@
+================================================================================
+DBT CORE CONCEPTS - COMPLETE CHEAT SHEET
+================================================================================
+
+Author: Learning Notes
+Date: 2026-01-20
+Topic: dbt (data build tool) fundamentals for beginners
+
+================================================================================
+TABLE OF CONTENTS
+================================================================================
+
+1. What is dbt?
+2. Installation & Setup
+3. Database Connection (profiles.yml)
+4. Project Structure
+5. Sources - Reading Raw Data
+6. Models - Transforming Data
+7. Materialization Types
+8. refs() - Building Dependencies (DAG)
+9. Testing
+10. Essential Commands
+11. Common Patterns
+12. Quick Reference
+
+================================================================================
+1. WHAT IS DBT?
+================================================================================
+
+dbt (data build tool) = SQL-based transformation tool for data warehouses
+
+Key Concept: dbt is the "T" in ELT (Extract, Load, Transform)
+- ETL tools load raw data into warehouse
+- dbt transforms that data using SQL
+- You write SELECT statements, dbt handles CREATE TABLE/VIEW
+
+Think of it as: "Git for data transformations"
+
+The Data Flow:
+Source Systems → ETL Tool → Data Warehouse → dbt → Analytics
+
+Example:
+  PostgreSQL (app) ──→ Fivetran ──→ Warehouse ──→ dbt ──→ BI Tools
+  Stripe API       ──→           ──→ (schemas) ──→     ──→
+
+================================================================================
+2. INSTALLATION & SETUP
+================================================================================
+
+Step 1: Install dbt Core and database adapter
+--------------------------------------------------
+# Install dbt-core and PostgreSQL adapter
+pip install dbt-core dbt-postgres
+
+# Verify installation
+dbt --version
+
+Step 2: Initialize a project
+--------------------------------------------------
+# Create new dbt project
+dbt init my_project
+
+# Navigate to project
+cd my_project
+
+Step 3: File structure created
+--------------------------------------------------
+my_project/
+├── dbt_project.yml      # Project configuration
+├── models/              # Your SQL transformations
+├── tests/               # Custom tests
+├── macros/              # Reusable SQL functions
+├── seeds/               # CSV files to load
+└── snapshots/           # Historical data tracking
+
+================================================================================
+3. DATABASE CONNECTION (profiles.yml)
+================================================================================
+
+Location: ~/.dbt/profiles.yml
+
+Important Concepts:
+- profiles.yml = Database credentials
+- ONE connection to your analytics warehouse
+- dbt does NOT connect to source systems
+- Source data must already be in warehouse (loaded by ETL)
+
+Basic PostgreSQL Configuration
+--------------------------------------------------
+# ~/.dbt/profiles.yml
+
+my_project:
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      user: postgres
+      password: your_password
+      port: 5432
+      dbname: analytics_warehouse
+      schema: dbt_dev              # Where dbt creates models
+      threads: 4
+      keepalives_idle: 0
+      connect_timeout: 10
+    
+    prod:
+      type: postgres
+      host: prod-db.company.com
+      user: dbt_service
+      password: prod_password
+      port: 5432
+      dbname: analytics_warehouse
+      schema: analytics
+      threads: 8
+  
+  target: dev                      # Default environment
+
+Parameter Meanings:
+- type: Database type (postgres, snowflake, bigquery)
+- host: Server address (localhost, IP, domain)
+- user: Database username
+- password: Database password
+- port: Database port (5432 for PostgreSQL)
+- dbname: Database name
+- schema: Where dbt creates tables/views (TARGET schema)
+- threads: Parallel execution (match CPU cores)
+
+Using Environment Variables (Secure)
+--------------------------------------------------
+# ~/.dbt/profiles.yml
+
+my_project:
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('DBT_HOST') }}"
+      user: "{{ env_var('DBT_USER') }}"
+      password: "{{ env_var('DBT_PASSWORD') }}"
+      port: "{{ env_var('DBT_PORT') | int }}"
+      dbname: "{{ env_var('DBT_DBNAME') }}"
+      schema: dbt_dev
+      threads: 4
+  target: dev
+
+# Set environment variables (Linux/Mac)
+export DBT_HOST=localhost
+export DBT_USER=postgres
+export DBT_PASSWORD=secret
+export DBT_PORT=5432
+export DBT_DBNAME=analytics
+
+Link to Project
+--------------------------------------------------
+# dbt_project.yml
+
+name: 'my_project'
+version: '1.0.0'
+profile: 'my_project'    # Must match profile name in profiles.yml
+
+Test Connection
+--------------------------------------------------
+# Navigate to project directory
+cd /path/to/my_project
+
+# Test database connection
+dbt debug
+
+# Expected output: "All checks passed!"
+
+================================================================================
+4. PROJECT STRUCTURE
+================================================================================
+
+Standard Layout (Best Practice)
+--------------------------------------------------
+my_project/
+├── dbt_project.yml
+├── models/
+│   ├── staging/              # Clean raw data (1:1 with sources)
+│   │   ├── sources.yml       # Source definitions
+│   │   ├── stg_users.sql
+│   │   └── stg_orders.sql
+│   ├── intermediate/         # Business logic (optional)
+│   │   └── int_order_items.sql
+│   ├── marts/                # Final business models
+│   │   ├── customers.sql
+│   │   └── revenue.sql
+│   └── schema.yml            # Tests and documentation
+├── tests/                    # Custom SQL tests
+├── macros/                   # Reusable functions
+└── seeds/                    # Reference data (CSVs)
+
+Naming Conventions
+--------------------------------------------------
+staging/    stg_*     Clean raw data, minimal transformations
+intermediate/ int_*   Business logic, not exposed to end users
+marts/      fct_*     Fact tables (events, transactions)
+            dim_*     Dimension tables (entities, attributes)
+
+================================================================================
+5. SOURCES - READING RAW DATA
+================================================================================
+
+Key Concept: Sources = Raw data tables that already exist in warehouse
+- Loaded by ETL tools (Fivetran, Airbyte, custom scripts)
+- dbt reads from these, doesn't create them
+- Defined in YAML files
+
+Schema Clarification:
+- Source schema = Where raw data lives (READ from here)
+- Target schema = Where dbt creates models (WRITE to here)
+
+Example Database Layout
+--------------------------------------------------
+analytics_warehouse (Database)
+├── raw_application (schema)    ← Source schema (sources.yml)
+│   ├── users
+│   ├── orders
+│   └── products
+├── raw_stripe (schema)          ← Source schema (sources.yml)
+│   ├── charges
+│   └── customers
+└── dbt_dev (schema)             ← Target schema (profiles.yml)
+    ├── stg_users                ← dbt creates these
+    ├── stg_orders
+    └── customers
+
+Basic Source Definition
+--------------------------------------------------
+# models/staging/sources.yml
+
+version: 2
+
+sources:
+  - name: raw_data              # Source name (you choose)
+    schema: raw_application     # Schema where tables exist
+    description: "Raw data from production database"
+    
+    tables:
+      - name: users             # Actual table name
+        description: "User accounts"
+      
+      - name: orders
+        description: "Order transactions"
+
+Using Sources in Models
+--------------------------------------------------
+# models/staging/stg_users.sql
+
+SELECT 
+    user_id,
+    email,
+    created_at
+FROM {{ source('raw_data', 'users') }}
+WHERE deleted_at IS NULL
+
+-- source() function takes:
+-- 1. Source name (from sources.yml)
+-- 2. Table name (from sources.yml)
+
+-- This reads from: raw_application.users
+-- Creates: dbt_dev.stg_users
+
+Multiple Sources Example
+--------------------------------------------------
+# models/staging/sources.yml
+
+version: 2
+
+sources:
+  # PostgreSQL application data
+  - name: postgres_app
+    schema: raw_postgres
+    tables:
+      - name: users
+      - name: orders
+  
+  # Stripe payment data
+  - name: stripe
+    schema: raw_stripe
+    tables:
+      - name: charges
+      - name: customers
+  
+  # Salesforce CRM data
+  - name: salesforce
+    schema: raw_salesforce
+    tables:
+      - name: accounts
+      - name: opportunities
+
+Using Multiple Sources
+--------------------------------------------------
+# models/staging/stg_users.sql
+SELECT * FROM {{ source('postgres_app', 'users') }}
+
+# models/staging/stg_charges.sql
+SELECT * FROM {{ source('stripe', 'charges') }}
+
+# models/staging/stg_accounts.sql
+SELECT * FROM {{ source('salesforce', 'accounts') }}
+
+Advanced Source Configuration
+--------------------------------------------------
+# models/staging/sources.yml
+
+version: 2
+
+sources:
+  - name: raw_data
+    database: analytics_warehouse    # Optional: specify database
+    schema: public
+    description: "Production data replica"
+    
+    tables:
+      - name: users
+        description: "User accounts"
+        
+        # Column documentation
+        columns:
+          - name: user_id
+            description: "Primary key"
+            tests:
+              - unique
+              - not_null
+          
+          - name: email
+            description: "User email address"
+            tests:
+              - unique
+        
+        # Data freshness checks
+        freshness:
+          warn_after: {count: 12, period: hour}
+          error_after: {count: 24, period: hour}
+        loaded_at_field: updated_at
+        
+        # If table name differs from what you want to call it
+        identifier: user_accounts
+
+Source Freshness Testing
+--------------------------------------------------
+# Check if source data is fresh
+dbt source freshness
+
+# Example output:
+# 1 of 1 WARN freshness of raw_data.orders .... [WARN in 0.05s]
+
+# Useful for: Alert if ETL pipeline fails
+
+================================================================================
+6. MODELS - TRANSFORMING DATA
+================================================================================
+
+Key Concept: Models = SELECT statements saved as .sql files
+- dbt runs them and creates tables/views
+- You write SELECT, dbt handles CREATE TABLE/VIEW
+
+Basic Model
+--------------------------------------------------
+# models/staging/stg_users.sql
+
+SELECT 
+    user_id,
+    first_name,
+    last_name,
+    email,
+    created_at
+FROM {{ source('raw_data', 'users') }}
+WHERE deleted_at IS NULL
+
+When you run: dbt run --select stg_users
+dbt creates: dbt_dev.stg_users (as table or view)
+
+Model with Transformations
+--------------------------------------------------
+# models/marts/customers.sql
+
+SELECT 
+    user_id as customer_id,
+    first_name,
+    last_name,
+    email,
+    DATE_TRUNC('month', created_at) as signup_month,
+    CASE 
+        WHEN created_at >= CURRENT_DATE - INTERVAL '30 days' 
+        THEN 'new'
+        ELSE 'existing'
+    END as customer_type
+FROM {{ ref('stg_users') }}
+
+Joining Multiple Models
+--------------------------------------------------
+# models/marts/customer_orders.sql
+
+SELECT 
+    c.customer_id,
+    c.first_name,
+    c.last_name,
+    COUNT(o.order_id) as lifetime_orders,
+    SUM(o.amount) as lifetime_value,
+    MAX(o.order_date) as last_order_date
+FROM {{ ref('stg_customers') }} c
+LEFT JOIN {{ ref('stg_orders') }} o
+    ON c.customer_id = o.customer_id
+GROUP BY 1, 2, 3
+
+Model Configuration
+--------------------------------------------------
+# In-file configuration
+
+-- models/staging/stg_users.sql
+{{ config(
+    materialized='table',
+    schema='staging'
+) }}
+
+SELECT * FROM {{ source('raw_data', 'users') }}
+
+# Project-level configuration
+
+-- dbt_project.yml
+models:
+  my_project:
+    staging:
+      +materialized: view
+      +schema: staging
+    marts:
+      +materialized: table
+      +schema: analytics
+
+================================================================================
+7. MATERIALIZATION TYPES
+================================================================================
+
+Materialization = How dbt persists your model in the database
+
+View (Default)
+--------------------------------------------------
+{{ config(materialized='view') }}
+
+SELECT * FROM {{ source('raw_data', 'users') }}
+
+Creates: CREATE VIEW dbt_dev.stg_users AS SELECT ...
+
+Pros: Always fresh, no storage cost
+Cons: Slow for complex queries
+Use for: Small datasets, frequently changing logic
+
+Table
+--------------------------------------------------
+{{ config(materialized='table') }}
+
+SELECT * FROM {{ source('raw_data', 'users') }}
+
+Creates: CREATE TABLE dbt_dev.stg_users AS SELECT ...
+
+Pros: Fast queries
+Cons: Takes storage, can be stale
+Use for: Large datasets, stable logic, frequently queried
+
+Incremental
+--------------------------------------------------
+{{ config(
+    materialized='incremental',
+    unique_key='user_id'
+) }}
+
+SELECT * FROM {{ source('raw_data', 'users') }}
+
+{% if is_incremental() %}
+    WHERE updated_at > (SELECT MAX(updated_at) FROM {{ this }})
+{% endif %}
+
+Creates: First run = full table, subsequent runs = INSERT new rows only
+
+Pros: Efficient for large, append-only data
+Cons: More complex, can drift
+Use for: Event logs, time-series data (millions of rows)
+
+Ephemeral
+--------------------------------------------------
+{{ config(materialized='ephemeral') }}
+
+SELECT * FROM {{ source('raw_data', 'users') }}
+
+Creates: Nothing - used as CTE in downstream models
+
+Pros: No database objects, reduces clutter
+Cons: Can't query directly, recomputed each time
+Use for: Intermediate logic, reusable snippets
+
+Comparison Table
+--------------------------------------------------
+Type        | Speed  | Storage | Freshness | Use Case
+------------|--------|---------|-----------|------------------
+View        | Slow   | None    | Always    | Small, changing
+Table       | Fast   | High    | Stale     | Large, stable
+Incremental | Fast   | Medium  | Recent    | Huge, time-series
+Ephemeral   | N/A    | None    | N/A       | Internal logic
+
+================================================================================
+8. REFS() - BUILDING DEPENDENCIES (DAG)
+================================================================================
+
+Key Concept: ref() creates dependencies between models
+- Tells dbt execution order
+- Creates Directed Acyclic Graph (DAG)
+- Enables impact analysis
+
+DAG = Directed Acyclic Graph
+- Directed: One-way dependencies (A → B)
+- Acyclic: No circular dependencies (A → B → C → A is invalid)
+- Graph: Network of connected models
+
+Example Dependencies
+--------------------------------------------------
+# models/staging/stg_users.sql
+SELECT * FROM {{ source('raw_data', 'users') }}
+
+# models/staging/stg_orders.sql  
+SELECT * FROM {{ source('raw_data', 'orders') }}
+
+# models/marts/customers.sql
+SELECT 
+    user_id,
+    first_name,
+    last_name
+FROM {{ ref('stg_users') }}
+
+# models/marts/customer_orders.sql
+SELECT 
+    c.user_id,
+    c.first_name,
+    COUNT(o.order_id) as order_count
+FROM {{ ref('customers') }} c
+LEFT JOIN {{ ref('stg_orders') }} o
+    ON c.user_id = o.user_id
+GROUP BY 1, 2
+
+DAG Visualization
+--------------------------------------------------
+raw_data.users ──→ stg_users ──→ customers ──→ customer_orders
+                                             
+raw_data.orders ─→ stg_orders ──────────────
+
+Execution Order (Autgit omatic)
+--------------------------------------------------
+1. stg_users (no dependencies)
+2. stg_orders (no dependencies)  
+3. customers (depends on stg_users)
+4. customer_orders (depends on customers AND stg_orders)
+
+dbt figures this out automatically!
+
+Selective Runs
+--------------------------------------------------
+# Run customer_orders and all its dependencies
+dbt run --select +customer_orders
+
+# Run stg_users and everything downstream
+dbt run --select stg_users+
+
+# Run only models between stg_users and customer_orders
+dbt run --select stg_users+,customer_orders
+
+Why ref() Matters
+--------------------------------------------------
+1. Automatic ordering: dbt knows what to run first
+2. No hard-coded names: {{ ref('model') }} works across environments
+3. Impact analysis: See what breaks if you change a model
+4. Lineage tracking: Visual graph of dependencies
+
+Viewing the DAG
+--------------------------------------------------
+# Generate documentation with DAG visualization
+dbt docs generate
+dbt docs serve
+
+# Open browser, click any model to see graph:
+# - Green: upstream (dependencies)
+# - Blue: current model
+# - Orange: downstream (what depends on this)
+
+Invalid DAG (Circular Dependency)
+--------------------------------------------------
+# models/model_a.sql
+SELECT * FROM {{ ref('model_b') }}  # A depends on B
+
+# models/model_b.sql
+SELECT * FROM {{ ref('model_a') }}  # B depends on A
+
+# Error: Found a cycle in the dependency graph
+# This is impossible to execute!
+
+================================================================================
+9. TESTING
+================================================================================
+
+Types of Tests
+--------------------------------------------------
+1. Schema tests (built-in): unique, not_null, relationships, accepted_values
+2. Custom SQL tests: Your own SQL queries
+3. Data tests: Test source freshness
+
+Schema Tests (Most Common)
+--------------------------------------------------
+# models/schema.yml
+
+version: 2
+
+models:
+  - name: customers
+    description: "One row per customer"
+    columns:
+      - name: customer_id
+        description: "Primary key"
+        tests:
+          - unique
+          - not_null
+      
+      - name: email
+        description: "Customer email"
+        tests:
+          - unique
+          - not_null
+      
+      - name: status
+        description: "Customer status"
+        tests:
+          - accepted_values:
+              values: ['active', 'inactive', 'pending']
+      
+      - name: country_code
+        description: "ISO country code"
+        tests:
+          - accepted_values:
+              values: ['US', 'CA', 'GB', 'SE']
+
+Relationship Tests
+--------------------------------------------------
+# models/schema.yml
+
+version: 2
+
+models:
+  - name: orders
+    columns:
+      - name: customer_id
+        description: "Foreign key to customers"
+        tests:
+          - relationships:
+              to: ref('customers')
+              field: customer_id
+
+# This ensures: All customer_ids in orders exist in customers
+
+Running Tests
+--------------------------------------------------
+# Run all tests
+dbt test
+
+# Test specific model
+dbt test --select customers
+
+# Test specific source
+dbt test --select source:raw_data
+
+Custom SQL Tests
+--------------------------------------------------
+# tests/assert_positive_order_amounts.sql
+
+-- Returns rows that fail the test
+-- If query returns 0 rows, test passes
+
+SELECT 
+    order_id,
+    amount
+FROM {{ ref('orders') }}
+WHERE amount <= 0
+
+# Run: dbt test
+# If any orders have amount <= 0, test fails
+
+Testing Sources
+--------------------------------------------------
+# models/staging/sources.yml
+
+version: 2
+
+sources:
+  - name: raw_data
+    tables:
+      - name: users
+        columns:
+          - name: user_id
+            tests:
+              - unique
+              - not_null
+
+# Test sources
+dbt test --select source:raw_data
+
+Test Severity
+--------------------------------------------------
+# models/schema.yml
+
+models:
+  - name: customers
+    columns:
+      - name: email
+        tests:
+          - unique:
+              severity: error    # Fail on violation (default)
+          - not_null:
+              severity: warn     # Warn but don't fail
+
+================================================================================
+10. ESSENTIAL COMMANDS
+================================================================================
+
+Setup & Configuration
+--------------------------------------------------
+dbt init my_project          # Create new project
+dbt debug                    # Test database connection
+dbt deps                     # Install packages from packages.yml
+
+Running Models
+--------------------------------------------------
+dbt run                      # Run all models
+dbt run --select stg_users   # Run specific model
+dbt run --select staging.*   # Run all in staging/
+dbt run --select +customers  # Run customers and dependencies
+dbt run --select stg_users+  # Run stg_users and downstream
+dbt run --full-refresh       # Rebuild incremental models from scratch
+
+Testing
+--------------------------------------------------
+dbt test                     # Run all tests
+dbt test --select customers  # Test specific model
+dbt source freshness         # Check source data freshness
+
+Documentation
+--------------------------------------------------
+dbt docs generate            # Generate documentation
+dbt docs serve               # View docs in browser (localhost:8080)
+
+Compilation
+--------------------------------------------------
+dbt compile                  # Compile SQL without running
+dbt compile --select model   # See compiled SQL for debugging
+
+Listing
+--------------------------------------------------
+dbt list                     # List all resources
+dbt list --select staging.*  # List models in staging
+dbt list --resource-type source  # List sources only
+
+Target Selection
+--------------------------------------------------
+dbt run --target prod        # Run against prod target
+dbt run --target staging     # Run against staging target
+
+Combined Flags
+--------------------------------------------------
+dbt run --select +customers --target prod
+dbt test --select staging.* --exclude stg_temp
+
+================================================================================
+11. COMMON PATTERNS
+================================================================================
+
+Pattern 1: Staging Layer (1:1 with sources)
+--------------------------------------------------
+# models/staging/stg_users.sql
+
+SELECT 
+    -- Rename columns to standard names
+    id as user_id,
+    email as email_address,
+    created as created_at,
+    
+    -- Basic cleaning
+    LOWER(TRIM(email)) as email_normalized,
+    
+    -- Type casting
+    created::timestamp as created_timestamp
+FROM {{ source('raw_data', 'users') }}
+WHERE deleted_at IS NULL
+
+Purpose: Clean and standardize raw data
+Rule: One staging model per source table
+
+Pattern 2: Intermediate Models (Business Logic)
+--------------------------------------------------
+# models/intermediate/int_order_items_joined.sql
+
+{{ config(materialized='ephemeral') }}
+
+SELECT 
+    oi.order_id,
+    oi.product_id,
+    oi.quantity,
+    oi.unit_price,
+    p.product_name,
+    p.category,
+    oi.quantity * oi.unit_price as line_total
+FROM {{ ref('stg_order_items') }} oi
+LEFT JOIN {{ ref('stg_products') }} p
+    ON oi.product_id = p.product_id
+
+Purpose: Complex joins, reusable logic
+Materialization: Usually ephemeral
+
+Pattern 3: Fact Tables (Events/Transactions)
+--------------------------------------------------
+# models/marts/fct_orders.sql
+
+SELECT 
+    o.order_id,
+    o.customer_id,
+    o.order_date,
+    o.order_status,
+    COUNT(oi.line_item_id) as line_item_count,
+    SUM(oi.quantity) as total_quantity,
+    SUM(oi.line_total) as order_total
+FROM {{ ref('stg_orders') }} o
+LEFT JOIN {{ ref('int_order_items_joined') }} oi
+    ON o.order_id = oi.order_id
+GROUP BY 1, 2, 3, 4
+
+Naming: fct_* (fct_orders, fct_payments)
+Materialization: Table (for performance)
+
+Pattern 4: Dimension Tables (Entities)
+--------------------------------------------------
+# models/marts/dim_customers.sql
+
+SELECT 
+    c.customer_id,
+    c.first_name,
+    c.last_name,
+    c.email,
+    c.created_at,
+    COUNT(o.order_id) as lifetime_orders,
+    SUM(o.order_total) as lifetime_value,
+    MAX(o.order_date) as last_order_date,
+    CASE 
+        WHEN COUNT(o.order_id) >= 10 THEN 'vip'
+        WHEN COUNT(o.order_id) >= 5 THEN 'regular'
+        ELSE 'occasional'
+    END as customer_segment
+FROM {{ ref('stg_customers') }} c
+LEFT JOIN {{ ref('fct_orders') }} o
+    ON c.customer_id = o.customer_id
+GROUP BY 1, 2, 3, 4, 5
+
+Naming: dim_* (dim_customers, dim_products)
+Materialization: Table
+
+Pattern 5: Incremental Model (Large Event Data)
+--------------------------------------------------
+# models/staging/stg_events.sql
+
+{{ config(
+    materialized='incremental',
+    unique_key='event_id'
+) }}
+
+SELECT 
+    event_id,
+    user_id,
+    event_type,
+    event_timestamp,
+    event_properties
+FROM {{ source('raw_data', 'events') }}
+
+{% if is_incremental() %}
+    -- Only process new events
+    WHERE event_timestamp > (
+        SELECT MAX(event_timestamp) 
+        FROM {{ this }}
+    )
+{% endif %}
+
+Purpose: Efficiently process append-only data
+Use for: Events, logs, time-series (millions of rows)
+
+Pattern 6: Using CTEs for Readability
+--------------------------------------------------
+# models/marts/customer_metrics.sql
+
+WITH customer_orders AS (
+    SELECT 
+        customer_id,
+        COUNT(*) as order_count,
+        SUM(amount) as total_spent
+    FROM {{ ref('fct_orders') }}
+    GROUP BY 1
+),
+
+customer_info AS (
+    SELECT 
+        customer_id,
+        first_name,
+        last_name,
+        created_at
+    FROM {{ ref('dim_customers') }}
+),
+
+final AS (
+    SELECT 
+        ci.customer_id,
+        ci.first_name,
+        ci.last_name,
+        ci.created_at,
+        COALESCE(co.order_count, 0) as order_count,
+        COALESCE(co.total_spent, 0) as total_spent
+    FROM customer_info ci
+    LEFT JOIN customer_orders co
+        ON ci.customer_id = co.customer_id
+)
+
+SELECT * FROM final
+
+Purpose: Break complex queries into logical steps
+
+================================================================================
+12. QUICK REFERENCE
+================================================================================
+
+Key Jinja Syntax
+--------------------------------------------------
+{{ source('source_name', 'table_name') }}    # Reference source
+{{ ref('model_name') }}                       # Reference model
+{{ config(materialized='table') }}            # Configure model
+{% if condition %}...{% endif %}              # Conditional logic
+{% for item in items %}...{% endfor %}        # Loops
+{{ var('variable_name') }}                    # Use variable
+{{ env_var('ENV_VAR_NAME') }}                 # Environment variable
+
+Common Config Options
+--------------------------------------------------
+materialized: 'view' | 'table' | 'incremental' | 'ephemeral'
+schema: 'custom_schema_name'
+tags: ['daily', 'pii']
+enabled: true | false
+pre_hook: 'SQL to run before model'
+post_hook: 'SQL to run after model'
+
+Project File Structure Summary
+--------------------------------------------------
+~/.dbt/profiles.yml          # Database credentials (ONE database)
+dbt_project.yml              # Project config
+models/staging/sources.yml   # Source definitions (raw data)
+models/staging/stg_*.sql     # Staging models (clean raw)
+models/marts/fct_*.sql       # Fact tables (events)
+models/marts/dim_*..sql      # Dimension tables (entities)
+models/schema.yml            # Tests and documentation
+
+Important Concepts
+--------------------------------------------------
+Source schema (sources.yml)  = Where raw data lives (READ)
+Target schema (profiles.yml) = Where dbt creates models (WRITE)
+
+ETL loads data → Source schemas (raw_*)
+dbt reads source schemas → Creates models in target schema
+
+DAG = Directed Acyclic Graph
+- Shows dependencies between models
+- dbt uses it for execution order
+- View with: dbt docs serve
+
+Materialization Cheat Sheet
+--------------------------------------------------
+View: Small, frequently changing, always fresh
+Table: Large, stable, frequently queried
+Incremental: Very large, append-only, time-series
+Ephemeral: Intermediate logic, no database object
+
+Selection Syntax
+--------------------------------------------------
+dbt run --select model_name           # Specific model
+dbt run --select folder.*             # All in folder
+dbt run --select +model_name          # Model + dependencies
+dbt run --select model_name+          # Model + downstream
+dbt run --select tag:daily            # By tag
+dbt run --select source:raw_data+     # Source + downstream
+
+Troubleshooting Checklist
+--------------------------------------------------
+1. Connection issues?
+   → dbt debug
+   → Check profiles.yml matches dbt_project.yml
+
+2. Model not running?
+   → Check for circular dependencies
+   → dbt compile to see compiled SQL
+
+3. Test failing?
+   → dbt test --select model_name
+   → Check schema.yml configuration
+
+4. Source not found?
+   → Verify schema name in sources.yml
+   → Check database permissions
+
+Best Practices
+--------------------------------------------------
+1. Always use source() for raw data (never hard-code table names)
+2. Always use ref() for model dependencies
+3. One staging model per source table (stg_*)
+4. Use consistent naming (stg_*, int_*, fct_*, dim_*)
+5. Test primary keys (unique + not_null)
+6. Document models and columns
+7. Use environment variables for credentials
+8. Version control everything (except profiles.yml)
+
+Most Common Workflow
+--------------------------------------------------
+1. Define sources (sources.yml)
+2. Create staging models (stg_*.sql)
+3. Add tests (schema.yml)
+4. Build marts (fct_*, dim_*)
+5. Run: dbt run
+6. Test: dbt test
+7. Document: dbt docs generate && dbt docs serve
+
+Getting Help
+--------------------------------------------------
+dbt debug                    # Connection troubleshooting
+dbt --help                   # Command help
+dbt run --help               # Command-specific help
+dbt docs serve               # View project documentation
+
+Official docs: https://docs.getdbt.com/
+Community: https://discourse.getdbt.com/
+
+================================================================================
+END OF CHEAT SHEET
+================================================================================
+
+Remember:
+- dbt connects to ONE database (your warehouse)
+- Sources = raw data (already loaded by ETL)
+- Models = your SQL transformations
+- ref() and source() create the DAG
+- Start simple, iterate and improve
+
+Next steps:
+1. Set up profiles.yml with your database
+2. Define sources for your raw tables
+3. Create your first staging model
+4. Add tests
+5. Build downstream models
+6. Run dbt docs serve to visualize
+
+Happy transforming!
