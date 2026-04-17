@@ -1,0 +1,105 @@
+## Environment
+    # Greenhouse Effect:
+        - The car makes the carbon dioxide into the atomosphere making it thicker. This thick layer reflect back from the 
+        heat rays creating greenhouse effect.
+
+        # Consequences: 
+            - Natular disasters
+            - Agricultural disturbance
+            - Diseases
+            - Water shortage
+
+    # Equipment and technology to reduce emission
+
+        # Catalytic converters:
+            - transform the harmful substances in exhaust fumes into carbon dioxide and water
+            - eliminates 80-95% harmful substances
+            - operating temp: 400-600°C
+
+        # Engine heater:
+            - catalytic converter starts working
+            - lower fuel consumption
+            - less wear in the engine
+
+            When to start:
+                - +10°C: 30 mins before 
+                - 0°C: 1 hour before
+                - -10°C: 1.5 hours before
+        
+        # Reducing air resistence: less fuel consumption
+            - remove rails and roof boxes
+            - windows shut
+            - tyres too wide
+        
+        # Correct type pressure
+
+        # Using less air conditioning
+            - turning off AC can save 5-10% fuel consumption
+        
+        # Washing car correctly
+            - Intended car wash drains water correctly
+            - Wax requires less car wash
+
+
+## Eco driving
+
+    # Avoid first gear
+        - appropriate when starting, 
+        - gives car a lot of power
+        - lot of fuel is used
+    
+    # Drive in as high a gear as possible
+        - most modern car can handle 50km/h in 5th gear
+        - if car is slugging go to lower gear
+    
+    # Accelerate fairly quickly
+        - constant speed takes less fuel
+        - keep engine below 2500 rpm
+    
+    # Avoid using clutch
+        - The engine uses fuel when the clutch pedal is depressed
+    
+    # Skip gears
+
+    # Utilize engine braking
+        - automatic car handles by itself
+        - shift to 1st gear before 1200-1300 rpm
+    
+    # Avoid breaking and stopping
+        - when approaching red light, engine break
+
+## Fuels
+
+    # Petrol and diesel
+        - both fossil fuels contribute to greenhouse effect and climate change
+        - diesel car has lower fuel consumption
+        - diesel car exhaust more dangerous gases
+        - at petrol station both are environmental class 1
+        - E10 is standard petrol in sweden 
+    
+    # Electric
+        - does not emit exhaust gas
+        - battery requires large amount of metal comes from mines
+    
+    # Hybrid
+        - two engines
+        - plugin hybrid means it can be charged with cable
+    
+    # Emission classes
+        - Euro classification: Euro 5, Euro 6, etc; higher number means lower emission
+        - Other: Electric (“El”), Hybrid (“Hybrid”) and Plug-in hybrid (“Laddhybrid”).
+    
+    # Environmental zones
+        * Class 1 / KLASS 1
+            - only effects heavy vehicles
+            - newer lorries are allowed but older models are prohibited
+            - regular car drives here regardlress of fuel consumption
+        
+        * Class 2 / KLASS 2
+            - Petrol cars: Euro 5 or Euro 6
+            - Diesel cars: Euro 6
+        
+        * Class 3 / KLASS 3
+            - electric, gas, fuel cell vehicles allowed
+            - petrol, diesel, plugin hybrid prohibited
+        

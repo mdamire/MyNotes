@@ -1,0 +1,249 @@
+## Learning and maturity
+
+    * The cogwheel principle (every oher car drives regardles of the priority rules) is not included in 
+    any legislation
+
+    * No general rule of when rules may be disobeyed
+        - should benefit the trafic situation
+        - everyone should be aware of what is happening
+        - never to benefit yourself
+    
+    * Probability learning (learning from experience) can be good or bad
+    
+    * Redece stress:
+        - make sure you have plenty of time
+        - be rested and in good health
+        - drive calmly and defensively
+        - avoid rush hour traffic (morning, afternoon)
+        - good car health
+    
+## Alcohol
+
+    # Drunk driving:
+        - 0.2 per mille of alcohol in blood; 0.1 mg of alcohol per litter of breath
+        - fines or up to 6 months jail
+        - revoked driving licence for 1 year
+    
+    # Aggravated drunk driving:
+        - 1.0 per mille of alcohol in blood; 0.5 mg of alcohol per littler of breath
+        - upto 2 years jail
+        - revoked driving licence for 2 year. take tests again
+    
+    # Per mille:
+        0.1-0.4% : Loss of certain inhibitions and overestimation of one’s own abilities. Slower reaction time.
+        0.4-1.0% : Impairment of vission, speech and coordination
+        1.0-2.0% : Uncontrolled body, double vission
+        2.0-3.5% : deep sleep
+        >3.5% : death
+    
+    # Awareness:
+        - reckless driving but under legal limit is still drunk driving
+        - serving alcohol to a driver or lending car to drunk person is punishable offence
+        - if taken into custody for being drunk in other context, licence can be revoked
+        - legislation of alcohol applies to all motor vehicles
+        - impossible to hide alcohol in body
+        - you often feel worn out the day after drinking
+        - different person can have different level of blood alcohol with same amount of drinking
+        - drunk driving rule is included everywhere including fenced off areas and private property
+        - alcolock may be an option instead of revoking licence
+    
+    * If medication makes you a traffic hazar then it's prohibited to drive, you need to judge it. Driving under 
+    medication is same as drunk driving
+
+    * Zero tolerance for drugs. Same as drunk driving
+
+    # Mobile phone:
+        - handheld mobile phone is always prohibited. Not allowed to hold it.
+        - handsfree/gps is prohibited if it makes you traffic hazard
+        - texting is also always prohibited and risk level is same as highly drunk person
+
+    # Stats:
+        - 20% of traffic deaths are because of alcohol or drugs
+        - estimated 15,000 drunk drivers on road every day
+        - around 25,000 are caught drunk driving, 15,000 are because of drugs
+        - 90% of drunk drivers are men
+    
+    # Alcohol calculation:
+        volume of spirit = % by volume * volume in cl * 0.025
+        Example: How many centilitres (cl) of spirits (40% volume) corresponds to 50 cl of low-strength beer (3.5% volume)?
+        Answer: 3.5 * 50 * 0.025 = 4.38 ≈ 4 cl
+
+
+## Tiredness
+
+    * It's forbidden to drive while tired and incapable of driving in safe manner
+    * After sleepless night the reaction time is same as a drunk person
+
+    # Cuases:
+        - Exhaustion
+        - Sleep deprivation
+        - Alcohol, drugs, medication
+        - Monotony:
+            - Wide, long and straight uninterrupted roads
+            - Engine/tyre noise
+    
+    # Dangers:
+        - bad concentration/coordination
+        - slower reaction time
+        - bad decision making
+        - difficulty maintaining speed
+    
+    # Indications:
+        - blurred vision
+        - dry mouth
+        - frequent yawning
+        - feeling cold
+        - overreacting
+        - head feels heavy
+        - muscle relaxation
+        - optical illusion
+        - difficulty to maintain speed
+        - problems concentrating
+        - difficulty to keep eyes open
+    
+    # Avoid tiredness:
+        - drive when rested
+        - not too warm car
+        - take break after about an hour
+        - do not eat heavy food
+    
+    # Reduce tiredness:
+        * Best way to have long sleep 
+        * Temporary:
+            - short nap (not less than 15 mins)
+            - take break, stretch legs
+            - coffee, same as taking a nap
+    
+    # Stats:
+        - most tiredness related accident 2:00 to 5:00
+        - most common cause of single vehicle accident
+        - 40% accidents outside of buildup area is at night or dawn
+        - risk of accident increases with proximity of destination as you feel relax
+
+  
+## Vision
+    * 180° visual field
+    * central vision is 1-2% of visual field, other is peripheral vision
+
+    # Experienced drivers:
+        - flexible gaze, smooth transition
+        - focus on moving object
+        - broader observation
+    
+    # Inexperienced drivers:
+        - Fix gaze on objects and keep it there for long time
+        - focus on stationary object
+        - narrower observation
+    
+    * Tunnel vision is when eye scans smaller area and misses what happens on the other side of road
+    Tunnel vision increases with: 
+        - Tiredness
+        - Alcohol 
+        - Stress
+
+
+## Impairments
+    * sign with five dot straight with straight line - visually impaired
+    * three dot in circle - Hearing imparied
+
+    # White cane:
+        - straight towards the ground - waiting & listening
+        - diagonal - intents to start walking
+    
+    # When stopping for a visually impaired person
+        - stop in good time
+        - don't make noise
+        - wait until they finish crossing the road
+    
+    # Guide dog:
+        - Wear white harness
+        - helps visually impaired person
+        - never contract with guide dog
+
+
+## Children
+    # School busses
+        - when overtaking stationary school bus be very careful, slow down
+        - has sign with warning lights that drivers turn on 100 meters before stop and turns off 100 meter after stop
+
+
+## Traffic Accidents
+    * Olyca == Accident
+
+    # Prone to accidents
+        * 15% of the population cause 50% of the accident. Their characteristics:
+        - Make excuses from their mistake
+        - Deny the danger
+        - Act impulsively
+        - Are proud
+        - Have need for self assertion
+        - Are prone to reaction formation
+        - Party a lot
+        - Adventurous
+    
+    # If first to arrive at accident:
+        - Survey the scene: Number of casualties? Other risks?
+        - Priorities: What needs to be done first? Person in a burning car?
+        - Warn: If visibility is limited, there is a risk of more cars colliding, thus making the situation worse.
+        - Call 112
+
+        # First aid:
+            1. Life-threatening situations: if someone is in burning car remove them
+            2. Breating: If breating put them recovery position, If not:
+                - No pulse: CPR is required
+                - Pulse: Mouth to mouth
+            3. Bleeding: Apply pressure
+            4. Shock: Can have internal bleeding. Make sure person is breatind and do not give them anything to drink
+        
+        # Remember:
+            - Stay at the scheme until emergency responders have taken over. If already people in the scene, then move away
+            - Don't move anything unless it's blocking the road
+            - Give your information even private person is asking
+            - Call police
+    
+    * Do not approach lorries with dangerous goods
+
+    # Minor accident:
+        * Keep an insurance claim form (provided by company). Write down:
+        - Time, date & location
+        - Name, address of any witness and what they have seen
+        - Counterparty's name, address, phone number, vehicle, registration, insurance company
+        - Any damage caused
+    
+    # Parking accident:
+        - call the owner. Swedish transport agency can help to find the owner with registration number
+        - put a note of your contract information on the windscreen
+        - if unable to reach owner then call police.
+    
+    * DAMAGED SIGN: try to restore it. If you unable to then contract police and warn other road users.
+
+    # Greatest rist of wildlife on road:
+        - at dusk and dawn
+        - May - June & September - October
+        - On salted roads
+        - Close to open fields
+        - Close to a water caurse
+        - at start and end of wildlife fence
+    
+    * If elk start crossing the road, go behind them
+
+    # What to do if you hit a large animal:
+        1. Warn other road users with hazard light and warning triangle
+        2. If animal is dead try to move it away from the road.
+        3. If animal is wounded you are obliged to call the police if the animal you hit is either:
+        Bear, Wolf, Walverine, Lynx, Elk, Deer, Roe deer, Otter, Wild boar, Mouflon sheep, Eagle
+
+    # Warning triangle: 
+        - car must be equipped with it
+        - if car stalls on a road where the speed is > 50km/h, you must display a warning triangle.
+        - place it 50-100 m before
+
+    # Accident locations:
+        - most are in built-up areas
+        - most serious are outside built-up are
+
+    # Stats:
+        - 20% traffic deaths are related to drugs or alcohol
+        - 40% killed were not wearing a seat belt
+        - 75% killed are men
+        - 75,000 accidents occur each year

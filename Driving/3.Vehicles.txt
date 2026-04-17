@@ -1,0 +1,470 @@
+
+## classification of vehicles
+    # Speed for different vehicle:
+        - speed limit : Private car, light lorry, motorcycle, light bus
+        - 100 : Heavy bus with seat belts
+        - 90 : Heavy by without seatbelts, heavy lorry on motorway or clearway
+        - 80 : Heavy lorry on the road, vehicle with breaked trailer/caravan, vehicle with unbreaked trailer/caravan
+        whose total weight is less than half the pulling vehicle's unladen weight and not more than 750 KG
+        - 45 : Moped class 1
+        - 40 : Vehicle with unbreaked trailer/caravan whose total weight is greater than pulling vehicles service weight
+        - 30 : Car towing another car
+
+
+## Distances
+    * Reaction distance is effected by car's speed and your reaction time
+    # Calculate the reaction distance
+        - Formula: Remove the last digit in the speed, multiply by the reaction time and then by 3.
+        - Example of calculation with a speed of 50 km/h and a reaction timeof 1 second:
+        5 * 1 * 3 = 15 metres reaction distance
+    
+    * Breaking distance is effected by vehicle's speed (raised by power of 2), the road, the load, the breaks
+    # Calculate the breaking distance
+        - Formula: Remove the last digit from the speed, multiply the figure by itself and then multiply by 0.4.
+        - Example of calculation with a speed of 10 km/h:
+        10 km/h ⇒ 1; 1 * 1 = 1; 1 * 0.4 = 0.4 metres braking distance
+    
+    # Stopping Distance: Breaking distance + Reaction distance
+
+
+## Tyres
+    # Types:
+        - Summer tyres
+        - Winter tyres:
+            - Studded tyres: 
+                - Best on icy surface. 
+                - cause a lot of wear on the road
+                - older cars without anti-skid system should have studded tyres
+            - Friction tyres:
+                - as good as studded tyres except on ice.
+                - more quite and less wear on the road
+                - good for cars with anti-skid system and less winter place
+            * bad performance in hot days
+        
+    # Tread depth:
+        - 1-1.6mm : minimum permitted summer tyre
+        - 3mm : minimum permitted winter tyre
+    
+    # When to use winter tyre
+        - 1 December to 31 March in winter road condition (legal requirement)
+        - Prohibited to have studded tyre 16 April to 30 September (if not winter condition)
+    
+    # Facts:
+        - Correct air pressure is important
+        - It is prohibited to combine summer and winter tyres.
+        Exception: if winter tyre is punctured, spare summer tyre can be used until winter tyre has been fixed
+        Better to change both tyre on same axle for balance.
+        - After changing tyre re-tighten the wheel bolts after some tens of kilometers of driving
+        - summer tyre + snow chain == winter tyre
+
+    # Tyre fault:
+        - Incorrect wheel alignment causes the car to pull on one side
+        - Incorrect balancing causes the steering wheel to vibrate
+    
+    # Spare typre:
+        * Regular spare is same tyre. Often best to have an old tyre as spare.
+        * A temporary spare is narrower version
+    
+    # Studded tyre on trailer
+        - If car has studded tyre, trailer must have studded tyre
+        - If trailer has studded tyre, car does not need to have studded tyre
+
+
+## Steering:
+    # Oversteering: 
+        - car turns too much on the back causing rear wheel slide
+        - to avoid, put the best tyres at the back
+        - normally effects rear wheel drive cars
+    
+    # Understeering:
+        - car turns too little and wants to continue travelling straight
+        - normally effects front wheel drive. (new cars are front wheel drive)
+        - better than Oversteering
+    
+    # Electronic stability control
+        * Auto corrects the steering with sensors.
+        * Makes car stable
+        # other names:
+            - Anti-skid 
+            - Anti-spin
+            - DSTC (Dynamic Stability and Traction Control)
+            - ESP (Electronic stable program)
+            - ESC (Electronic stable control)
+    
+    # Aquaplaning:
+        * Car doesn't have contract with road because of water.
+        * Slushplaning is the same thing but with snow or slush
+
+        # Factors that increase:
+            - Large pool of water
+            - High speed
+            - Wide tyres
+            - Tyres with poor tread depth
+        
+        # If it begins:
+            - Do not make sudden movement
+            - Wheels should point towards roads
+            - Depress the clutch
+            - Release the accelerator
+            - Do not break
+    
+## Breaks:
+    * Dual circuit break system means the breaking system has two different part, if one fails other will work
+    * Disk break, Drum break
+    * ABS (Anti-lock breaking system) helps you maintain control. Descreases breaking distance. On gravel the 
+    breaking distance may increase.
+
+    # Faulty break test:
+        Hold down break for 20 secs. if break:
+        - sinks very low, means wear
+        - continues to sink slowly, means leak in breaking system
+        - padel feels springy, means air in breaking system
+    
+    * Break fluid should be changed every two years.
+    * Parking break is to stop the car from rolling. Applies breaks on the back wheels.
+
+
+## Crash safety
+    # Seatbelt:
+        - It requires by law to wear setbelt. drivers responsibility to passengers under 15
+        - For pregnant woman, seat belt should be under the belly. 
+    
+    # Airbag:
+        - seat atleast 25 cm from the airbag
+        - triggered at a speed over 20-30 km/h
+
+
+## Child safety seats
+    * Drivers responsibility to ensure the children under the age of 15 have correct protection
+    * Children under 135cm mush have some from of special child protection
+        - Exception 1: Occasional trips in the back seats of taxis are permitted if the child is under 3 years old
+        - Exception 2: Occasional trips over short distances for children over 3 years old and under 135 cm are permitted if 
+        the child sits with seat belt on.
+
+    # Baby car seat:
+        - 0-9 months old until the child is able to sit properly
+        - airbag must be disconnected if the baby car seat is placed in the front seat
+        - rear facing baby car sit provides best protection. It's for 7 months to 4 years old until it baby's head 
+        recheases the edge of the child safety seat.
+    
+    # Booster seat:
+        - 4 years until baby child is over 135cm
+        - disconnect airbag
+        - backseat is best
+
+    * 135cm - 140cm: only backseat
+
+
+## Length & width
+    # Width
+        - The total maximum width is 260cm (with or without load)
+        - A load may protrude by maximum 20cm
+
+    # Length:
+        - The total maximum length can be 240cm (with or without load)
+        - Forward protrusion must be marked. Exception in under 1 meter and clearly visible
+        - Rear protrusion must be marked if it protrudes >1m
+    
+    Marking:
+        - day: flags with clear color to both front and back
+        - night: lamp with light and reflactor. front = white; back = red
+
+    * When towing if distance is more than 2 meter it needs to be marked
+
+    # Marking trailer:
+        # Front:
+            - white reflector
+            - white position light on trailers wider than 160cm
+        # Sides:
+            - orange reflectors
+            - orange lights
+        # Back:
+            - rear lights
+            - break lights
+            - indicator
+            - rear registration plate light
+            - rear triangle reflector
+
+
+## Loads
+    * It is normally the breaking when load is subjected to pressure
+
+    # correct loading:
+        - secure the load. must restrict 80% forward and 50% side movement
+        - place it at the front of the boot
+        - heaviest part of the load on the bottom
+    
+    # terminology:
+        - Unladen weight: unladen car with driver
+        - Maximum load: maximum load permitted in registration
+        - total weight: Unladen weight + Maximum load
+        - Gross weight: The weight at a given time
+    
+    * With B licence, you may drive private car or light lorry with a maximum total weight of 3500kg
+
+    # Trailer
+        * With B licence, you are allowed to tow a light trailer 
+
+        # A triler is light if:
+            - maximum total weight 750 kg 
+            OR
+            - total weight for car + trailer <= 3500kg
+
+        * Light trailer weight cannot go beyond what car registration say
+
+    # Ball pressure
+        * Ball pressure is the pressure trailer puts on the car
+        
+        - High ball pressure: excesive load on front of the trailer. Poor traction on front wheels of the car.
+        - Low ball pressure: excessive load on the back of the trailer. Porr traction with the rear wheels.
+    
+    # Trailer break:
+        - A service break for > 750kg total trailer weight
+        - A perking break for > 400kg unladen trailer weight
+    
+    (see the signs for heavy lorry and heavy trailer)
+
+
+## Lights
+    1. Dipped headlights
+        * The norm is to use combination of dipped headlights and parking lights. 
+        # Prohibited light combination:
+            - Dipped headlights + fog light
+            - dipped headlights + daytime running light
+            - dipped headlights + auxiliary hight beam light
+            - fog lights + daytime running lights
+    
+    2. Full beam headlights:
+        * Most powerful light. Use them as often as you can in the dark.
+        # Prohibited if:
+            - close incoming any traffic 
+            - when behind another vehicle
+            - road is not dark
+        
+        * No need to dim for pedestrians.
+        * Good idea to turn off at junction with lot of cars
+        * For oncoming lorry, must dim as soon as you see the position lights on the roof
+        * Makes bad visible in fog or snow, try switching to the dipped light
+        * Fix your gaze on the right hand side of the car
+
+    3. Indicators:
+        - turn left or right
+        - change lane
+        - turn around
+        - pull out from the side of the road
+        - manoeuvre the car sideways
+    
+    4. Hazard light:
+        - used in time of emergency stop or similar
+        - all indicators flashes at the same time
+    
+    5. Fog light
+        - Permitted to use fog light instead of dipped headlight in daylight
+    
+    6. Rear fog light
+        - very powerful red light
+        - turn off as soon as the read vehicle has seen you
+    
+    7. Daytime running light
+        - used to increase the car's visibility
+        - some cars have it
+    
+    8. Auxiliary hight beam light
+        - Fitted additionally
+    
+    9. Parking lights
+        - should be used when car is stopped or parked in poor visibility
+        - low power lights
+    
+    10. Rear lights
+
+    11. Break lights
+        - lights that come when break is pressed
+
+    12. Reversing light
+        - lights that come when reverse gear
+    
+    13. Registration plate light Correct dim 
+
+    # correct dimming of full beam head light
+        # Oncoming traffic:
+            - keep them on as long as you can
+            - when the light meet with incoming cars light or you are dazzled, dim the light
+            - exectly when leveled with the car, switch back on 
+        
+        # Overtaking:
+            - keep them on as long as you can
+            - when close to the car, dim the light
+            - exectly when leveled with the car, switch back full beam
+            - Now it's the car that being overtaken must turn off the hight beam, 
+        
+        # Bends:
+            - cars on the lower curve should dim the light
+            - cars on the higher curve can keep them on
+    
+    # Visibility in darkness:
+        # dark clothing without reflectors:
+            - dipped headlights: 25m
+            - high beam: 150m
+        
+        # light clothing without reflectors:
+            - dipped headlights: 60m
+            - full beam headlight: 300m
+        
+        # With reflactor:
+            - dipped headlight: 125m
+            - full beam: 450m
+
+
+## Safety checks
+    # External Safety checks
+        - parking lights, front and rear lights, reflectors, registration plate light
+        - turn on ignition, dipped headlight, indicators, rear fog light
+        - on left: check front wheel (tread depth, round tyre), front indicator, headlights (fullbeam), rear wheel, 
+        rear light, rear indicator and rear for light
+        - same on right
+        - turn off lights and indicators
+        - ask someone to press the break to see break lights
+    
+    # Internal Safety check
+        - correct driving position, check the mirror, check doors are shut
+        - check wipers, heating control
+        - beep horn once and adjust your seatbelt
+        - press and hold the break
+        - turn steering wheel slightly and start the car. Power steering should work, break should sink
+        - check the handbreak by pulling it and attepting to drive or by releasing it on a slope
+    
+    # Driving Position
+        - Adjust the seat so you should be able to angle your wrists over the sterring wheel
+        - Adjust the head restrant so it's positined roughly in the centre of the back of your head
+        - Adjust mirrors
+        - Fasten seatbelt
+        - Depress the clutch
+        - Start the engine
+        - turn on necessary regulator systems (e.g fans)
+        - check correct lights are switched on
+
+
+## Roadworthiness test
+    * Roadworthiness test (inspection) is carried out in order to reduce accident caused by technical fault and to 
+    prevent excessive emission of harmful substances
+
+    # Checks
+        - Frame: car's structure is not damaged (e.g rusted)
+        - Wheels and control system: no damage in front and back wheel. tyre condition and thread depth
+        - Drive system: the engine, the electric, exhaust and drive system
+        - Break system: functionality, effectiveness and evenness of the break
+        - Bodywork: seat belts, windows and doors
+        - Communication: lights, indicators, horn, windscreen, washer fluid and warning light
+        - environment: exhaust emission
+        - Other: towbar, instrument lights, speedometer
+    
+    * Your responsibility to get the car inspected
+
+    # Inspection time:
+        - 1st: 3 years after the month when serviced
+        - 2nd: 2 years after the month of 1st inspection
+        - subsequent: 14 months after the months it was inspected
+    
+    # Rules:
+        - if not inspected, a driving ban is automatially imposed on the vehile until it's inspectd
+        - you must rectify any faults found during inspection otherwise a driving ban will be imposed
+        - police can do vehicle spot inspection
+        - if vehicle changes (e.g new engine) it must be subjected to registration inspection within 1 month. 
+
+
+## Services
+    # Car battery
+        - electric parts (e.g radio/starter motor) run by battery
+        - Check the fluid, there is min/max
+        - if low, add distilled water. 
+        - when engine running batter is charged by genarator
+        - battery deteriorates over time
+        - fluid in batter is corrosive
+    
+    # Fuses
+        - part of electrical system
+        - if electicity has stopped working it's most likely fuse
+    
+    # Radiator
+        - prevents the engine to overheat
+        - if engine temp is high, there might be too little coolant.
+        - should not open the radiator when engine is warm as it might burn you with hot steam
+        - radiator should have coolant which is water and glycol
+    
+    # Engine Oil
+        - lubricant to the engine
+        - pull out dipstick, wipe it, dip it again, check the mark
+        - added by removing a screw cap on the engine
+    
+    # Windscreen washer fluid
+        - check by looking at the windscreen washer fluid container under the bonnet
+
+
+## Registration certification
+    # PART 1 - information about the vehicle
+        # contains:
+            - technical information
+            - about leasing and purchasing on credit
+            - authorisation code for internet service
+            - general information about the vehicle
+        
+        # Used for:
+            - notification of on road status
+            - notification of off road status
+            - Ordering registration plates
+            - Ordering Part 2
+    
+    # PART 2 - certificate of ownership and change of ownership
+        # contains:
+            - ownership information
+            - most recent ownership of the vehicle
+            - other general information about the vehicle
+        
+        # user for:
+            - Change of ownership
+            - Deregistration
+        
+        * It's important to keep it somewhere safe. Not in the glove box.
+    
+    * Chaning of ownership can happen via app or send part 2 via mail
+
+    # Important info:
+        - new owner must have third party insurance from the the date specified the change of ownership
+        - check one another's personal details. Otherwise Swedish transport agency cannot complete it
+    
+    # Off-road status
+        - by registering as off road, you avoid having to pay vehicle tax or insurance
+        - submit by app or part-2 of registration certificate in mail
+        - driving ban doesn't mean off road status. need to submit yourself.
+        - vehicle with off road status can only be driven to or from roadworthiness test, provided that third-party 
+        insurance has been paid and there are no motor vehicle tax arrears.
+        - forbidden to tow a vehicle with off-road status
+
+
+## Insurance
+    * Devided into three parts and differs from one insurance to another.
+    * keep insurance claim form in the car. order from insurance company
+
+    1. Third-party insurance
+        - covers persoan injury and damage to another party's car or property. If own car is damaged, no compensation
+        - obligatory
+        - if not submitted any claims for number of years, you can receive it cheaper through no-claim bonus
+        - if penalised for reckless driving or drunk driving, insurance company may claim money back
+    
+    2. Partial insurance
+        * Covers everything in third-party insurance
+        - theft
+        - fire
+        - glass (e.g stone chips)
+        - machine (if engine breaks down)
+        - legal protection
+    
+    3. Fully comprehensive insurance (motor vehicle damage insurance)
+        * Covers everything in partial insurance
+        - damage to your own car in the event of a traffic accident
+        - scratches and dents
+        - vandalism
+        - salvage and towing
+
+
