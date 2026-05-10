@@ -28,6 +28,8 @@
         - 1.0 per mille of alcohol in blood; 0.5 mg of alcohol per littler of breath
         - upto 2 years jail
         - revoked driving licence for 2 year. take tests again
+        - You can be charged with aggravated drunk driving with less than legal limit. The reason can be that your 
+        driving has entailed a significant risk of causing and accident, or an accident has occured
     
     # Per mille:
         0.1-0.4% : Loss of certain inhibitions and overestimation of one’s own abilities. Slower reaction time.
@@ -202,6 +204,11 @@
             - Call police
     
     * Do not approach lorries with dangerous goods
+    * Most deaths happen in single vehicle accident
+    
+    # Warning signs:
+        - buildup area: 5-75 meter before the danger
+        - outside of buildup are: 150-250 meter before the danger
 
     # Minor accident:
         * Keep an insurance claim form (provided by company). Write down:

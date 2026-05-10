@@ -6,6 +6,7 @@
         - 90 : Heavy by without seatbelts, heavy lorry on motorway or clearway
         - 80 : Heavy lorry on the road, vehicle with breaked trailer/caravan, vehicle with unbreaked trailer/caravan
         whose total weight is less than half the pulling vehicle's unladen weight and not more than 750 KG
+        - 50 : maximum speed of tractor. Some tractors are designed to be 30km/h
         - 45 : Moped class 1
         - 40 : Vehicle with unbreaked trailer/caravan whose total weight is greater than pulling vehicles service weight
         - 30 : Car towing another car
