@@ -1,0 +1,168 @@
+## Lanes
+
+    # Types:
+        - marked: lanes are separated by lines. most common
+        - unmarked: if there is enough room to drive four wheel vehicle, that is also considered lane.
+    
+    # Car position:
+        * Basic rule is to be in the middle of the lane. 
+        * When approaching a wide incoming vehicle, you can move to the right
+        * If good visibility ahead but poor visibility on the side, move to left to your lane. Avoid if oncoming traffic.
+        
+        # When turning:
+            - Left turn: close to the left edge. don't obstacle oncoming traffic
+            - Right turn: close to the right edge of the carriageway
+
+        # When turning on one way road:
+            - Left turn: close to left of the carriageway
+            - Right turn: close to right of the carriageway
+    
+    # Lane to choose:
+        * The basic rule is to choose the furthest to the right
+        # If following condition met, choose the suitable:
+            - Speed limit is less than 70km/h, there are at least two marked lanes in your direction
+            - The lanes lead to different destinations
+    
+    # Prohibition on changing lanes:
+        - not allowed to slalom between cars
+        - cannot cross solid line
+
+    # Public transport lane (bus lane):
+        - Bicycles and class 2 mopeds may also use a public trasport lane
+        - If other transport is permitted it's specified in additional panel
+        - You may cross a public transport lane to change lane
+    
+    # Reversible lane
+        - direction can be changed
+
+
+## Priority rules
+    * No rights, only obligation
+
+    # Obligation to give away
+        - let the intersecting vehicle pass
+        - clearly show intention; break in good time
+        - stop only if necessary
+    
+        ** Your obligation to give way applies to all traffc on the entire road you are joining.
+
+    # Obligation to stop
+        - Same as the obligation to give away but you have to stop
+        - Need to stop completely, cannot creep foward.
+        - Stop just before the stop line. If there is no stop line, stop right before the intersecting road.
+        The sign can be several meters before the junction.
+        - if there is a queue, each car must stop.
+        - all way stop mean that all the adjoining roads have an obligation to stop. Who stops first goes first.
+
+    # Priority Roads:
+        - all car entering priority road must give way to vehicles already on it.
+        - Indicated by sign. The sign displayed after every junction unless it's evident that the priority road
+        continues after the junction
+    
+    # Priority to the right rule:
+        - give away to vihecles from the right
+        - junction sign
+        - everytime vehicle pass, it's default rule unless otherwise stated
+    
+    # Priority to the right rule does not apply:
+        - On priority roads
+        - Functioning traffic signals
+        - at roundabouts
+        - where give away or stop sign is displayed
+        - when driver leaves an acceleration lane
+        - when reversing
+        - at exits
+    
+    # The turning rule
+        - Don't obstruct oncoming traffic
+        - Don't obstruct road users on the carriageway you are joining. 
+            * This includes pedestrians, cyclists even though there is no crossing.
+            * Don't have to stop and wait for pedestrians who are approaching the junction and are about to cross as 
+            you must do at pedestrian crossing. 
+    
+    # The exit rule:
+        * You have an obligation to give away when exiting from:
+        - A car park
+        - a property, a petrol station, or any other similar area in connection to the road
+        - A pedestrian street, home zone, bycycle street, hard shoulder, or off road area
+        - an uninterrupted footpath or bicycle path that you have crossed. At a junction usually a footpath or bycycle 
+        path ends and starts again
+
+    # The obstruction rule:
+        - Try to never stop at junction, on a pedestrian crossing or similar
+    
+    # The bus rule:
+        - 50km/h or slower: you must give away to the bys if it indicates to exit. Only applicable to the lane 
+        farthest to the right.
+        - over 50km: bus must give away to you 
+    
+    # Give away and do not obstruct:
+        - Emergency vehicles (ambulances, police cars, and fire truck) with sirens and/or flashing blue lights turned on.
+        - Trains and trams
+        - military convoy
+        - processions such as children with teacheers and funeral processions
+    
+    # Signals:
+        - red: stop at stop line
+        - red + yellow: the change to a green signal is imminent. otherwise it's a red
+        - amber: stop if no danger
+        - flasing amber: signals not working. take special caution
+        - green: 
+            - intersecting traffic has red light. 
+            - oncoming traffic has green light. don't obstruct when turning.
+            - if you turn, pedestrian and cyclists also have green light the road you want to join. You must let them 
+            pass
+        - green arrow: other traffic (car/pedestrian/cyclists) have red
+        - regular signal + arrow: arrow overrides regular signal
+
+
+## Crossings
+    # Pedestrian crossings
+        * Pedestrian crossing is indicated by sign and/or road marking
+
+        # In addition to those walking, pedestrians also include:
+            - Person in wheelchair (including electric)
+            - Persons on roller skates, roller skis, kicksled, toy vehicles and similar
+            - Persons walk with a bycycle or moped
+        
+        * Seek eye contact
+        * don't wave the pedestrian
+    
+        # Controlled pedestrian crossing
+            - have functional signals
+            - if pedestrian is entered crossing, let them pass
+        
+        # Uncontrolled pedestrian crossing
+            - give away to are on the crossing or about to do so.
+            - show clear intention by stoping in good time.
+    
+    # Footpath:
+        - drivers are only allowed to cross he footpath
+        - obligation to give way to pedestrians on the footpath
+        - lacks standardises design, sometimes (not always) marked with footpath sign
+        - often crosses when entering/exiting a property
+    
+    # Bicycle passages:
+        - always indicated by road marking
+        - often combined with pedestrian crossings
+    
+        # Controlled:
+            - have functioning traffic signals
+            - if they entered when they had green light, give away
+        
+        # Uncontrolled:
+            - adapt your speed, don't endgander those on the bicycle passage
+            - when crossing a uncrontrolled biccle passage while turning or exiting a roundabout, you must drive at a 
+            low speed and provide any cyclists who are already on the or about to enter with opportunity to pass
+            - cyclists have an obligation to give away to drivers
+
+    # Bicycle crossing:
+        - always indicated by road sign for bicycle crossing, the road marking for bycycle crossing and give away sign
+        - you have obligation to give away to cyclists
+    
+    * Bicycle crossing and path also applies to electric scooter or class 2 mopeds
+
+    # Bicycle paths:
+        - A road or part of a road for bicycles. 
+        - Only allowed to cross the bicycle path
+        - car have obligation to give way to the cyclists

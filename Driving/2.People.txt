@@ -237,13 +237,16 @@
     # What to do if you hit a large animal:
         1. Warn other road users with hazard light and warning triangle
         2. If animal is dead try to move it away from the road.
-        3. If animal is wounded you are obliged to call the police if the animal you hit is either:
-        Bear, Wolf, Walverine, Lynx, Elk, Deer, Roe deer, Otter, Wild boar, Mouflon sheep, Eagle
+        3. You are obliged to call the police for any collision (injured, dead, or escaped) with:
+        Bear, Wolf, Wolverine, Lynx, Elk, Deer, Roe deer, Otter, Wild boar, Mouflon sheep, Eagle
+            - Failing to report is a criminal offence (straffbart)
+            - Do not exit the car if you hit a bear, wolf, wild boar or lynx
+            - Mark the collision spot so search teams can locate a wounded animal
 
     # Warning triangle: 
         - car must be equipped with it
         - if car stalls on a road where the speed is > 50km/h, you must display a warning triangle.
-        - place it 50-100 m before
+        - place it 50-100 m behind the car (so approaching traffic sees it first)
 
     # Accident locations:
         - most are in built-up areas
@@ -254,3 +257,13 @@
         - 40% killed were not wearing a seat belt
         - 75% killed are men
         - 75,000 accidents occur each year
+        - ~250 deaths/year in traffic (lowest mortality rate in EU)
+        - ~1,500-2,000 seriously injured/year
+        - 66% of fatalities are on rural roads (much higher than EU avg)
+        - 50% of drivers killed in single-vehicle accidents had alcohol involved
+        - 18-19 year olds: 5-6x higher accident risk than average
+        - 50% of pedestrian accidents happen in the dark
+
+    # Speed vs pedestrian survival:
+        - hit at 30 km/h: ~10% risk of death
+        - hit at 50 km/h: ~50% risk of death

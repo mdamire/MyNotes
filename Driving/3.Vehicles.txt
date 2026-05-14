@@ -159,7 +159,7 @@
 ## Length & width
     # Width
         - The total maximum width is 260cm (with or without load)
-        - A load may protrude by maximum 20cm
+        - A load may protrude by maximum 20cm on each side
 
     # Length:
         - The total maximum length can be 240cm (with or without load)
@@ -196,10 +196,10 @@
         - heaviest part of the load on the bottom
     
     # terminology:
-        - Unladen weight: unladen car with driver
-        - Maximum load: maximum load permitted in registration
-        - total weight: Unladen weight + Maximum load
-        - Gross weight: The weight at a given time
+        - Unladen weight (Tjänstevikt): unladen car + fluids + 75 kg standard driver
+        - Maximum load (Maxlast): maximum load permitted in registration (Totalvikt - Tjänstevikt)
+        - Total weight (Totalvikt): Unladen weight + Maximum load (legal max from registration)
+        - Gross weight (Bruttovikt): The actual weight at a given time (must never exceed Totalvikt)
     
     * With B licence, you may drive private car or light lorry with a maximum total weight of 3500kg
 
@@ -230,10 +230,10 @@
     1. Dipped headlights
         * The norm is to use combination of dipped headlights and parking lights. 
         # Prohibited light combination:
-            - Dipped headlights + fog light
+            - Dipped headlights + front fog light
             - dipped headlights + daytime running light
+            - front fog lights + daytime running lights
             - dipped headlights + auxiliary hight beam light
-            - fog lights + daytime running lights
     
     2. Full beam headlights:
         * Most powerful light. Use them as often as you can in the dark.
@@ -264,7 +264,7 @@
     
     6. Rear fog light
         - very powerful red light
-        - turn off as soon as the read vehicle has seen you
+        - turn off as soon as the rear vehicle has seen you
     
     7. Daytime running light
         - used to increase the car's visibility
